@@ -15,7 +15,7 @@
 #include <cstdlib>
 using namespace std;
 
-#define TIMING_ANALYSIS 0
+#define TIMING_ANALYSIS 1
 #define MAX_VALUE 100.0
 #define srand48(s) srand(s)
 #define drand48() (((double)rand())/((double)RAND_MAX))
@@ -24,7 +24,7 @@ using namespace std;
 void fill_matrix(double* matrix, const int dim)
 {
   // Error Check
-  if (matrix == nullptr) return;
+  if (matrix == NULL) return;
 
   for (int m = 0; m < dim; ++m)
     for (int n = 0; n < dim; ++n)

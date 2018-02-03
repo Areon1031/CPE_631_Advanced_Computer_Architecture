@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Binary Files
+*.bin
+
+# Visual Studio Project Files
+*.suo
+*.ipch
+*.db
+*.opendb

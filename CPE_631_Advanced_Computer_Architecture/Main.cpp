@@ -8,17 +8,15 @@
   CPE 631 Advanced Computer Architecture
   Kyle Ray
   Homework #2
-  January 31, 2018
+  February 5, 2018
 */
 
 #include <iostream>
 #include <cstdlib>
 using namespace std;
 
-#define TIMING_ANALYSIS 1
+#define TIMING_ANALYSIS 0
 #define MAX_VALUE 100.0
-#define srand48(s) srand(s)
-#define drand48() (((double)rand())/((double)RAND_MAX))
 
 // Method to fill matrix with random values
 void fill_matrix(double* matrix, const int dim)
@@ -28,7 +26,7 @@ void fill_matrix(double* matrix, const int dim)
 
   for (int m = 0; m < dim; ++m)
     for (int n = 0; n < dim; ++n)
-      matrix[m*dim + n] = drand48()*MAX_VALUE;
+      matrix[m*dim + n] = (((double)rand()) / ((double)RAND_MAX))*MAX_VALUE;
 }
 
 // Method to easily print matrix
@@ -43,7 +41,7 @@ void print_matrix(double* matrix, const int dim_m, const int dim_n)
   }
 }
 
-// Method to multiple Square matrices
+// Method to multiply Square matrices
 void square_matrix_mult(double* first_matrix, double* second_matrix, double* out_matrix, const int dim)
 {
   for (int m = 0; m < dim; ++m)
@@ -61,6 +59,26 @@ void square_matrix_mult(double* first_matrix, double* second_matrix, double* out
   }
 }
 
+// Method to write the contents of a matrix to a binary file
+void write_matrix_to_file(double* matrix, const int dim)
+{
+  // Open the binary file
+  FILE* out_file;
+  out_file = fopen("MatrixMult.bin", "wb");
+  if (!out_file)
+  {
+    cerr << "Unable to open the file" << endl;
+    return;
+  }
+
+  // Write the matrix contents to the binary file
+  for (int m = 0; m < dim; ++m)
+  {
+    for (int n = 0; n < dim; ++n)
+      fwrite(&matrix[m*dim + n], sizeof(double), 1, out_file);
+  }
+}
+
 int main(int argc, char* argv[])
 {
   // Error Check
@@ -74,9 +92,9 @@ int main(int argc, char* argv[])
   int m_dim = atoi(argv[1]);
 
   // Create the matrix
-  double* first_matrix = new double[m_dim*m_dim];
+  double* first_matrix  = new double[m_dim*m_dim];
   double* second_matrix = new double[m_dim*m_dim];
-  double* final_matrix = new double[m_dim*m_dim];
+  double* final_matrix  = new double[m_dim*m_dim];
 
   // Fill the matrix with random values
   fill_matrix(first_matrix, m_dim);
@@ -95,6 +113,9 @@ int main(int argc, char* argv[])
   // Present the results to the user
   cout << "Final Matrix : \n"; print_matrix(final_matrix, m_dim, m_dim); cout << endl;
 #endif
+
+  // Write the result to a binary file
+  write_matrix_to_file(final_matrix, m_dim);
 
   // Clean Up
   delete[] first_matrix;

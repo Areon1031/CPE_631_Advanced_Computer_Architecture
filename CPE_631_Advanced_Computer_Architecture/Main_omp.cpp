@@ -45,7 +45,7 @@ void print_matrix(double* matrix, const int dim_m, const int dim_n)
   }
 }
 
-// Method to multiple Square matrices
+// Method to multiply Square matrices
 void square_matrix_mult(double* first_matrix, double* second_matrix, double* out_matrix, const int dim)
 {
   // Critical Loop
@@ -64,6 +64,26 @@ void square_matrix_mult(double* first_matrix, double* second_matrix, double* out
 
       out_matrix[m*dim + n] = sum;
     }
+  }
+}
+
+// Method to write the contents of a matrix to a binary file
+void write_matrix_to_file(double* matrix, const int dim)
+{
+  // Open the binary file
+  FILE* out_file;
+  out_file = fopen("MatrixMult.bin", "wb");
+  if (!out_file)
+  {
+    cerr << "Unable to open the file" << endl;
+    return;
+  }
+
+  // Write the matrix contents to the binary file
+  for (int m = 0; m < dim; ++m)
+  {
+    for (int n = 0; n < dim; ++n)
+      fwrite(&matrix[m*dim + n], sizeof(double), 1, out_file);
   }
 }
 
@@ -101,6 +121,9 @@ int main(int argc, char* argv[])
   // Present the results to the user
   cout << "Final Matrix : \n"; print_matrix(final_matrix, m_dim, m_dim); cout << endl;
 #endif
+
+  // Write the result to a binary file
+  write_matrix_to_file(final_matrix, m_dim);
 
   // Clean Up
   delete[] first_matrix;

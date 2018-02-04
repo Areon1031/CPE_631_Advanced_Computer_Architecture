@@ -13,9 +13,11 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <stdio.h>
+#include <time.h>
 using namespace std;
 
-#define TIMING_ANALYSIS 0
+#define TIMING_ANALYSIS 1
 #define MAX_VALUE 100.0
 
 // Method to fill matrix with random values
@@ -106,8 +108,23 @@ int main(int argc, char* argv[])
   cout << "Second Matrix: \n"; print_matrix(second_matrix, m_dim, m_dim); cout << endl;
 #endif
 
+#if TIMING_ANALYSIS 
+  // Setup Clock
+  clock_t start_time, finish_time;
+  start_time = clock();
+  finish_time = clock();
+  double delay_time = (double)(finish_time - start_time);
+  start_time = clock();
+#endif
   // Critical Loop
   square_matrix_mult(first_matrix, second_matrix, final_matrix, m_dim);
+
+#if TIMING_ANALYSIS
+  finish_time = clock();
+  double elapsed_time = finish_time - start_time - delay_time;
+  double elapsed_time_sec = elapsed_time / CLOCKS_PER_SEC;
+  cout << "Time for the critical loop is " << elapsed_time_sec << " seconds." << endl;
+#endif
 
 #if !TIMING_ANALYSIS
   // Present the results to the user

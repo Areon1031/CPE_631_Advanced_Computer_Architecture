@@ -15,12 +15,16 @@ January 31, 2018
 
 #include <iostream>
 #include <cstdlib>
+#include <stdio.h>
+#include <time.h>
 using namespace std;
 
-#define TIMING_ANALYSIS 0
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+#define TIMING_ANALYSIS 1
 #define MAX_VALUE 100.0
-#define srand48(s) srand(s)
-#define drand48() (((double)rand())/((double)RAND_MAX))
 
 // Method to fill matrix with random values
 void fill_matrix(double* matrix, const int dim)
@@ -30,7 +34,7 @@ void fill_matrix(double* matrix, const int dim)
 
   for (int m = 0; m < dim; ++m)
     for (int n = 0; n < dim; ++n)
-      matrix[m*dim + n] = drand48()*MAX_VALUE;
+      matrix[m*dim + n] = (((double)rand()) / ((double)RAND_MAX))*MAX_VALUE;
 }
 
 // Method to easily print matrix
@@ -114,8 +118,21 @@ int main(int argc, char* argv[])
   cout << "Second Matrix: \n"; print_matrix(second_matrix, m_dim, m_dim); cout << endl;
 #endif
 
+#ifdef _OPENMP
+#if TIMING_ANALYSIS
+  double start_time, finish_time;
+  start_time = omp_get_wtime();
+#endif
+#endif
   // Critical Loop
   square_matrix_mult(first_matrix, second_matrix, final_matrix, m_dim);
+
+#ifdef _OPENMP
+#if TIMING_ANALYSIS
+  finish_time = omp_get_wtime();
+  cout << "Time for the critical loop is " << (finish_time - start_time) << " seconds." << endl;
+#endif
+#endif
 
 #if !TIMING_ANALYSIS
   // Present the results to the user

@@ -1,0 +1,8 @@
+﻿  mm_mult_serial.c
+e:\uah\cpe_631_advanced_computer_architecture\cpe_631_advanced_computer_architecture\hw4\daxpy\daxpy\mm_mult_serial.c(99): warning C4013: 'drand48' undefined; assuming extern returning int
+e:\uah\cpe_631_advanced_computer_architecture\cpe_631_advanced_computer_architecture\hw4\daxpy\daxpy\mm_mult_serial.c(99): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+e:\uah\cpe_631_advanced_computer_architecture\cpe_631_advanced_computer_architecture\hw4\daxpy\daxpy\mm_mult_serial.c(147): warning C4013: 'srand48' undefined; assuming extern returning int
+e:\uah\cpe_631_advanced_computer_architecture\cpe_631_advanced_computer_architecture\hw4\daxpy\daxpy\mm_mult_serial.c(124): warning C4101: 'dot_prod': unreferenced local variable
+e:\uah\cpe_631_advanced_computer_architecture\cpe_631_advanced_computer_architecture\hw4\daxpy\daxpy\mm_mult_serial.c(126): warning C4101: 'j': unreferenced local variable
+e:\uah\cpe_631_advanced_computer_architecture\cpe_631_advanced_computer_architecture\hw4\daxpy\daxpy\mm_mult_serial.c(126): warning C4101: 'i': unreferenced local variable
+e:\uah\cpe_631_advanced_computer_architecture\cpe_631_advanced_computer_architecture\hw4\daxpy\daxpy\mm_mult_serial.c(189): error C4700: uninitialized local variable 'k' used

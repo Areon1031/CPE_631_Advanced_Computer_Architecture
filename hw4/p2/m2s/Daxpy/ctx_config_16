@@ -1,0 +1,5 @@
+[ Context 0 ]
+Exe = ./daxpy_16
+Args = 2048
+Cwd = /home/student/krr0010/CPE_631/hw4/p2/m2s/Daxpy/
+StdOut = SerialContextOutputFile16.txt

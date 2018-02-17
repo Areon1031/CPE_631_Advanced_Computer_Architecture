@@ -1,0 +1,6 @@
+[ General ]
+Frequency = 2000
+Cores = 1
+[ BranchPredictor ]
+Kind = Bimodal
+Bimod.Size = 512

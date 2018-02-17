@@ -1,0 +1,170 @@
+
+; Multi2Sim 4.2 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: AE5Fq
+
+
+;
+; Simulation Statistics Summary
+;
+
+[ General ]
+RealTime = 0.43 [s]
+SimEnd = ContextsFinished
+SimTime = 187714.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 375429
+
+[ x86 ]
+RealTime = 0.43 [s]
+Instructions = 138331
+InstructionsPerSecond = 320484
+Contexts = 1
+Memory = 9121792
+FastForwardInstructions = 0
+CommittedInstructions = 106744
+CommittedInstructionsPerCycle = 0.2843
+CommittedMicroInstructions = 229683
+CommittedMicroInstructionsPerCycle = 0.6118
+BranchPredictionAccuracy = 0.9132
+SimTime = 187712.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 375424
+CyclesPerSecond = 869778
+
+
+; Multi2Sim 4.2 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: AFV3I
+
+
+;
+; Simulation Statistics Summary
+;
+
+[ General ]
+RealTime = 0.43 [s]
+SimEnd = ContextsFinished
+SimTime = 176431.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 352863
+
+[ x86 ]
+RealTime = 0.43 [s]
+Instructions = 136934
+InstructionsPerSecond = 316871
+Contexts = 1
+Memory = 9121792
+FastForwardInstructions = 0
+CommittedInstructions = 105740
+CommittedInstructionsPerCycle = 0.3001
+CommittedMicroInstructions = 222540
+CommittedMicroInstructionsPerCycle = 0.6315
+BranchPredictionAccuracy = 0.8983
+SimTime = 176189.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 352378
+CyclesPerSecond = 815418
+
+
+; Multi2Sim 4.2 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: AHKDu
+
+
+;
+; Simulation Statistics Summary
+;
+
+[ General ]
+RealTime = 0.40 [s]
+SimEnd = ContextsFinished
+SimTime = 178134.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 356269
+
+[ x86 ]
+RealTime = 0.40 [s]
+Instructions = 136709
+InstructionsPerSecond = 338955
+Contexts = 1
+Memory = 9121792
+FastForwardInstructions = 0
+CommittedInstructions = 105228
+CommittedInstructionsPerCycle = 0.2954
+CommittedMicroInstructions = 218956
+CommittedMicroInstructionsPerCycle = 0.6146
+BranchPredictionAccuracy = 0.8885
+SimTime = 178131.50 [ns]
+Frequency = 2000 [MHz]
+Cycles = 356263
+CyclesPerSecond = 883315
+
+
+; Multi2Sim 4.2 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: Hlagz
+
+
+;
+; Simulation Statistics Summary
+;
+
+[ General ]
+RealTime = 0.39 [s]
+SimEnd = ContextsFinished
+SimTime = 172611.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 345223
+
+[ x86 ]
+RealTime = 0.39 [s]
+Instructions = 136243
+InstructionsPerSecond = 351054
+Contexts = 1
+Memory = 9121792
+FastForwardInstructions = 0
+CommittedInstructions = 104972
+CommittedInstructionsPerCycle = 0.3041
+CommittedMicroInstructions = 217164
+CommittedMicroInstructionsPerCycle = 0.6292
+BranchPredictionAccuracy = 0.8831
+SimTime = 172580.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 345160
+CyclesPerSecond = 889365
+
+
+; Multi2Sim 4.2 - A Simulation Framework for CPU-GPU Heterogeneous Computing
+; Please use command 'm2s --help' for a list of command-line options.
+; Simulation alpha-numeric ID: HmOEF
+
+
+;
+; Simulation Statistics Summary
+;
+
+[ General ]
+RealTime = 0.38 [s]
+SimEnd = ContextsFinished
+SimTime = 171303.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 342607
+
+[ x86 ]
+RealTime = 0.38 [s]
+Instructions = 135997
+InstructionsPerSecond = 357318
+Contexts = 1
+Memory = 9121792
+FastForwardInstructions = 0
+CommittedInstructions = 104849
+CommittedInstructionsPerCycle = 0.306
+CommittedMicroInstructions = 216271
+CommittedMicroInstructionsPerCycle = 0.6313
+BranchPredictionAccuracy = 0.8808
+SimTime = 171301.00 [ns]
+Frequency = 2000 [MHz]
+Cycles = 342602
+CyclesPerSecond = 900151
+

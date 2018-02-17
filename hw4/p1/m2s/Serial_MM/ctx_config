@@ -1,0 +1,5 @@
+[ Context 0 ]
+Exe = ./mm_mult_serial
+Args = 256
+Cwd = /home/student/krr0010/CPE_631/hw4/p1/m2s/Serial_MM
+StdOut = SerialContextOutputFile.txt

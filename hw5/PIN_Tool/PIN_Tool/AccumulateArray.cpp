@@ -1,14 +1,15 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cstdlib>
 #include <sstream>
 #include <string.h>
 #include <time.h>
 using namespace std;
 
 // Defines so that I can compile the code in visual studio
-#define srand48(s) srand(s)
-#define drand48() (((double)rand())/((double)RAND_MAX))
+//#define srand48(s) srand(s
+//#define drand48() (((double)rand())/((double)RAND_MAX)
 
 #define MX_SZ 320
 #define SEED 2397           /* random number seed */

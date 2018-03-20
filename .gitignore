@@ -42,3 +42,6 @@
 *.pdb
 *.ilk
 *.tlog
+
+#TextFiles
+*.txt

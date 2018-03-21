@@ -24,6 +24,7 @@
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
+#include "customview.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -42,7 +43,9 @@ public:
     QWidget *CacheMiss_Tab;
     QWidget *MemoryUsage_Tab;
     QWidget *CPIStack_Tab;
-    QTextBrowser *CPI_Stack_Text;
+    CustomView *CPI_Stack_GraphicsView;
+    QWidget *ApplicationOutput_Tab;
+    QTextBrowser *ApplicationOutput_Text;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -87,10 +90,16 @@ public:
         tabWidget->addTab(MemoryUsage_Tab, QString());
         CPIStack_Tab = new QWidget();
         CPIStack_Tab->setObjectName(QStringLiteral("CPIStack_Tab"));
-        CPI_Stack_Text = new QTextBrowser(CPIStack_Tab);
-        CPI_Stack_Text->setObjectName(QStringLiteral("CPI_Stack_Text"));
-        CPI_Stack_Text->setGeometry(QRect(0, 0, 1041, 321));
+        CPI_Stack_GraphicsView = new CustomView(CPIStack_Tab);
+        CPI_Stack_GraphicsView->setObjectName(QStringLiteral("CPI_Stack_GraphicsView"));
+        CPI_Stack_GraphicsView->setGeometry(QRect(0, 0, 1041, 321));
         tabWidget->addTab(CPIStack_Tab, QString());
+        ApplicationOutput_Tab = new QWidget();
+        ApplicationOutput_Tab->setObjectName(QStringLiteral("ApplicationOutput_Tab"));
+        ApplicationOutput_Text = new QTextBrowser(ApplicationOutput_Tab);
+        ApplicationOutput_Text->setObjectName(QStringLiteral("ApplicationOutput_Text"));
+        ApplicationOutput_Text->setGeometry(QRect(0, 0, 1041, 321));
+        tabWidget->addTab(ApplicationOutput_Tab, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -105,7 +114,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -122,6 +131,7 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(CacheMiss_Tab), QApplication::translate("MainWindow", "Cache Misses", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(MemoryUsage_Tab), QApplication::translate("MainWindow", "Memory Usage", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
     } // retranslateUi
 
 };

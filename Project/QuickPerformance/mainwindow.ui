@@ -89,7 +89,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Topology_Tab">
      <attribute name="title">
@@ -120,7 +120,22 @@
      <attribute name="title">
       <string>CPI Stack</string>
      </attribute>
-     <widget class="QTextBrowser" name="CPI_Stack_Text">
+     <widget class="CustomView" name="CPI_Stack_GraphicsView">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1041</width>
+        <height>321</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="ApplicationOutput_Tab">
+     <attribute name="title">
+      <string>Application Output</string>
+     </attribute>
+     <widget class="QTextBrowser" name="ApplicationOutput_Text">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -154,6 +169,13 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CustomView</class>
+   <extends>QGraphicsView</extends>
+   <header>customview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

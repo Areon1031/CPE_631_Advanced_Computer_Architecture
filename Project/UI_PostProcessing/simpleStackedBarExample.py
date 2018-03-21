@@ -18,4 +18,8 @@ plt.bar(X, B, color = 'r', bottom = A)
 plt.bar(X, C, color = 'g', bottom = (A + B))
 
 # Show the plot
-plt.show()
+#plt.show()
+plt.plot()
+
+# Save the Figure
+plt.savefig("../bin/Results/CPI_Stack.png")

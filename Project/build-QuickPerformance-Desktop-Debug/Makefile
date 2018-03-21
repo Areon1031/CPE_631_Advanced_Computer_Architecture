@@ -51,9 +51,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../QuickPerformance/main.cpp \
-		../QuickPerformance/mainwindow.cpp moc_mainwindow.cpp
+		../QuickPerformance/mainwindow.cpp \
+		../QuickPerformance/customview.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		customview.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -109,6 +111,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../QuickPerformance/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -128,8 +131,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../QuickPerformance/QuickPerformance.pro ../QuickPerformance/mainwindow.h ../QuickPerformance/main.cpp \
-		../QuickPerformance/mainwindow.cpp
+		../QuickPerformance/QuickPerformance.pro ../QuickPerformance/mainwindow.h \
+		../QuickPerformance/customview.h ../QuickPerformance/main.cpp \
+		../QuickPerformance/mainwindow.cpp \
+		../QuickPerformance/customview.cpp
 QMAKE_TARGET  = QuickPerformance
 DESTDIR       = 
 TARGET        = QuickPerformance
@@ -195,6 +200,7 @@ Makefile: ../QuickPerformance/QuickPerformance.pro /usr/lib/x86_64-linux-gnu/qt5
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -273,6 +279,7 @@ Makefile: ../QuickPerformance/QuickPerformance.pro /usr/lib/x86_64-linux-gnu/qt5
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -311,8 +318,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QuickPerformance/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QuickPerformance/main.cpp ../QuickPerformance/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QuickPerformance/mainwindow.h ../QuickPerformance/customview.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QuickPerformance/main.cpp ../QuickPerformance/mainwindow.cpp ../QuickPerformance/customview.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../QuickPerformance/mainwindow.ui $(DISTDIR)/
 
 
@@ -359,7 +366,8 @@ compiler_uic_make_all: ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: ../QuickPerformance/mainwindow.ui \
-		/usr/lib/x86_64-linux-gnu/qt5/bin/uic
+		/usr/lib/x86_64-linux-gnu/qt5/bin/uic \
+		../QuickPerformance/customview.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../QuickPerformance/mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -378,6 +386,9 @@ main.o: ../QuickPerformance/main.cpp ../QuickPerformance/mainwindow.h
 mainwindow.o: ../QuickPerformance/mainwindow.cpp ../QuickPerformance/mainwindow.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QuickPerformance/mainwindow.cpp
+
+customview.o: ../QuickPerformance/customview.cpp ../QuickPerformance/customview.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o customview.o ../QuickPerformance/customview.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

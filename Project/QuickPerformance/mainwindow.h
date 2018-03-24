@@ -11,6 +11,9 @@
 #include <QGraphicsScene>
 #include <QtGui>
 
+#include <likwid.h>
+#include <thread>
+
 // Enumeration for Tabs
 enum QuickTabs
 {
@@ -36,6 +39,9 @@ public:
     // Execution Methods
     void executeUserApplication();
     void generateCPIStack();
+
+    // Perfscope thread
+    std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
 
     // Destructor
     ~MainWindow();

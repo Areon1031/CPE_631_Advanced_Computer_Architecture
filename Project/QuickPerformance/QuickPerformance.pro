@@ -30,7 +30,11 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    customview.h
+    customview.h \
+    /usr/local/include/likwid.h
 
 FORMS += \
         mainwindow.ui
+
+LIBS += -L/usr/local/lib -llikwid \
+    -pthread

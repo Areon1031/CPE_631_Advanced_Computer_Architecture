@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    topology_init();
+
     ui->setupUi(this);
 
     // Setup the Logo
@@ -69,13 +71,19 @@ void MainWindow::on_ApplicationLoad_pushButton_clicked()
     ui->Application_Text->setText(fileName);
 }
 
+void doSomething()
+{
+    return;
+}
+
 void MainWindow::on_RunTest_pushButton_clicked()
 {
     // Run application if loaded
     if (!application_.isEmpty())
     {
         // Run the application with the likwid toolset
-        executeUserApplication();
+        std::thread userApp = spawn();
+        userApp.detach();
 
         // Update the CPI Stack Tab
         generateCPIStack();
@@ -89,7 +97,10 @@ void MainWindow::executeUserApplication()
 {
     //TODO: Write in all of the likwid tools
     QString runString = application_ + " 2>&1 | tee output.txt";
-    system(runString.toStdString().c_str());
+    QString test = "likwid-perfscope -g ENERGY -C S0:7 -r 10 -t 500ms ";
+    test += runString;
+    //system(runString.toStdString().c_str());
+    system(test.toStdString().c_str());
 
     // Open the output from the program and display it to the user
     QFile outputFile("./output.txt");

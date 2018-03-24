@@ -38,7 +38,7 @@ DISTNAME      = QuickPerformance1.0.0
 DISTDIR = /home/ghost/UAH/CPE_631/CPE_631_Advanced_Computer_Architecture/Project/build-QuickPerformance-Desktop-Debug/.tmp/QuickPerformance1.0.0
 LINK          = g++
 LFLAGS        = -m64
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L/usr/local/lib -llikwid -pthread -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -132,7 +132,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../QuickPerformance/QuickPerformance.pro ../QuickPerformance/mainwindow.h \
-		../QuickPerformance/customview.h ../QuickPerformance/main.cpp \
+		../QuickPerformance/customview.h \
+		/usr/local/include/likwid.h ../QuickPerformance/main.cpp \
 		../QuickPerformance/mainwindow.cpp \
 		../QuickPerformance/customview.cpp
 QMAKE_TARGET  = QuickPerformance
@@ -318,7 +319,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QuickPerformance/mainwindow.h ../QuickPerformance/customview.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QuickPerformance/mainwindow.h ../QuickPerformance/customview.h /usr/local/include/likwid.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../QuickPerformance/main.cpp ../QuickPerformance/mainwindow.cpp ../QuickPerformance/customview.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../QuickPerformance/mainwindow.ui $(DISTDIR)/
 
@@ -384,7 +385,8 @@ main.o: ../QuickPerformance/main.cpp ../QuickPerformance/mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QuickPerformance/main.cpp
 
 mainwindow.o: ../QuickPerformance/mainwindow.cpp ../QuickPerformance/mainwindow.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../QuickPerformance/customview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QuickPerformance/mainwindow.cpp
 
 customview.o: ../QuickPerformance/customview.cpp ../QuickPerformance/customview.h

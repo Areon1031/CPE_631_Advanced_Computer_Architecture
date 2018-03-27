@@ -40,6 +40,8 @@ public:
     void executeUserApplication();
     void generateCPIStack();
 
+    void likwidExample();
+
     // Perfscope thread
     std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
 

@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -46,6 +47,10 @@ public:
     CustomView *CPI_Stack_GraphicsView;
     QWidget *ApplicationOutput_Tab;
     QTextBrowser *ApplicationOutput_Text;
+    QListWidget *listWidget;
+    QListWidget *listWidget_2;
+    QLabel *Application_Label_2;
+    QLabel *Application_Label_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -100,6 +105,18 @@ public:
         ApplicationOutput_Text->setObjectName(QStringLiteral("ApplicationOutput_Text"));
         ApplicationOutput_Text->setGeometry(QRect(0, 0, 1041, 321));
         tabWidget->addTab(ApplicationOutput_Tab, QString());
+        listWidget = new QListWidget(centralWidget);
+        listWidget->setObjectName(QStringLiteral("listWidget"));
+        listWidget->setGeometry(QRect(300, 30, 211, 41));
+        listWidget_2 = new QListWidget(centralWidget);
+        listWidget_2->setObjectName(QStringLiteral("listWidget_2"));
+        listWidget_2->setGeometry(QRect(300, 100, 211, 41));
+        Application_Label_2 = new QLabel(centralWidget);
+        Application_Label_2->setObjectName(QStringLiteral("Application_Label_2"));
+        Application_Label_2->setGeometry(QRect(301, 7, 161, 20));
+        Application_Label_3 = new QLabel(centralWidget);
+        Application_Label_3->setObjectName(QStringLiteral("Application_Label_3"));
+        Application_Label_3->setGeometry(QRect(302, 79, 200, 20));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -132,6 +149,8 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(MemoryUsage_Tab), QApplication::translate("MainWindow", "Memory Usage", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
+        Application_Label_2->setText(QApplication::translate("MainWindow", "Performance Groups", Q_NULLPTR));
+        Application_Label_3->setText(QApplication::translate("MainWindow", "Chosen Performance Groups", Q_NULLPTR));
     } // retranslateUi
 
 };

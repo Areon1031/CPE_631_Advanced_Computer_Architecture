@@ -13,6 +13,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
+    // Setup the background
+    //this->setStyleSheet("background-color: black");
+    //QPalette pal = QPalette();
+    //pal.setColor(QPalette::Background, Qt::black);
+    //this->setAutoFillBackground(true);
+    //this->setPalette(pal);
+
     // Setup the Logo
     QPixmap logo("../bin/Logo/UAH_Logo.png");
     ui->Logo->setPixmap(logo);

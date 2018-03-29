@@ -11,7 +11,7 @@
 #include <QGraphicsScene>
 #include <QtGui>
 
-#include <likwid.h>
+#include <likwid.h> // May not be necessary, remove later if needed
 #include <thread>
 
 // Enumeration for Tabs
@@ -40,8 +40,6 @@ public:
     void executeUserApplication();
     void generateCPIStack();
 
-    void likwidExample();
-
     // Perfscope thread
     std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
 
@@ -50,8 +48,9 @@ public:
 
 private slots:
     void on_ApplicationLoad_pushButton_clicked();
-
     void on_RunTest_pushButton_clicked();
+    void on_AddPerfGroup_pushButton_clicked();
+    void on_RemovePerfGroup_pushButton_clicked();
 
 private:
     // Reference to the UI

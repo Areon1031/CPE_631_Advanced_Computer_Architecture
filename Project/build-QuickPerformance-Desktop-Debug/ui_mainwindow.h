@@ -53,6 +53,8 @@ public:
     CustomView *CPI_Stack_GraphicsView;
     QWidget *ApplicationOutput_Tab;
     QTextBrowser *ApplicationOutput_Text;
+    QLabel *CommandLineArgs_Label;
+    QTextEdit *CommandLineArgs_Text;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -125,6 +127,14 @@ public:
         ApplicationOutput_Text->setObjectName(QStringLiteral("ApplicationOutput_Text"));
         ApplicationOutput_Text->setGeometry(QRect(0, 0, 1041, 321));
         tabWidget->addTab(ApplicationOutput_Tab, QString());
+        CommandLineArgs_Label = new QLabel(centralWidget);
+        CommandLineArgs_Label->setObjectName(QStringLiteral("CommandLineArgs_Label"));
+        CommandLineArgs_Label->setGeometry(QRect(690, 70, 190, 17));
+        CommandLineArgs_Text = new QTextEdit(centralWidget);
+        CommandLineArgs_Text->setObjectName(QStringLiteral("CommandLineArgs_Text"));
+        CommandLineArgs_Text->setGeometry(QRect(690, 90, 281, 31));
+        CommandLineArgs_Text->setReadOnly(false);
+        CommandLineArgs_Text->setAcceptRichText(true);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -161,6 +171,7 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(MemoryUsage_Tab), QApplication::translate("MainWindow", "Memory Usage", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
+        CommandLineArgs_Label->setText(QApplication::translate("MainWindow", "Command Line Arguments", Q_NULLPTR));
     } // retranslateUi
 
 };

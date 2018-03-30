@@ -24,7 +24,28 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Logo->setScaledContents(true);
 
     // Run Topology
-    system("likwid-topology -g --output top.txt");
+    getTopology();
+
+    // Run likwid-perfctr -a to get performance groups
+    getPerformanceGroups();
+
+    // Setup CPI Stack Items
+    item_ = nullptr;
+    scene_ = new QGraphicsScene(this);
+}
+
+MainWindow::~MainWindow()
+{
+    // Clean up
+    delete item_;
+    delete scene_;
+    delete ui;
+}
+
+void MainWindow::getTopology()
+{
+    // Execute likwid topology
+    system("likwid-topology -c -C -g --output top.txt");
     QFile topFile("./top.txt");
 
     // Error Check the file
@@ -40,8 +61,11 @@ MainWindow::MainWindow(QWidget *parent) :
     topFont.setBold(true);
     topFont.setFamily("Ubuntu Mono");
     ui->Topology_Text->setFont(topFont);
+}
 
-    // Run likwid-perfctr -a to get performance groups
+void MainWindow::getPerformanceGroups()
+{
+    // Execute likwid-perfctr -a to get performance groups
     system("likwid-perfctr -a > perfGroups.txt");
     QFile perfGroupFile("./perfGroups.txt");
 
@@ -51,22 +75,37 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Read the supported performance groups and populate the list
     QTextStream perfInStream(&perfGroupFile);
+    perfInStream.setCodec("UTF-8");
     perfInStream.readLine();
     perfInStream.readLine();
+
+    // Read the data from the stream
     while(!perfInStream.atEnd())
-        ui->PerfGroups_List->addItem(perfInStream.readLine().remove(" ")); //perfGroup.append(perfInStream.readLine());
+    {
+        // Grab the current performance macro and description
+        QString perfGroup = perfInStream.readLine();
+        QString finalString;
+        bool foundFirstChar = false;
 
-    // Setup CPI Stack Items
-    item = nullptr;
-    scene = new QGraphicsScene(this);
-}
+        // Remove the description from the string as well as unnecessary characters
+        for (int i = 0; i < perfGroup.size(); i++)
+        {
+            // Remove leading whitespace and tabs
+            if (perfGroup.at(i) != ' ' && perfGroup.at(i) != '\t')
+            {
+                finalString += perfGroup.at(i);
+                foundFirstChar = true;
+            }
 
-MainWindow::~MainWindow()
-{
-    // Clean up
-    delete item;
-    delete scene;
-    delete ui;
+            // If the first character has been found, we have the performance group
+            // stop processing when we find the start of the description
+            if (foundFirstChar && (perfGroup.at(i) == ' ' || perfGroup.at(i) == '\t'))
+                break;
+        }
+
+        // Add the current option to the list
+        ui->PerfGroups_List->addItem(finalString);
+    }
 }
 
 void MainWindow::on_ApplicationLoad_pushButton_clicked()
@@ -107,6 +146,14 @@ void MainWindow::on_RunTest_pushButton_clicked()
         // Run the application with the likwid toolset
         //std::thread userApp = spawn();
         //userApp.join();
+
+        // Generate Likwid String based off of selections from user
+        generateLikwidPerfCommand();
+
+        // Read Command Line Arguments
+        readCommandLineArgs();
+
+        // Execute the user application
         executeUserApplication();
 
         // Update the CPI Stack Tab
@@ -117,11 +164,36 @@ void MainWindow::on_RunTest_pushButton_clicked()
 
 }
 
+void MainWindow::generateLikwidPerfCommand()
+{
+    // Add user specified groups
+    QString perfString;
+    for (int i = 0; i < ui->ChosenPerfGroups_List->count(); ++i)
+    {
+        perfString += ("-g " + ui->ChosenPerfGroups_List->item(i)->text() + " ");
+    }
+
+    // Update overall likwid command
+    if (!perfString.isNull())
+    {
+        likwidPerfCommand_ = "likwid-perfctr -C 1 ";
+        likwidPerfCommand_ += perfString;
+    }
+    else
+        likwidPerfCommand_ = "";
+}
+
+void MainWindow::readCommandLineArgs()
+{
+    // Read Command Line Arguments from the Text Box if any
+    commandLineArgs_ = ui->CommandLineArgs_Text->toPlainText();
+}
+
 void MainWindow::executeUserApplication()
 {
     //TODO: Write in all of the likwid tools
-    QString runString = application_ + " 2>&1 | tee output.txt";
-    QString test = "likwid-perfscope -g ENERGY -C S0:7 -r 10 -t 500ms ";
+    QString runString = likwidPerfCommand_ + application_ + commandLineArgs_ + " 2>&1 | tee output.txt";
+    QString test = "likwid-perfscope -g ENERGY -C 1 -r 10 -t 500ms ";
     test += runString;
     //system(runString.toStdString().c_str());
     system(test.toStdString().c_str());
@@ -151,27 +223,32 @@ void MainWindow::executeUserApplication()
 
 void MainWindow::generateCPIStack()
 {
+    // TODO: Update the python post processing to accept data from the gui
+    // This may just have the python script parsing the data output.txt
+    // from this application and feeding it back.
+
+
     // Run Python Post Processing Script
     QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
     system(runString.toStdString().c_str());
 
     // Setup the image
     QImage image("../bin/Results/CPI_Stack.png");
-    if (item == nullptr)
-        item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+    if (item_ == nullptr)
+        item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
     else
     {
         // Remove the current item
-        scene->removeItem(item);
-        delete item;
+        scene_->removeItem(item_);
+        delete item_;
 
         // Build the new item
-        item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
     }
 
     // Set the scene and place the item
-    ui->CPI_Stack_GraphicsView->setScene(scene);
-    scene->addItem(item);
+    ui->CPI_Stack_GraphicsView->setScene(scene_);
+    scene_->addItem(item_);
 }
 
 void MainWindow::on_AddPerfGroup_pushButton_clicked()

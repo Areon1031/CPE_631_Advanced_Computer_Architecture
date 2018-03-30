@@ -36,13 +36,6 @@ public:
     // Constructor
     explicit MainWindow(QWidget *parent = 0);
 
-    // Execution Methods
-    void executeUserApplication();
-    void generateCPIStack();
-
-    // Perfscope thread
-    std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
-
     // Destructor
     ~MainWindow();
 
@@ -59,8 +52,27 @@ private:
     // Application File
     QString application_;
 
-    QGraphicsItem* item;
-    QGraphicsScene* scene;
+    // Command Line Arguments for Application
+    QString commandLineArgs_;
+
+    // Likwid String
+    QString likwidPerfCommand_;
+
+    QGraphicsItem* item_;
+    QGraphicsScene* scene_;
+
+    // Execution Methods
+    void generateLikwidPerfCommand();
+    void readCommandLineArgs();
+    void executeUserApplication();
+    void generateCPIStack();
+
+    // Likwid Utility
+    void getTopology();
+    void getPerformanceGroups();
+
+    // Perfscope thread
+    std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
 };
 
 #endif // MAINWINDOW_H

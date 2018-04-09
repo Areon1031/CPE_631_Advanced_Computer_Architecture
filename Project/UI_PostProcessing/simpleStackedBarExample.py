@@ -23,3 +23,30 @@ plt.plot()
 
 # Save the Figure
 plt.savefig("../bin/Results/CPI_Stack.png")
+
+
+
+# Output
+# Groupx:GroupName: CPI|x.xxxx|
+# saved in file cpiInfo.txt
+# Need to read in this file and parse each group
+# generate the stacked bar graph for the gui to use
+cpiFile = open("../build-QuickPerformance-Desktop-Debug/cpiInfo.txt", 'r')
+count = 0
+
+for line in cpiFile:
+    # Don't process the first line
+    if count != 0:
+        # Get the pieces of information
+        parseString = line.split(':') 
+
+        # Get the group from the info
+        group = parseString[1]
+
+        # Gather the CPI information if any
+        cpiString = parseString[2].split('|')
+        cpi = cpiString[1]
+    # end if
+
+    count += 1
+#end for

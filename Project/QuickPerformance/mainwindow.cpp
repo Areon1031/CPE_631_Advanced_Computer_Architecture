@@ -157,7 +157,8 @@ void MainWindow::on_RunTest_pushButton_clicked()
         executeUserApplication();
 
         // Update the CPI Stack Tab
-        generateCPIStack();
+        if (ui->ChosenPerfGroups_List->count() > 0)
+            generateCPIStack();
     }
     else
         ui->Application_Text->setText("Please Load an Application!");
@@ -192,7 +193,7 @@ void MainWindow::readCommandLineArgs()
 void MainWindow::executeUserApplication()
 {
     //TODO: Write in all of the likwid tools
-    QString runString = likwidPerfCommand_ + application_ + commandLineArgs_ + " 2>&1 | tee output.txt";
+    QString runString = likwidPerfCommand_ + application_ + " " + commandLineArgs_ + " 2>&1 | tee output.txt";
     QString test = "likwid-perfscope -g ENERGY -C 1 -r 10 -t 500ms ";
     test += runString;
     //system(runString.toStdString().c_str());
@@ -226,6 +227,48 @@ void MainWindow::generateCPIStack()
     // TODO: Update the python post processing to accept data from the gui
     // This may just have the python script parsing the data output.txt
     // from this application and feeding it back.
+
+    // Read CPI Information from the resulting file
+    QFile cpiInFile("./output.txt");
+    QFile cpiOutFile("./cpiInfo.txt");
+
+    // Error Check the file
+    if (!cpiInFile.open(QIODevice::ReadOnly))
+        QMessageBox::information(0, "info", cpiInFile.errorString());
+
+    if (!cpiOutFile.open(QIODevice::WriteOnly))
+        QMessageBox::information(0, "info", cpiOutFile.errorString());
+
+    // Convert file into stream to show it in text box
+    QTextStream cpiInStream(&cpiInFile);
+    cpiInStream.setCodec("UTF-8");
+
+    QTextStream cpiOutStream(&cpiOutFile);
+    cpiOutStream.setCodec("UTF-8");
+
+    // Read through each line grabbing the cpi information
+    // Read the data from the stream
+    while(!cpiInStream.atEnd())
+    {
+        // Grab the current performance macro and description
+        QString currLine = cpiInStream.readLine();
+        if (currLine.contains("group", Qt::CaseInsensitive))
+        {
+            // Grab the group name
+            QString group = currLine.remove(" ");
+            cpiOutStream << group << ": ";
+        }
+
+        if (currLine.contains("cpi", Qt::CaseInsensitive))
+        {
+            // Process the number after the comma
+            QString cpi = currLine.mid(4).remove(" ");
+            cpiOutStream << cpi << "\n";
+        }
+    }
+
+
+    // Have Python parse the data that was just written
 
 
     // Run Python Post Processing Script

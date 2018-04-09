@@ -13,6 +13,7 @@
 
 #include <likwid.h> // May not be necessary, remove later if needed
 #include <thread>
+#include <chrono>
 
 // Enumeration for Tabs
 enum QuickTabs
@@ -44,6 +45,8 @@ private slots:
     void on_RunTest_pushButton_clicked();
     void on_AddPerfGroup_pushButton_clicked();
     void on_RemovePerfGroup_pushButton_clicked();
+
+    void on_PerfGroups_List_doubleClicked(const QModelIndex &index);
 
 private:
     // Reference to the UI

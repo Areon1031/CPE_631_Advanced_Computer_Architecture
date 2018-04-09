@@ -177,7 +177,7 @@ void MainWindow::generateLikwidPerfCommand()
     // Update overall likwid command
     if (!perfString.isNull())
     {
-        likwidPerfCommand_ = "likwid-perfctr -C 1 ";
+        likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
         likwidPerfCommand_ += perfString;
     }
     else
@@ -220,6 +220,8 @@ void MainWindow::executeUserApplication()
 
     // Set the focus to the Application Output Tab
     ui->tabWidget->setCurrentIndex(QuickTabs::APP_OUT);
+
+    outputFile.close();
 }
 
 void MainWindow::generateCPIStack()
@@ -267,13 +269,16 @@ void MainWindow::generateCPIStack()
         }
     }
 
-
-    // Have Python parse the data that was just written
-
+    cpiInFile.close();
+    cpiOutFile.close();
 
     // Run Python Post Processing Script
-    QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
+    QString runString = "python ../UI_PostProcessing/genCPIStack.py";
+    //QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
     system(runString.toStdString().c_str());
+
+    // Give the image time to process
+    //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 
     // Setup the image
     QImage image("../bin/Results/CPI_Stack.png");
@@ -310,4 +315,9 @@ void MainWindow::on_RemovePerfGroup_pushButton_clicked()
     // Remove the current item
     if (ui->ChosenPerfGroups_List->count() > 0)
         delete ui->ChosenPerfGroups_List->item(ui->ChosenPerfGroups_List->currentIndex().row());
+}
+
+void MainWindow::on_PerfGroups_List_doubleClicked(const QModelIndex &index)
+{
+    on_AddPerfGroup_pushButton_clicked();
 }

@@ -30,32 +30,33 @@ groupList = list()
 
 # Loop through the file and parse the information
 for line in cpiFile:
-    # Don't process the first line
-    if count != 0:
-        # Get the pieces of information
-        parseString = line.split(':') 
+    # Don't process the first line if using perf-scope
+    #if count != 0:
+    # Get the pieces of information
+    parseString = line.split(':') 
 
-        # Get the group from the info
-        group = parseString[1]
+    # Get the group from the info
+    group = parseString[1]
 
-        # Create the group list for the legend
-        groupList.append(group)
+    # Create the group list for the legend
+    groupList.append(group)
 
-        # Gather the CPI information if any
-        cpiList = parseString[2].split('|')
+    # Gather the CPI information if any
+    cpiList = parseString[2].split('|')
 
-        # Don't use if CPI not reported
-        if cpiList[1].find('-') == -1:
-            cpiString = cpiList[1]
-        else:
-            cpiString = '0'
-        #end if
+    # Don't use if CPI not reported
+    if cpiList[1].find('-') == -1 and cpiList[1].find('nan') == -1:
+        cpiString = cpiList[1]
+    else:
+        cpiString = '0'
+    #end if
 
-        groupCPIList.append((group, float(cpiString)))
+    groupCPIList.append((group, float(cpiString)))
     #end if
     count += 1
 #end for
 
+print groupList
 print groupCPIList
 
 arrayList = list()

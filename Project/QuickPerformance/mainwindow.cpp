@@ -29,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Run likwid-perfctr -a to get performance groups
     getPerformanceGroups();
 
+    // Run likwid-perfctr -e to get performance metrics allowed on current machine
+    getPerformanceMetrics();
+
     // Setup CPI Stack Items
     item_ = nullptr;
     scene_ = new QGraphicsScene(this);
@@ -105,6 +108,51 @@ void MainWindow::getPerformanceGroups()
 
         // Add the current option to the list
         ui->PerfGroups_List->addItem(finalString);
+    }
+}
+
+void MainWindow::getPerformanceMetrics()
+{
+    // Execute likwid-perfctr -a to get performance groups
+    system("likwid-perfctr -e > perfMetrics.txt");
+    QFile perfMetricFile("./perfMetrics.txt");
+
+    // Error Check the file
+    if (!perfMetricFile.open(QIODevice::ReadOnly))
+        QMessageBox::information(0, "info", perfMetricFile.errorString());
+
+    bool readingCounters = true;
+    bool readingMetrics = false;
+
+    // Read the supported performance groups and populate the list
+    QTextStream perfInStream(&perfMetricFile);
+    perfInStream.setCodec("UTF-8");
+    perfInStream.readLine();
+    perfInStream.readLine();
+
+    // Read the data from the stream
+    while(!perfInStream.atEnd())
+    {
+        // Grab the current performance macro and description
+        QString perfMetric = perfInStream.readLine();
+        if (perfMetric.isEmpty())
+        {
+            readingCounters = false;
+            continue;
+        }
+        else if (!readingCounters && !readingMetrics)
+        {
+            perfInStream.readLine();
+
+            readingMetrics = true;
+            continue;
+        }
+
+        // Add the current option to the list
+        if (readingCounters)
+            ui->PerfCounters_List->addItem(perfMetric);
+        else
+            ui->PerfMetrics_List->addItem(perfMetric);
     }
 }
 
@@ -299,6 +347,7 @@ void MainWindow::generateCPIStack()
     scene_->addItem(item_);
 }
 
+// TODO: Think about removing the add and remove pushbuttons in place for just the double click method
 void MainWindow::on_AddPerfGroup_pushButton_clicked()
 {
     // Check if the item is already in the chosen list
@@ -308,6 +357,9 @@ void MainWindow::on_AddPerfGroup_pushButton_clicked()
 
     // If the item doesn't exist in the list then add it
     ui->ChosenPerfGroups_List->addItem(ui->PerfGroups_List->currentItem()->clone());
+
+    // Disable the perf metric because counters can already be taken up
+    ui->PerfMetric_Tab->setDisabled(true);
 }
 
 void MainWindow::on_RemovePerfGroup_pushButton_clicked()
@@ -315,9 +367,85 @@ void MainWindow::on_RemovePerfGroup_pushButton_clicked()
     // Remove the current item
     if (ui->ChosenPerfGroups_List->count() > 0)
         delete ui->ChosenPerfGroups_List->item(ui->ChosenPerfGroups_List->currentIndex().row());
+
+    if (ui->ChosenPerfGroups_List->count() == 0)
+        ui->PerfMetric_Tab->setDisabled(false);
 }
 
 void MainWindow::on_PerfGroups_List_doubleClicked(const QModelIndex &index)
 {
-    on_AddPerfGroup_pushButton_clicked();
+    // Check for valid index
+    if (index.isValid())
+        on_AddPerfGroup_pushButton_clicked();
+}
+
+void MainWindow::on_ChosenPerfGroups_List_doubleClicked(const QModelIndex &index)
+{
+    // Check for valid index
+    if (index.isValid())
+        on_RemovePerfGroup_pushButton_clicked();
+}
+
+void MainWindow::on_PerfCounters_List_doubleClicked(const QModelIndex &index)
+{
+    // Check for valid index
+    if (index.isValid())
+    {
+        // Check if the item is already in the chosen list
+        for (int i = 0; i < ui->ChosenPerfCounters_List->count(); ++i)
+            if (ui->ChosenPerfCounters_List->item(i)->text() == ui->PerfCounters_List->currentItem()->text())
+                return;
+
+        // If the item doesn't exist in the list then add it
+        ui->ChosenPerfCounters_List->addItem(ui->PerfCounters_List->currentItem()->clone());
+
+        // Disable the perf group because counters can already be taken up
+        ui->PerfGroup_Tab->setDisabled(true);
+    }
+}
+
+void MainWindow::on_PerfMetrics_List_doubleClicked(const QModelIndex &index)
+{
+    // Check for valid index
+    if (index.isValid())
+    {
+        // Check if the item is already in the chosen list
+        for (int i = 0; i < ui->ChosenPerfMetrics_List->count(); ++i)
+            if (ui->ChosenPerfMetrics_List->item(i)->text() == ui->PerfMetrics_List->currentItem()->text())
+                return;
+
+        // If the item doesn't exist in the list then add it
+        ui->ChosenPerfMetrics_List->addItem(ui->PerfMetrics_List->currentItem()->clone());
+
+        // Disable the perf group because counters can already be taken up
+        ui->PerfGroup_Tab->setDisabled(true);
+    }
+}
+
+void MainWindow::on_ChosenPerfCounters_List_doubleClicked(const QModelIndex &index)
+{
+    // Check for valid index
+    if (index.isValid())
+    {
+        // Remove the current item
+        if (ui->ChosenPerfCounters_List->count() > 0)
+            delete ui->ChosenPerfCounters_List->item(ui->ChosenPerfCounters_List->currentIndex().row());
+
+        if ((ui->ChosenPerfCounters_List->count() == 0) && (ui->ChosenPerfMetrics_List->count() == 0))
+            ui->PerfGroup_Tab->setDisabled(false);
+    }
+}
+
+void MainWindow::on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &index)
+{
+    // Check for valid index
+    if (index.isValid())
+    {
+        // Remove the current item
+        if (ui->ChosenPerfMetrics_List->count() > 0)
+            delete ui->ChosenPerfMetrics_List->item(ui->ChosenPerfMetrics_List->currentIndex().row());
+
+        if ((ui->ChosenPerfCounters_List->count() == 0) && (ui->ChosenPerfMetrics_List->count() == 0))
+            ui->PerfGroup_Tab->setDisabled(false);
+    }
 }

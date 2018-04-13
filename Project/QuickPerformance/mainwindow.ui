@@ -89,7 +89,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Topology_Tab">
      <attribute name="title">
@@ -183,10 +183,128 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="MemoryUsage_Tab">
+    <widget class="QWidget" name="PerfMetric_Tab">
      <attribute name="title">
-      <string>Memory Usage</string>
+      <string>Performance Metric Selection</string>
      </attribute>
+     <widget class="QLabel" name="PerfCounters_Label">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>157</y>
+        <width>161</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Performance Counters</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="PerfCounters_List">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>180</y>
+        <width>431</width>
+        <height>141</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="ChosenPerfMetrics_Label">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>0</y>
+        <width>200</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Chosen Performance Metrics</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="AddPerfMetric_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>110</y>
+        <width>110</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add Item</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="ChosenPerfMetrics_List">
+      <property name="geometry">
+       <rect>
+        <x>578</x>
+        <y>21</y>
+        <width>231</width>
+        <height>301</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="RemovePerfMetric_pushButton">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>160</y>
+        <width>110</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remove Item</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="PerfMetrics_List">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>431</width>
+        <height>141</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PerfMetrics_Label">
+      <property name="geometry">
+       <rect>
+        <x>1</x>
+        <y>-3</y>
+        <width>161</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Performance Metrics</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="ChosenPerfCounters_List">
+      <property name="geometry">
+       <rect>
+        <x>808</x>
+        <y>20</y>
+        <width>231</width>
+        <height>301</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="ChosenPerfCoutners_Label">
+      <property name="geometry">
+       <rect>
+        <x>817</x>
+        <y>-1</y>
+        <width>210</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Chosen Performance Counters</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="CPIStack_Tab">
      <attribute name="title">

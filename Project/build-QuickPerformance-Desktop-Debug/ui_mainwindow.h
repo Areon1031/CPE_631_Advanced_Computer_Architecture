@@ -48,7 +48,17 @@ public:
     QListWidget *ChosenPerfGroups_List;
     QPushButton *AddPerfGroup_pushButton;
     QPushButton *RemovePerfGroup_pushButton;
-    QWidget *MemoryUsage_Tab;
+    QWidget *PerfMetric_Tab;
+    QLabel *PerfCounters_Label;
+    QListWidget *PerfCounters_List;
+    QLabel *ChosenPerfMetrics_Label;
+    QPushButton *AddPerfMetric_pushButton;
+    QListWidget *ChosenPerfMetrics_List;
+    QPushButton *RemovePerfMetric_pushButton;
+    QListWidget *PerfMetrics_List;
+    QLabel *PerfMetrics_Label;
+    QListWidget *ChosenPerfCounters_List;
+    QLabel *ChosenPerfCoutners_Label;
     QWidget *CPIStack_Tab;
     CustomView *CPI_Stack_GraphicsView;
     QWidget *ApplicationOutput_Tab;
@@ -112,9 +122,39 @@ public:
         RemovePerfGroup_pushButton->setObjectName(QStringLiteral("RemovePerfGroup_pushButton"));
         RemovePerfGroup_pushButton->setGeometry(QRect(450, 160, 110, 30));
         tabWidget->addTab(PerfGroup_Tab, QString());
-        MemoryUsage_Tab = new QWidget();
-        MemoryUsage_Tab->setObjectName(QStringLiteral("MemoryUsage_Tab"));
-        tabWidget->addTab(MemoryUsage_Tab, QString());
+        PerfMetric_Tab = new QWidget();
+        PerfMetric_Tab->setObjectName(QStringLiteral("PerfMetric_Tab"));
+        PerfCounters_Label = new QLabel(PerfMetric_Tab);
+        PerfCounters_Label->setObjectName(QStringLiteral("PerfCounters_Label"));
+        PerfCounters_Label->setGeometry(QRect(1, 157, 161, 20));
+        PerfCounters_List = new QListWidget(PerfMetric_Tab);
+        PerfCounters_List->setObjectName(QStringLiteral("PerfCounters_List"));
+        PerfCounters_List->setGeometry(QRect(0, 180, 431, 141));
+        ChosenPerfMetrics_Label = new QLabel(PerfMetric_Tab);
+        ChosenPerfMetrics_Label->setObjectName(QStringLiteral("ChosenPerfMetrics_Label"));
+        ChosenPerfMetrics_Label->setGeometry(QRect(590, 0, 200, 20));
+        AddPerfMetric_pushButton = new QPushButton(PerfMetric_Tab);
+        AddPerfMetric_pushButton->setObjectName(QStringLiteral("AddPerfMetric_pushButton"));
+        AddPerfMetric_pushButton->setGeometry(QRect(450, 110, 110, 30));
+        ChosenPerfMetrics_List = new QListWidget(PerfMetric_Tab);
+        ChosenPerfMetrics_List->setObjectName(QStringLiteral("ChosenPerfMetrics_List"));
+        ChosenPerfMetrics_List->setGeometry(QRect(578, 21, 231, 301));
+        RemovePerfMetric_pushButton = new QPushButton(PerfMetric_Tab);
+        RemovePerfMetric_pushButton->setObjectName(QStringLiteral("RemovePerfMetric_pushButton"));
+        RemovePerfMetric_pushButton->setGeometry(QRect(450, 160, 110, 30));
+        PerfMetrics_List = new QListWidget(PerfMetric_Tab);
+        PerfMetrics_List->setObjectName(QStringLiteral("PerfMetrics_List"));
+        PerfMetrics_List->setGeometry(QRect(0, 20, 431, 141));
+        PerfMetrics_Label = new QLabel(PerfMetric_Tab);
+        PerfMetrics_Label->setObjectName(QStringLiteral("PerfMetrics_Label"));
+        PerfMetrics_Label->setGeometry(QRect(1, -3, 161, 20));
+        ChosenPerfCounters_List = new QListWidget(PerfMetric_Tab);
+        ChosenPerfCounters_List->setObjectName(QStringLiteral("ChosenPerfCounters_List"));
+        ChosenPerfCounters_List->setGeometry(QRect(808, 20, 231, 301));
+        ChosenPerfCoutners_Label = new QLabel(PerfMetric_Tab);
+        ChosenPerfCoutners_Label->setObjectName(QStringLiteral("ChosenPerfCoutners_Label"));
+        ChosenPerfCoutners_Label->setGeometry(QRect(817, -1, 210, 20));
+        tabWidget->addTab(PerfMetric_Tab, QString());
         CPIStack_Tab = new QWidget();
         CPIStack_Tab->setObjectName(QStringLiteral("CPIStack_Tab"));
         CPI_Stack_GraphicsView = new CustomView(CPIStack_Tab);
@@ -149,7 +189,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -168,7 +208,13 @@ public:
         AddPerfGroup_pushButton->setText(QApplication::translate("MainWindow", "Add Item", Q_NULLPTR));
         RemovePerfGroup_pushButton->setText(QApplication::translate("MainWindow", "Remove Item", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(PerfGroup_Tab), QApplication::translate("MainWindow", "Performance Group Selection", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(MemoryUsage_Tab), QApplication::translate("MainWindow", "Memory Usage", Q_NULLPTR));
+        PerfCounters_Label->setText(QApplication::translate("MainWindow", "Performance Counters", Q_NULLPTR));
+        ChosenPerfMetrics_Label->setText(QApplication::translate("MainWindow", "Chosen Performance Metrics", Q_NULLPTR));
+        AddPerfMetric_pushButton->setText(QApplication::translate("MainWindow", "Add Item", Q_NULLPTR));
+        RemovePerfMetric_pushButton->setText(QApplication::translate("MainWindow", "Remove Item", Q_NULLPTR));
+        PerfMetrics_Label->setText(QApplication::translate("MainWindow", "Performance Metrics", Q_NULLPTR));
+        ChosenPerfCoutners_Label->setText(QApplication::translate("MainWindow", "Chosen Performance Counters", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(PerfMetric_Tab), QApplication::translate("MainWindow", "Performance Metric Selection", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
         CommandLineArgs_Label->setText(QApplication::translate("MainWindow", "Command Line Arguments", Q_NULLPTR));

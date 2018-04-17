@@ -6,373 +6,339 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
-    <height>568</height>
+    <width>1082</width>
+    <height>686</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>1</horstretch>
+    <verstretch>1</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextEdit" name="Application_Text">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>30</y>
-      <width>281</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Application_Label">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>10</y>
-      <width>161</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Application Under Test</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ApplicationLoad_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>980</x>
-      <y>31</y>
-      <width>89</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Load</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="RunTest_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>980</x>
-      <y>120</y>
-      <width>89</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Run Test</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="Logo">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>261</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>150</y>
-      <width>1041</width>
-      <height>351</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="Topology_Tab">
-     <attribute name="title">
-      <string>Architecture Topology</string>
-     </attribute>
-     <widget class="QTextBrowser" name="Topology_Text">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1031</width>
-        <height>321</height>
-       </rect>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+     <horstretch>1</horstretch>
+     <verstretch>1</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_8">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
+      <property name="minimumSize">
+       <size>
+        <width>260</width>
+        <height>160</height>
+       </size>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="Logo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-    </widget>
-    <widget class="QWidget" name="PerfGroup_Tab">
-     <attribute name="title">
-      <string>Performance Group Selection</string>
-     </attribute>
-     <widget class="QListWidget" name="PerfGroups_List">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>431</width>
-        <height>301</height>
-       </rect>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="Application_Label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>161</width>
+           <height>17</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Application Under Test</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTextEdit" name="Application_Text">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>281</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="ApplicationLoad_pushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>89</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Load</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="CommandLineArgs_Label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>190</width>
+           <height>17</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Command Line Arguments</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QTextEdit" name="CommandLineArgs_Text">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>281</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="acceptRichText">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="RunTest_pushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>89</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Run Test</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLabel" name="Application_Label_2">
-      <property name="geometry">
-       <rect>
-        <x>1</x>
-        <y>-3</y>
-        <width>161</width>
-        <height>20</height>
-       </rect>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
-      <property name="text">
-       <string>Performance Groups</string>
+      <property name="currentIndex">
+       <number>0</number>
       </property>
+      <widget class="QWidget" name="Topology_Tab">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="title">
+        <string>Architecture Topology</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QTextBrowser" name="Topology_Text"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="PerfGroup_Tab">
+       <attribute name="title">
+        <string>Performance Group Selection</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="QLabel" name="Application_Label_2">
+          <property name="text">
+           <string>Performance Groups</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="Application_Label_3">
+          <property name="text">
+           <string>Chosen Performance Groups</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QListWidget" name="PerfGroups_List"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QListWidget" name="ChosenPerfGroups_List"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="PerfMetric_Tab">
+       <attribute name="title">
+        <string>Performance Metric Selection</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="PerfMetrics_Label">
+          <property name="text">
+           <string>Performance Metrics</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="ChosenPerfMetrics_Label">
+          <property name="text">
+           <string>Chosen Performance Metrics</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="ChosenPerfCoutners_Label">
+          <property name="text">
+           <string>Chosen Performance Counters</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QListWidget" name="PerfMetrics_List"/>
+        </item>
+        <item row="1" column="1" rowspan="3">
+         <widget class="QListWidget" name="ChosenPerfMetrics_List"/>
+        </item>
+        <item row="1" column="2" rowspan="3">
+         <widget class="QListWidget" name="ChosenPerfCounters_List"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="PerfCounters_Label">
+          <property name="text">
+           <string>Performance Counters</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QListWidget" name="PerfCounters_List"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="CPIStack_Tab">
+       <attribute name="title">
+        <string>CPI Stack</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <widget class="CustomView" name="CPI_Stack_GraphicsView"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="ApplicationOutput_Tab">
+       <attribute name="title">
+        <string>Application Output</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_7">
+        <item row="0" column="0">
+         <widget class="QTextBrowser" name="ApplicationOutput_Text"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
-     <widget class="QLabel" name="Application_Label_3">
-      <property name="geometry">
-       <rect>
-        <x>830</x>
-        <y>0</y>
-        <width>200</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Chosen Performance Groups</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="ChosenPerfGroups_List">
-      <property name="geometry">
-       <rect>
-        <x>578</x>
-        <y>21</y>
-        <width>461</width>
-        <height>301</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="AddPerfGroup_pushButton">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>110</y>
-        <width>110</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Add Item</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="RemovePerfGroup_pushButton">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>160</y>
-        <width>110</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Remove Item</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="PerfMetric_Tab">
-     <attribute name="title">
-      <string>Performance Metric Selection</string>
-     </attribute>
-     <widget class="QLabel" name="PerfCounters_Label">
-      <property name="geometry">
-       <rect>
-        <x>1</x>
-        <y>157</y>
-        <width>161</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Performance Counters</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="PerfCounters_List">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>180</y>
-        <width>431</width>
-        <height>141</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="ChosenPerfMetrics_Label">
-      <property name="geometry">
-       <rect>
-        <x>590</x>
-        <y>0</y>
-        <width>200</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Chosen Performance Metrics</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="AddPerfMetric_pushButton">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>110</y>
-        <width>110</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Add Item</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="ChosenPerfMetrics_List">
-      <property name="geometry">
-       <rect>
-        <x>578</x>
-        <y>21</y>
-        <width>231</width>
-        <height>301</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="RemovePerfMetric_pushButton">
-      <property name="geometry">
-       <rect>
-        <x>450</x>
-        <y>160</y>
-        <width>110</width>
-        <height>30</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Remove Item</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="PerfMetrics_List">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>20</y>
-        <width>431</width>
-        <height>141</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="PerfMetrics_Label">
-      <property name="geometry">
-       <rect>
-        <x>1</x>
-        <y>-3</y>
-        <width>161</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Performance Metrics</string>
-      </property>
-     </widget>
-     <widget class="QListWidget" name="ChosenPerfCounters_List">
-      <property name="geometry">
-       <rect>
-        <x>808</x>
-        <y>20</y>
-        <width>231</width>
-        <height>301</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="ChosenPerfCoutners_Label">
-      <property name="geometry">
-       <rect>
-        <x>817</x>
-        <y>-1</y>
-        <width>210</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Chosen Performance Counters</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="CPIStack_Tab">
-     <attribute name="title">
-      <string>CPI Stack</string>
-     </attribute>
-     <widget class="CustomView" name="CPI_Stack_GraphicsView">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1041</width>
-        <height>321</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="ApplicationOutput_Tab">
-     <attribute name="title">
-      <string>Application Output</string>
-     </attribute>
-     <widget class="QTextBrowser" name="ApplicationOutput_Text">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1041</width>
-        <height>321</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="CommandLineArgs_Label">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>70</y>
-      <width>190</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Command Line Arguments</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="CommandLineArgs_Text">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>90</y>
-      <width>281</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>false</bool>
-    </property>
-    <property name="acceptRichText">
-     <bool>true</bool>
-    </property>
-   </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1080</width>
+     <width>1082</width>
      <height>22</height>
     </rect>
    </property>
@@ -386,6 +352,17 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

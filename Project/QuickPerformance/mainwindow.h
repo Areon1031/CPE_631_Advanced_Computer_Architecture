@@ -44,8 +44,6 @@ private slots:
     // Push Button Control
     void on_ApplicationLoad_pushButton_clicked();
     void on_RunTest_pushButton_clicked();
-    void on_AddPerfGroup_pushButton_clicked();
-    void on_RemovePerfGroup_pushButton_clicked();
 
     // Double Click (Move Data)
     void on_PerfGroups_List_doubleClicked(const QModelIndex &index);

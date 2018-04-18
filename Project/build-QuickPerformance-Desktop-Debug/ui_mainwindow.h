@@ -72,6 +72,16 @@ public:
     QListWidget *ChosenPerfCounters_List;
     QLabel *PerfCounters_Label;
     QListWidget *PerfCounters_List;
+    QWidget *Features_Tab;
+    QGridLayout *gridLayout_11;
+    QTextBrowser *FeatureOperations_Text;
+    QListWidget *Features_List;
+    QGroupBox *groupBox;
+    QGridLayout *gridLayout_10;
+    QPushButton *FeatureEnable_pushButton;
+    QPushButton *FeatureDisable_pushButton;
+    QLabel *FeaturesList_Label;
+    QLabel *ChosenPerfCoutners_Label_2;
     QWidget *CPIStack_Tab;
     QGridLayout *gridLayout_6;
     CustomView *CPI_Stack_GraphicsView;
@@ -343,6 +353,78 @@ public:
         gridLayout->addWidget(PerfCounters_List, 3, 0, 1, 1);
 
         tabWidget->addTab(PerfMetric_Tab, QString());
+        Features_Tab = new QWidget();
+        Features_Tab->setObjectName(QStringLiteral("Features_Tab"));
+        gridLayout_11 = new QGridLayout(Features_Tab);
+        gridLayout_11->setSpacing(6);
+        gridLayout_11->setContentsMargins(11, 11, 11, 11);
+        gridLayout_11->setObjectName(QStringLiteral("gridLayout_11"));
+        FeatureOperations_Text = new QTextBrowser(Features_Tab);
+        FeatureOperations_Text->setObjectName(QStringLiteral("FeatureOperations_Text"));
+        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy7.setHorizontalStretch(1);
+        sizePolicy7.setVerticalStretch(1);
+        sizePolicy7.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
+        FeatureOperations_Text->setSizePolicy(sizePolicy7);
+
+        gridLayout_11->addWidget(FeatureOperations_Text, 1, 2, 1, 1);
+
+        Features_List = new QListWidget(Features_Tab);
+        Features_List->setObjectName(QStringLiteral("Features_List"));
+        sizePolicy7.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
+        Features_List->setSizePolicy(sizePolicy7);
+
+        gridLayout_11->addWidget(Features_List, 1, 0, 1, 1);
+
+        groupBox = new QGroupBox(Features_Tab);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        sizePolicy6.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy6);
+        gridLayout_10 = new QGridLayout(groupBox);
+        gridLayout_10->setSpacing(6);
+        gridLayout_10->setContentsMargins(11, 11, 11, 11);
+        gridLayout_10->setObjectName(QStringLiteral("gridLayout_10"));
+        FeatureEnable_pushButton = new QPushButton(groupBox);
+        FeatureEnable_pushButton->setObjectName(QStringLiteral("FeatureEnable_pushButton"));
+        sizePolicy2.setHeightForWidth(FeatureEnable_pushButton->sizePolicy().hasHeightForWidth());
+        FeatureEnable_pushButton->setSizePolicy(sizePolicy2);
+        FeatureEnable_pushButton->setMaximumSize(QSize(120, 30));
+
+        gridLayout_10->addWidget(FeatureEnable_pushButton, 0, 0, 1, 1);
+
+        FeatureDisable_pushButton = new QPushButton(groupBox);
+        FeatureDisable_pushButton->setObjectName(QStringLiteral("FeatureDisable_pushButton"));
+        sizePolicy2.setHeightForWidth(FeatureDisable_pushButton->sizePolicy().hasHeightForWidth());
+        FeatureDisable_pushButton->setSizePolicy(sizePolicy2);
+        FeatureDisable_pushButton->setMaximumSize(QSize(120, 30));
+
+        gridLayout_10->addWidget(FeatureDisable_pushButton, 1, 0, 1, 1);
+
+
+        gridLayout_11->addWidget(groupBox, 0, 1, 2, 1);
+
+        FeaturesList_Label = new QLabel(Features_Tab);
+        FeaturesList_Label->setObjectName(QStringLiteral("FeaturesList_Label"));
+        QSizePolicy sizePolicy8(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
+        FeaturesList_Label->setSizePolicy(sizePolicy8);
+        FeaturesList_Label->setMinimumSize(QSize(343, 17));
+        FeaturesList_Label->setMaximumSize(QSize(343, 17));
+
+        gridLayout_11->addWidget(FeaturesList_Label, 0, 0, 1, 1);
+
+        ChosenPerfCoutners_Label_2 = new QLabel(Features_Tab);
+        ChosenPerfCoutners_Label_2->setObjectName(QStringLiteral("ChosenPerfCoutners_Label_2"));
+        sizePolicy8.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
+        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy8);
+        ChosenPerfCoutners_Label_2->setMinimumSize(QSize(343, 17));
+        ChosenPerfCoutners_Label_2->setMaximumSize(QSize(343, 17));
+
+        gridLayout_11->addWidget(ChosenPerfCoutners_Label_2, 0, 2, 1, 1);
+
+        tabWidget->addTab(Features_Tab, QString());
         CPIStack_Tab = new QWidget();
         CPIStack_Tab->setObjectName(QStringLiteral("CPIStack_Tab"));
         gridLayout_6 = new QGridLayout(CPIStack_Tab);
@@ -387,7 +469,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -416,6 +498,12 @@ public:
         ChosenPerfCoutners_Label->setText(QApplication::translate("MainWindow", "Chosen Performance Counters", Q_NULLPTR));
         PerfCounters_Label->setText(QApplication::translate("MainWindow", "Performance Counters", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(PerfMetric_Tab), QApplication::translate("MainWindow", "Performance Metric Selection", Q_NULLPTR));
+        groupBox->setTitle(QString());
+        FeatureEnable_pushButton->setText(QApplication::translate("MainWindow", "Enable", Q_NULLPTR));
+        FeatureDisable_pushButton->setText(QApplication::translate("MainWindow", "Disable", Q_NULLPTR));
+        FeaturesList_Label->setText(QApplication::translate("MainWindow", "Features List", Q_NULLPTR));
+        ChosenPerfCoutners_Label_2->setText(QApplication::translate("MainWindow", "Operation Results", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(Features_Tab), QApplication::translate("MainWindow", "Feature Control", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", Q_NULLPTR));

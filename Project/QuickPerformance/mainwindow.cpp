@@ -35,6 +35,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Run likwid-perfctr -e to get performance metrics allowed on current machine
     getPerformanceMetrics();
 
+    // Get CPU Feature List
+    getFeatureList();
+
     // Setup CPI Stack Items
     item_ = nullptr;
     scene_ = new QGraphicsScene(this);
@@ -159,6 +162,65 @@ void MainWindow::getPerformanceMetrics()
     }
 }
 
+void MainWindow::getFeatureList()
+{
+    // Clear the current features list
+    ui->Features_List->clear();
+
+    // Execute likwid-perfctr -a to get performance groups
+    system("likwid-features -c 0 -l > cpuFeatures.txt");
+    QFile featuresFile("./cpuFeatures.txt");
+
+    // Error Check the file
+    if (!featuresFile.open(QIODevice::ReadOnly))
+        QMessageBox::information(0, "info", featuresFile.errorString());
+
+    // Read the supported performance groups and populate the list
+    QTextStream featureInStream(&featuresFile);
+    featureInStream.setCodec("UTF-8");
+    featureInStream.readLine();
+
+    // Read the data from the stream
+    while(!featureInStream.atEnd())
+    {
+        // Grab the current performance macro and description
+        QStringList currFeature = featureInStream.readLine().split(' ');
+        QMutableListIterator<QString> it(currFeature);
+        while (it.hasNext())
+        {
+            it.next();
+            it.value() = it.value().trimmed();
+            if (it.value().length() == 0)
+                it.remove();
+        }
+
+        QString finalFeature = currFeature.join("\t\t");
+
+        // Add the current option to the list
+        ui->Features_List->addItem(finalFeature);
+    }
+}
+
+void MainWindow::updateFeaturesResultOutput()
+{
+    // Open the features results file
+    QFile featuresFile("./featuresListResults.txt");
+
+    // Error Check the file
+    if (!featuresFile.open(QIODevice::ReadOnly))
+        QMessageBox::information(0, "info", featuresFile.errorString());
+
+    // Read the supported performance groups and populate the list
+    QTextStream featureInStream(&featuresFile);
+    featureInStream.setCodec("UTF-8");
+
+    ui->FeatureOperations_Text->setText(featureInStream.readAll());
+}
+
+
+/*************************************************************
+ * SLOTS
+ * **********************************************************/
 void MainWindow::on_ApplicationLoad_pushButton_clicked()
 {
     // Prompt the user to find the application
@@ -182,11 +244,6 @@ void MainWindow::on_ApplicationLoad_pushButton_clicked()
     // Update member and display choice to user
     application_ = fileName;
     ui->Application_Text->setText(fileName);
-}
-
-void doSomething()
-{
-    return;
 }
 
 void MainWindow::on_RunTest_pushButton_clicked()
@@ -271,7 +328,7 @@ void MainWindow::readCommandLineArgs()
 void MainWindow::executeUserApplication()
 {
     //TODO: Write in all of the likwid tools
-    QString runString = likwidPerfCommand_ + application_ + " " + commandLineArgs_ + " 2>&1 | tee output.txt";
+    QString runString = likwidPerfCommand_ + application_ + " " + commandLineArgs_ + " --stats " + " 2>&1 | tee output.txt";
     //QString test = "likwid-perfscope -g ENERGY -C 1 -r 10 -t 500ms ";
     //test += runString;
     system(runString.toStdString().c_str());
@@ -474,6 +531,9 @@ void MainWindow::on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &inde
 
 void MainWindow::on_StethoscopeMode_pushButton_clicked()
 {
+    // Change color of the button to notify the user of which mode
+    // White = Normal
+    // Green = Stethoscope Mode
     QPalette pal = QPalette();
     pal.setColor(QPalette::Button, (stethoscopeMode_ ? Qt::white : Qt::green));
     ui->StethoscopeMode_pushButton->setPalette(pal);
@@ -487,7 +547,7 @@ void MainWindow::on_StethoscopeMode_pushButton_clicked()
         ui->RefreshRate_Text->setReadOnly(true);
     }
     else
-    {
+    { // will be turning it on so deactive other widgets
         ui->PerfGroup_Tab->setDisabled(true);
         ui->PerfMetric_Tab->setDisabled(true);
         ui->CPIStack_Tab->setDisabled(true);
@@ -496,4 +556,35 @@ void MainWindow::on_StethoscopeMode_pushButton_clicked()
 
     // Invert the flag
     stethoscopeMode_ = !stethoscopeMode_;
+}
+
+void MainWindow::enableFeature(bool enable)
+{
+    QStringList currFeature = ui->Features_List->currentItem()->text().split(' ');
+    if (currFeature.length() == 0)
+        return;
+
+    QString feature = currFeature.at(0);
+    QString command;
+    if (enable)
+        command = "likwid-features -c 0 -e " + feature + " > featuresListResults.txt";
+    else
+        command = "likwid-features -c 0 -d " + feature + " > featuresListResults.txt";
+
+    // Execute the command
+    system(command.toStdString().c_str());
+
+    // Update the list
+    getFeatureList();
+    updateFeaturesResultOutput();
+}
+
+void MainWindow::on_FeatureEnable_pushButton_clicked()
+{
+    enableFeature(true);
+}
+
+void MainWindow::on_FeatureDisable_pushButton_clicked()
+{
+    enableFeature(false);
 }

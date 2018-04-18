@@ -56,6 +56,10 @@ private slots:
 
     void on_StethoscopeMode_pushButton_clicked();
 
+    void on_FeatureEnable_pushButton_clicked();
+
+    void on_FeatureDisable_pushButton_clicked();
+
 private:
     // Reference to the UI
     Ui::MainWindow *ui;
@@ -85,9 +89,18 @@ private:
     void getTopology();
     void getPerformanceGroups();
     void getPerformanceMetrics();
+    void getFeatureList();
+
+    // Likwid Perfscope
+    void executeLikwidPerfScope();
+
+    // Features
+    void updateFeaturesResultOutput();
+    void enableFeature(bool enable);
 
     // Perfscope thread
     std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
+    std::thread spawnPerfScope(){ return std::thread( [this] { this->executeLikwidPerfScope(); } ); }
 };
 
 #endif // MAINWINDOW_H

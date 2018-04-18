@@ -168,7 +168,7 @@ void MainWindow::getFeatureList()
     ui->Features_List->clear();
 
     // Execute likwid-perfctr -a to get performance groups
-    system("likwid-features -c 1 -l > cpuFeatures.txt");
+    system("likwid-features -c 0 -l > cpuFeatures.txt");
     QFile featuresFile("./cpuFeatures.txt");
 
     // Error Check the file
@@ -304,7 +304,7 @@ void MainWindow::generateLikwidPerfCommand()
             // Update overall likwid command
             if (!perfString.isNull())
             {
-                likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+                likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
                 likwidPerfCommand_ += perfString;
             }
             else
@@ -329,7 +329,7 @@ void MainWindow::generateLikwidPerfCommand()
             // Update overall likwid command
             if (!perfString.isNull())
             {
-                likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+                likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
                 likwidPerfCommand_ += perfString;
             }
             else
@@ -354,7 +354,7 @@ void MainWindow::generateLikwidPerfCommand()
 //        // Update overall likwid command
 //        if (!perfString.isNull())
 //        {
-//            likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+//            likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
 //            likwidPerfCommand_ += perfString;
 //        }
     }
@@ -370,7 +370,7 @@ void MainWindow::executeUserApplication()
 {
     //TODO: Write in all of the likwid tools
     QString runString = likwidPerfCommand_ + application_ + " " + commandLineArgs_ + " 2>&1 | tee output.txt";
-    //QString test = "likwid-perfscope -g ENERGY -C 1 -r 10 -t 500ms ";
+    //QString test = "likwid-perfscope -g ENERGY -C 0 -r 10 -t 500ms ";
     //test += runString;
     system(runString.toStdString().c_str());
     //system(test.toStdString().c_str());
@@ -620,9 +620,9 @@ void MainWindow::enableFeature(bool enable)
     QString feature = currFeature.at(0);
     QString command;
     if (enable)
-        command = "likwid-features -c 1 -e " + feature + " > featuresListResults.txt";
+        command = "likwid-features -c 0 -e " + feature + " > featuresListResults.txt";
     else
-        command = "likwid-features -c 1 -d " + feature + " > featuresListResults.txt";
+        command = "likwid-features -c 0 -d " + feature + " > featuresListResults.txt";
 
     // Execute the command
     system(command.toStdString().c_str());

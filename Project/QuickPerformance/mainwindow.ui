@@ -31,7 +31,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout_8">
     <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox_2">
+     <widget class="QGroupBox" name="Logo_Group">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -77,7 +77,100 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QGroupBox" name="groupBox">
+     <widget class="QGroupBox" name="Stethoscope_Group">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>191</width>
+        <height>131</height>
+       </size>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_9">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="StethoscopeMode_pushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Stethoscope Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="RefreshRate_Label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>161</width>
+           <height>17</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Refresh Rate (ms)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+        <widget class="QTextEdit" name="RefreshRate_Text">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>31</height>
+          </size>
+         </property>
+         <property name="lineWrapMode">
+          <enum>QTextEdit::NoWrap</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+         </property>
+         <property name="placeholderText">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>RefreshRate_Text</zorder>
+      <zorder>StethoscopeMode_pushButton</zorder>
+      <zorder>RefreshRate_Label</zorder>
+      <zorder>RefreshRate_Text</zorder>
+      <zorder>StethoscopeMode_pushButton</zorder>
+      <zorder>RefreshRate_Label</zorder>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="Application_Group">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -120,6 +213,12 @@
            <width>281</width>
            <height>31</height>
           </size>
+         </property>
+         <property name="lineWrapMode">
+          <enum>QTextEdit::NoWrap</enum>
+         </property>
+         <property name="lineWrapColumnOrWidth">
+          <number>0</number>
          </property>
          <property name="readOnly">
           <bool>true</bool>
@@ -178,6 +277,9 @@
            <height>31</height>
           </size>
          </property>
+         <property name="lineWrapMode">
+          <enum>QTextEdit::NoWrap</enum>
+         </property>
          <property name="readOnly">
           <bool>false</bool>
          </property>
@@ -208,7 +310,7 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="0" colspan="2">
+    <item row="1" column="0" colspan="3">
      <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -217,7 +319,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Topology_Tab">
        <property name="sizePolicy">

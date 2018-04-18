@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //this->setAutoFillBackground(true);
     //this->setPalette(pal);
 
+    // Initially don't start in this mode
+    stethoscopeMode_ = false;
+
     // Setup the Logo
     QPixmap logo("../bin/Logo/UAH_Logo.png");
     ui->Logo->setPixmap(logo);
@@ -203,6 +206,7 @@ void MainWindow::on_RunTest_pushButton_clicked()
 
         // Execute the user application
         executeUserApplication();
+        //spawn();
 
         // Update the CPI Stack Tab
         if (ui->ChosenPerfGroups_List->count() > 0)
@@ -217,19 +221,45 @@ void MainWindow::generateLikwidPerfCommand()
 {
     // Add user specified groups
     QString perfString;
-    for (int i = 0; i < ui->ChosenPerfGroups_List->count(); ++i)
+    if (!stethoscopeMode_)
     {
-        perfString += ("-g " + ui->ChosenPerfGroups_List->item(i)->text() + " ");
-    }
+        for (int i = 0; i < ui->ChosenPerfGroups_List->count(); ++i)
+        {
+            perfString += ("-g " + ui->ChosenPerfGroups_List->item(i)->text() + " ");
+        }
 
-    // Update overall likwid command
-    if (!perfString.isNull())
-    {
-        likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
-        likwidPerfCommand_ += perfString;
+        // Update overall likwid command
+        if (!perfString.isNull())
+        {
+            likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+            likwidPerfCommand_ += perfString;
+        }
+        else
+            likwidPerfCommand_ = "";
     }
     else
-        likwidPerfCommand_ = "";
+    {
+        if (ui->ChosenPerfGroups_List->count() > 0)
+            perfString += ("-g " + ui->ChosenPerfGroups_List->item(0)->text());
+        else
+            perfString += ("-g " + ui->PerfGroups_List->item(0)->text());
+
+        perfString += " ";
+
+        QString refreshRateString = ui->RefreshRate_Text->toPlainText().remove("");
+        if (refreshRateString.isEmpty())
+            perfString += "-S 500ms ";
+        else
+            perfString += "-S " + refreshRateString + "ms ";
+
+        // Update overall likwid command
+        if (!perfString.isNull())
+        {
+            likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+            likwidPerfCommand_ += perfString;
+        }
+
+    }
 }
 
 void MainWindow::readCommandLineArgs()
@@ -347,31 +377,6 @@ void MainWindow::generateCPIStack()
     scene_->addItem(item_);
 }
 
-// TODO: Think about removing the add and remove pushbuttons in place for just the double click method
-//void MainWindow::on_AddPerfGroup_pushButton_clicked()
-//{
-//    // Check if the item is already in the chosen list
-//    for (int i = 0; i < ui->ChosenPerfGroups_List->count(); ++i)
-//        if (ui->ChosenPerfGroups_List->item(i)->text() == ui->PerfGroups_List->currentItem()->text())
-//            return;
-
-//    // If the item doesn't exist in the list then add it
-//    ui->ChosenPerfGroups_List->addItem(ui->PerfGroups_List->currentItem()->clone());
-
-//    // Disable the perf metric because counters can already be taken up
-//    ui->PerfMetric_Tab->setDisabled(true);
-//}
-
-//void MainWindow::on_RemovePerfGroup_pushButton_clicked()
-//{
-//    // Remove the current item
-//    if (ui->ChosenPerfGroups_List->count() > 0)
-//        delete ui->ChosenPerfGroups_List->item(ui->ChosenPerfGroups_List->currentIndex().row());
-
-//    if (ui->ChosenPerfGroups_List->count() == 0)
-//        ui->PerfMetric_Tab->setDisabled(false);
-//}
-
 void MainWindow::on_PerfGroups_List_doubleClicked(const QModelIndex &index)
 {
     // Check for valid index
@@ -465,4 +470,30 @@ void MainWindow::on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &inde
         if ((ui->ChosenPerfCounters_List->count() == 0) && (ui->ChosenPerfMetrics_List->count() == 0))
             ui->PerfGroup_Tab->setDisabled(false);
     }
+}
+
+void MainWindow::on_StethoscopeMode_pushButton_clicked()
+{
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Button, (stethoscopeMode_ ? Qt::white : Qt::green));
+    ui->StethoscopeMode_pushButton->setPalette(pal);
+
+    // Control what is enabled based on this button press
+    if (stethoscopeMode_)
+    { // will be turning it off so activate other widgets
+        ui->PerfGroup_Tab->setDisabled(false);
+        ui->PerfMetric_Tab->setDisabled(false);
+        ui->CPIStack_Tab->setDisabled(false);
+        ui->RefreshRate_Text->setReadOnly(true);
+    }
+    else
+    {
+        ui->PerfGroup_Tab->setDisabled(true);
+        ui->PerfMetric_Tab->setDisabled(true);
+        ui->CPIStack_Tab->setDisabled(true);
+        ui->RefreshRate_Text->setReadOnly(false);
+    }
+
+    // Invert the flag
+    stethoscopeMode_ = !stethoscopeMode_;
 }

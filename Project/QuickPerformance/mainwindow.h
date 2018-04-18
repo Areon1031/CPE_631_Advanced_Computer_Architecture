@@ -54,6 +54,8 @@ private slots:
     void on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &index);
 
 
+    void on_StethoscopeMode_pushButton_clicked();
+
 private:
     // Reference to the UI
     Ui::MainWindow *ui;
@@ -66,6 +68,9 @@ private:
 
     // Likwid String
     QString likwidPerfCommand_;
+
+    // Stethoscope Mode
+    bool stethoscopeMode_;
 
     QGraphicsItem* item_;
     QGraphicsScene* scene_;

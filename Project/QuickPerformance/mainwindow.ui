@@ -109,61 +109,11 @@
           </size>
          </property>
          <property name="text">
-          <string>Stethoscope Mode</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="RefreshRate_Label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>161</width>
-           <height>17</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Refresh Rate (ms)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-        <widget class="QTextEdit" name="RefreshRate_Text">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>150</width>
-           <height>31</height>
-          </size>
-         </property>
-         <property name="lineWrapMode">
-          <enum>QTextEdit::NoWrap</enum>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-         <property name="textInteractionFlags">
-          <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-         </property>
-         <property name="placeholderText">
-          <string/>
+          <string>Perf Scope</string>
          </property>
         </widget>
        </item>
       </layout>
-      <zorder>RefreshRate_Text</zorder>
-      <zorder>StethoscopeMode_pushButton</zorder>
-      <zorder>RefreshRate_Label</zorder>
      </widget>
     </item>
     <item row="0" column="2">

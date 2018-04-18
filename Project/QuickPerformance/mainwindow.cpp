@@ -38,9 +38,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Get CPU Feature List
     getFeatureList();
 
-    // Start Perfscope
-    executeLikwidPerfScope();
-
     // Setup CPI Stack Items
     item_ = nullptr;
     scene_ = new QGraphicsScene(this);
@@ -52,8 +49,6 @@ MainWindow::~MainWindow()
     delete item_;
     delete scene_;
     delete ui;
-
-    system("./killScopeForever.sh");
 }
 
 void MainWindow::getTopology()
@@ -229,9 +224,12 @@ void MainWindow::updateFeaturesResultOutput()
     ui->FeatureOperations_Text->setText(featureInStream.readAll());
 }
 
-void MainWindow::executeLikwidPerfScope()
+void MainWindow::enableLikwidPerfScope(bool enable)
 {
-    system("./scopeMe.sh");
+    if (enable)
+        system("./scopeMe.sh");
+    else
+        system("./killScopeForever.sh");
 }
 
 
@@ -282,7 +280,7 @@ void MainWindow::on_RunTest_pushButton_clicked()
         executeUserApplication();
 
         // Update the CPI Stack Tab
-        if (ui->ChosenPerfGroups_List->count() > 0)
+        if (ui->ChosenPerfGroups_List->count() > 0 && ui->CPIStack_Tab->isEnabled())
             generateCPIStack();
     }
     else
@@ -296,41 +294,69 @@ void MainWindow::generateLikwidPerfCommand()
     QString perfString;
     if (!stethoscopeMode_)
     {
-        for (int i = 0; i < ui->ChosenPerfGroups_List->count(); ++i)
+        if (ui->PerfGroup_Tab->isEnabled())
         {
-            perfString += ("-g " + ui->ChosenPerfGroups_List->item(i)->text() + " ");
-        }
+            for (int i = 0; i < ui->ChosenPerfGroups_List->count(); ++i)
+            {
+                perfString += ("-g " + ui->ChosenPerfGroups_List->item(i)->text() + " ");
+            }
 
-        // Update overall likwid command
-        if (!perfString.isNull())
-        {
-            likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
-            likwidPerfCommand_ += perfString;
+            // Update overall likwid command
+            if (!perfString.isNull())
+            {
+                likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+                likwidPerfCommand_ += perfString;
+            }
+            else
+                likwidPerfCommand_ = "";
         }
-        else
-            likwidPerfCommand_ = "";
+        else if (ui->PerfMetric_Tab->isEnabled())
+        {
+            // TODO: Output an error message if the counters and metrics don't sync
+            if (ui->ChosenPerfMetrics_List->count() != ui->ChosenPerfCounters_List->count())
+                return;
+
+
+            for (int i = 0; i < ui->ChosenPerfMetrics_List->count(); ++i)
+            {
+                perfString += ("-g " +                                                      // Group
+                         ui->ChosenPerfMetrics_List->item(i)->text().split(',').at(0) +     // Metric
+                         ":" +                                                              // Separator
+                         ui->ChosenPerfCounters_List->item(i)->text().split(',').at(0) +    // Counter
+                         " -f ");
+            }
+
+            // Update overall likwid command
+            if (!perfString.isNull())
+            {
+                likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+                likwidPerfCommand_ += perfString;
+            }
+            else
+                likwidPerfCommand_ = "";
+        }
     }
-    else
+    else // TODO: Figure out if stethoscope should happen
     { // Stethoscope mode is on so process accordingly
-        if (ui->ChosenPerfGroups_List->count() > 0)
-            perfString += ("-g " + ui->ChosenPerfGroups_List->item(0)->text());
-        else
-            perfString += ("-g " + ui->PerfGroups_List->item(0)->text());
+//        if (ui->ChosenPerfGroups_List->count() > 0)
+//            perfString += ("-g " + ui->ChosenPerfGroups_List->item(0)->text());
+//        else
+//            perfString += ("-g " + ui->PerfGroups_List->item(0)->text());
 
-        perfString += " ";
+//        perfString += " ";
 
-        QString refreshRateString = ui->RefreshRate_Text->toPlainText().remove("");
-        if (refreshRateString.isEmpty())
-            perfString += "-S 500ms ";
-        else
-            perfString += "-S " + refreshRateString + "ms ";
+//        QString refreshRateString = ui->RefreshRate_Text->toPlainText().remove("");
+//        if (refreshRateString.isEmpty())
+//            perfString += "-S 500ms ";
+//        else
+//            perfString += "-S " + refreshRateString + "ms ";
 
-        // Update overall likwid command
-        if (!perfString.isNull())
-        {
-            likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
-            likwidPerfCommand_ += perfString;
-        }
+//        // Update overall likwid command
+//        if (!perfString.isNull())
+//        {
+//            likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
+//            likwidPerfCommand_ += perfString;
+//        }
     }
 }
 
@@ -485,10 +511,10 @@ void MainWindow::on_PerfCounters_List_doubleClicked(const QModelIndex &index)
     // Check for valid index
     if (index.isValid())
     {
-        // Check if the item is already in the chosen list
-        for (int i = 0; i < ui->ChosenPerfCounters_List->count(); ++i)
-            if (ui->ChosenPerfCounters_List->item(i)->text() == ui->PerfCounters_List->currentItem()->text())
-                return;
+//        // Check if the item is already in the chosen list
+//        for (int i = 0; i < ui->ChosenPerfCounters_List->count(); ++i)
+//            if (ui->ChosenPerfCounters_List->item(i)->text() == ui->PerfCounters_List->currentItem()->text())
+//                return;
 
         // If the item doesn't exist in the list then add it
         ui->ChosenPerfCounters_List->addItem(ui->PerfCounters_List->currentItem()->clone());
@@ -513,6 +539,9 @@ void MainWindow::on_PerfMetrics_List_doubleClicked(const QModelIndex &index)
 
         // Disable the perf group because counters can already be taken up
         ui->PerfGroup_Tab->setDisabled(true);
+
+        // Disable CPI Stack for now
+        ui->CPIStack_Tab->setDisabled(true);
     }
 }
 
@@ -540,7 +569,10 @@ void MainWindow::on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &inde
             delete ui->ChosenPerfMetrics_List->item(ui->ChosenPerfMetrics_List->currentIndex().row());
 
         if ((ui->ChosenPerfCounters_List->count() == 0) && (ui->ChosenPerfMetrics_List->count() == 0))
+        {
             ui->PerfGroup_Tab->setDisabled(false);
+            ui->CPIStack_Tab->setDisabled(false);
+        }
     }
 }
 
@@ -559,14 +591,20 @@ void MainWindow::on_StethoscopeMode_pushButton_clicked()
         ui->PerfGroup_Tab->setDisabled(false);
         ui->PerfMetric_Tab->setDisabled(false);
         ui->CPIStack_Tab->setDisabled(false);
-        ui->RefreshRate_Text->setReadOnly(true);
+        //ui->RefreshRate_Text->setReadOnly(true);
+
+        // Turn off perfscope
+        enableLikwidPerfScope(false);
     }
     else
     { // will be turning it on so deactive other widgets
         ui->PerfGroup_Tab->setDisabled(true);
         ui->PerfMetric_Tab->setDisabled(true);
         ui->CPIStack_Tab->setDisabled(true);
-        ui->RefreshRate_Text->setReadOnly(false);
+        //ui->RefreshRate_Text->setReadOnly(false);
+
+        // Start Perfscope
+        enableLikwidPerfScope(true);
     }
 
     // Invert the flag

@@ -42,8 +42,6 @@ public:
     QGroupBox *Stethoscope_Group;
     QGridLayout *gridLayout_9;
     QPushButton *StethoscopeMode_pushButton;
-    QLabel *RefreshRate_Label;
-    QTextEdit *RefreshRate_Text;
     QGroupBox *Application_Group;
     QGridLayout *gridLayout_2;
     QLabel *Application_Label;
@@ -162,28 +160,6 @@ public:
 
         gridLayout_9->addWidget(StethoscopeMode_pushButton, 0, 0, 1, 1);
 
-        RefreshRate_Label = new QLabel(Stethoscope_Group);
-        RefreshRate_Label->setObjectName(QStringLiteral("RefreshRate_Label"));
-        sizePolicy2.setHeightForWidth(RefreshRate_Label->sizePolicy().hasHeightForWidth());
-        RefreshRate_Label->setSizePolicy(sizePolicy2);
-        RefreshRate_Label->setMaximumSize(QSize(161, 17));
-
-        gridLayout_9->addWidget(RefreshRate_Label, 1, 0, 1, 1);
-
-        RefreshRate_Text = new QTextEdit(Stethoscope_Group);
-        RefreshRate_Text->setObjectName(QStringLiteral("RefreshRate_Text"));
-        sizePolicy2.setHeightForWidth(RefreshRate_Text->sizePolicy().hasHeightForWidth());
-        RefreshRate_Text->setSizePolicy(sizePolicy2);
-        RefreshRate_Text->setMaximumSize(QSize(150, 31));
-        RefreshRate_Text->setLineWrapMode(QTextEdit::NoWrap);
-        RefreshRate_Text->setReadOnly(true);
-        RefreshRate_Text->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
-
-        gridLayout_9->addWidget(RefreshRate_Text, 2, 0, 1, 1, Qt::AlignHCenter|Qt::AlignVCenter);
-
-        RefreshRate_Text->raise();
-        StethoscopeMode_pushButton->raise();
-        RefreshRate_Label->raise();
 
         gridLayout_8->addWidget(Stethoscope_Group, 0, 1, 1, 1);
 
@@ -478,9 +454,7 @@ public:
         Logo_Group->setTitle(QString());
         Logo->setText(QString());
         Stethoscope_Group->setTitle(QString());
-        StethoscopeMode_pushButton->setText(QApplication::translate("MainWindow", "Stethoscope Mode", Q_NULLPTR));
-        RefreshRate_Label->setText(QApplication::translate("MainWindow", "Refresh Rate (ms)", Q_NULLPTR));
-        RefreshRate_Text->setPlaceholderText(QString());
+        StethoscopeMode_pushButton->setText(QApplication::translate("MainWindow", "Perf Scope", Q_NULLPTR));
         Application_Group->setTitle(QString());
         Application_Label->setText(QApplication::translate("MainWindow", "Application Under Test", Q_NULLPTR));
         ApplicationLoad_pushButton->setText(QApplication::translate("MainWindow", "Load", Q_NULLPTR));

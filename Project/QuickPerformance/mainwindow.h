@@ -93,7 +93,7 @@ private:
     void getFeatureList();
 
     // Likwid Perfscope
-    void executeLikwidPerfScope();
+    void enableLikwidPerfScope(bool enable);
 
     // Features
     void updateFeaturesResultOutput();
@@ -101,7 +101,7 @@ private:
 
     // Perfscope thread
     std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
-    std::thread spawnPerfScope(){ return std::thread( [this] { this->executeLikwidPerfScope(); } ); }
+    std::thread spawnPerfScope(){ return std::thread( [this] { this->enableLikwidPerfScope(true); } ); }
 };
 
 #endif // MAINWINDOW_H

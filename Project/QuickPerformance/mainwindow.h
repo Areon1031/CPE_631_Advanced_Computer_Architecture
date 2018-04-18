@@ -21,6 +21,7 @@ enum QuickTabs
     TOPOLOGY = 0,
     PERF_GROUPS,
     PERF_METRICS,
+    FEATURE_CONTROL,
     CPI,
     APP_OUT
 };

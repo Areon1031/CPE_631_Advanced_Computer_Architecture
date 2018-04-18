@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Get CPU Feature List
     getFeatureList();
 
+    // Start Perfscope
+    executeLikwidPerfScope();
+
     // Setup CPI Stack Items
     item_ = nullptr;
     scene_ = new QGraphicsScene(this);
@@ -49,6 +52,8 @@ MainWindow::~MainWindow()
     delete item_;
     delete scene_;
     delete ui;
+
+    system("./killScopeForever.sh");
 }
 
 void MainWindow::getTopology()
@@ -183,9 +188,16 @@ void MainWindow::getFeatureList()
     // Read the data from the stream
     while(!featureInStream.atEnd())
     {
-        // Grab the current performance macro and description
-        QStringList currFeature = featureInStream.readLine().split(' ');
-        QMutableListIterator<QString> it(currFeature);
+        // Grab the current feature
+        // Only process modifiable features (contains an *)
+        QString currFeature = featureInStream.readLine();
+        // TODO: Implement safety before final release
+        //if (!currFeature.contains('*'))
+        //    continue;
+
+
+        QStringList currFeatureList = currFeature.split(' ');
+        QMutableListIterator<QString> it(currFeatureList);
         while (it.hasNext())
         {
             it.next();
@@ -194,10 +206,10 @@ void MainWindow::getFeatureList()
                 it.remove();
         }
 
-        QString finalFeature = currFeature.join("\t\t");
+        currFeature = currFeatureList.join("\t\t");
 
         // Add the current option to the list
-        ui->Features_List->addItem(finalFeature);
+        ui->Features_List->addItem(currFeature);
     }
 }
 
@@ -215,6 +227,11 @@ void MainWindow::updateFeaturesResultOutput()
     featureInStream.setCodec("UTF-8");
 
     ui->FeatureOperations_Text->setText(featureInStream.readAll());
+}
+
+void MainWindow::executeLikwidPerfScope()
+{
+    system("./scopeMe.sh ./");
 }
 
 
@@ -263,7 +280,6 @@ void MainWindow::on_RunTest_pushButton_clicked()
 
         // Execute the user application
         executeUserApplication();
-        //spawn();
 
         // Update the CPI Stack Tab
         if (ui->ChosenPerfGroups_List->count() > 0)
@@ -295,7 +311,7 @@ void MainWindow::generateLikwidPerfCommand()
             likwidPerfCommand_ = "";
     }
     else
-    {
+    { // Stethoscope mode is on so process accordingly
         if (ui->ChosenPerfGroups_List->count() > 0)
             perfString += ("-g " + ui->ChosenPerfGroups_List->item(0)->text());
         else
@@ -315,7 +331,6 @@ void MainWindow::generateLikwidPerfCommand()
             likwidPerfCommand_ = "likwid-perfctr -C 1 -M 1 ";
             likwidPerfCommand_ += perfString;
         }
-
     }
 }
 
@@ -328,7 +343,7 @@ void MainWindow::readCommandLineArgs()
 void MainWindow::executeUserApplication()
 {
     //TODO: Write in all of the likwid tools
-    QString runString = likwidPerfCommand_ + application_ + " " + commandLineArgs_ + " --stats " + " 2>&1 | tee output.txt";
+    QString runString = likwidPerfCommand_ + application_ + " " + commandLineArgs_ + " 2>&1 | tee output.txt";
     //QString test = "likwid-perfscope -g ENERGY -C 1 -r 10 -t 500ms ";
     //test += runString;
     system(runString.toStdString().c_str());

@@ -184,9 +184,6 @@ public:
         RefreshRate_Text->raise();
         StethoscopeMode_pushButton->raise();
         RefreshRate_Label->raise();
-        RefreshRate_Text->raise();
-        StethoscopeMode_pushButton->raise();
-        RefreshRate_Label->raise();
 
         gridLayout_8->addWidget(Stethoscope_Group, 0, 1, 1, 1);
 
@@ -469,7 +466,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(3);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

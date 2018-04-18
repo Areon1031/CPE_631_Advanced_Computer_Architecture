@@ -1,3 +1,3 @@
 #!/bin/bash
 
-likwid-perfscope -C 0 -g TEMP -t 500ms ./scopeForever
+likwid-perfscope -C 1 -g TEMP -t 2s ./scopeForever

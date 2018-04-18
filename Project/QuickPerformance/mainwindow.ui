@@ -164,9 +164,6 @@
       <zorder>RefreshRate_Text</zorder>
       <zorder>StethoscopeMode_pushButton</zorder>
       <zorder>RefreshRate_Label</zorder>
-      <zorder>RefreshRate_Text</zorder>
-      <zorder>StethoscopeMode_pushButton</zorder>
-      <zorder>RefreshRate_Label</zorder>
      </widget>
     </item>
     <item row="0" column="2">
@@ -319,7 +316,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Topology_Tab">
        <property name="sizePolicy">

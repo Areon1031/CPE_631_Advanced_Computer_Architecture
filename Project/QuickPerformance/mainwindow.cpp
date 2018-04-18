@@ -173,7 +173,7 @@ void MainWindow::getFeatureList()
     ui->Features_List->clear();
 
     // Execute likwid-perfctr -a to get performance groups
-    system("likwid-features -c 0 -l > cpuFeatures.txt");
+    system("likwid-features -c 1 -l > cpuFeatures.txt");
     QFile featuresFile("./cpuFeatures.txt");
 
     // Error Check the file
@@ -231,7 +231,7 @@ void MainWindow::updateFeaturesResultOutput()
 
 void MainWindow::executeLikwidPerfScope()
 {
-    system("./scopeMe.sh ./");
+    system("./scopeMe.sh");
 }
 
 
@@ -582,9 +582,9 @@ void MainWindow::enableFeature(bool enable)
     QString feature = currFeature.at(0);
     QString command;
     if (enable)
-        command = "likwid-features -c 0 -e " + feature + " > featuresListResults.txt";
+        command = "likwid-features -c 1 -e " + feature + " > featuresListResults.txt";
     else
-        command = "likwid-features -c 0 -d " + feature + " > featuresListResults.txt";
+        command = "likwid-features -c 1 -d " + feature + " > featuresListResults.txt";
 
     // Execute the command
     system(command.toStdString().c_str());

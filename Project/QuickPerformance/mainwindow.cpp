@@ -470,7 +470,7 @@ void MainWindow::generateBreakdown()
 
         // Read CPI Information from the resulting file
         QFile breakdownFile("./breakDown.txt");
-        QFile breakdownOutFile("./breakDownOut.txt");
+        QFile breakdownOutFile("./breakdownInfo.txt");
 
         // Error Check the file
         if (!breakdownFile.open(QIODevice::ReadOnly))
@@ -503,8 +503,7 @@ void MainWindow::generateBreakdown()
                     currLine.contains("mem-loads", Qt::CaseInsensitive) ||
                     currLine.contains("mem-stores", Qt::CaseInsensitive))
             {
-                currLine = currLine.remove(",");
-                values = currLine.split(" ");
+                values = currLine.remove(",").split(" ");
                 values.removeAll("");
                 finalValues.append(values.at(0));
                 finalMetrics.append(values.at(1));
@@ -515,15 +514,19 @@ void MainWindow::generateBreakdown()
         for (int i = 0; i < finalValues.count(); ++i)
             breakdownOut += finalMetrics.at(i) + ":" + finalValues.at(i) + " \n";
 
+        // Write the value to the file
         breakdownOutStream << breakdownOut;
 
+        // Output the GUI element
         //ui->BreakdownOutput_Text->setText(breakdownInStream.readAll());
         ui->BreakdownOutput_Text->setText(breakdownOut);
+
+        // Close the files
         breakdownFile.close();
         breakdownOutFile.close();
 
         // Read the breakdown file and run python to process the perf data
-
+        QString runString = "python ../UI_PostProcessing/genBreakdownChart.py";
 
 //        // Run Python Post Processing Script
 //        QString runString = "python ../UI_PostProcessing/genCPIStack.py";

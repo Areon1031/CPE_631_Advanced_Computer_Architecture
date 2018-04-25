@@ -39,9 +39,9 @@ public:
     QGroupBox *Logo_Group;
     QGridLayout *gridLayout_3;
     QLabel *Logo;
-    QGroupBox *Stethoscope_Group;
+    QGroupBox *Perfscope_Group;
     QGridLayout *gridLayout_9;
-    QPushButton *StethoscopeMode_pushButton;
+    QPushButton *Perfscope_pushButton;
     QGroupBox *Application_Group;
     QGridLayout *gridLayout_2;
     QLabel *Application_Label;
@@ -50,6 +50,11 @@ public:
     QLabel *CommandLineArgs_Label;
     QTextEdit *CommandLineArgs_Text;
     QPushButton *RunTest_pushButton;
+    QGroupBox *Breakdown_Group;
+    QGridLayout *gridLayout_13;
+    QPushButton *Breakdown_pushButton;
+    QLabel *LikwidCommand_Label;
+    QTextEdit *LikwidCommand_Text;
     QTabWidget *tabWidget;
     QWidget *Topology_Tab;
     QGridLayout *gridLayout_4;
@@ -83,6 +88,10 @@ public:
     QWidget *CPIStack_Tab;
     QGridLayout *gridLayout_6;
     CustomView *CPI_Stack_GraphicsView;
+    QWidget *Breakdown_Tab;
+    QGridLayout *gridLayout_12;
+    CustomView *BreakdownChart_GraphicsView;
+    QTextBrowser *BreakdownOutput_Text;
     QWidget *ApplicationOutput_Tab;
     QGridLayout *gridLayout_7;
     QTextBrowser *ApplicationOutput_Text;
@@ -95,7 +104,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1082, 686);
+        MainWindow->resize(1088, 694);
         QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy.setHorizontalStretch(1);
         sizePolicy.setVerticalStretch(1);
@@ -135,33 +144,33 @@ public:
         gridLayout_3->addWidget(Logo, 0, 0, 1, 1);
 
 
-        gridLayout_8->addWidget(Logo_Group, 0, 0, 1, 1);
+        gridLayout_8->addWidget(Logo_Group, 0, 0, 2, 2);
 
-        Stethoscope_Group = new QGroupBox(centralWidget);
-        Stethoscope_Group->setObjectName(QStringLiteral("Stethoscope_Group"));
+        Perfscope_Group = new QGroupBox(centralWidget);
+        Perfscope_Group->setObjectName(QStringLiteral("Perfscope_Group"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Minimum);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(Stethoscope_Group->sizePolicy().hasHeightForWidth());
-        Stethoscope_Group->setSizePolicy(sizePolicy3);
-        Stethoscope_Group->setMinimumSize(QSize(191, 131));
-        gridLayout_9 = new QGridLayout(Stethoscope_Group);
+        sizePolicy3.setHeightForWidth(Perfscope_Group->sizePolicy().hasHeightForWidth());
+        Perfscope_Group->setSizePolicy(sizePolicy3);
+        Perfscope_Group->setMinimumSize(QSize(191, 50));
+        gridLayout_9 = new QGridLayout(Perfscope_Group);
         gridLayout_9->setSpacing(6);
         gridLayout_9->setContentsMargins(11, 11, 11, 11);
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
-        StethoscopeMode_pushButton = new QPushButton(Stethoscope_Group);
-        StethoscopeMode_pushButton->setObjectName(QStringLiteral("StethoscopeMode_pushButton"));
+        Perfscope_pushButton = new QPushButton(Perfscope_Group);
+        Perfscope_pushButton->setObjectName(QStringLiteral("Perfscope_pushButton"));
         QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(StethoscopeMode_pushButton->sizePolicy().hasHeightForWidth());
-        StethoscopeMode_pushButton->setSizePolicy(sizePolicy4);
-        StethoscopeMode_pushButton->setMaximumSize(QSize(150, 30));
+        sizePolicy4.setHeightForWidth(Perfscope_pushButton->sizePolicy().hasHeightForWidth());
+        Perfscope_pushButton->setSizePolicy(sizePolicy4);
+        Perfscope_pushButton->setMaximumSize(QSize(150, 30));
 
-        gridLayout_9->addWidget(StethoscopeMode_pushButton, 0, 0, 1, 1);
+        gridLayout_9->addWidget(Perfscope_pushButton, 0, 0, 1, 1);
 
 
-        gridLayout_8->addWidget(Stethoscope_Group, 0, 1, 1, 1);
+        gridLayout_8->addWidget(Perfscope_Group, 0, 2, 1, 1);
 
         Application_Group = new QGroupBox(centralWidget);
         Application_Group->setObjectName(QStringLiteral("Application_Group"));
@@ -226,22 +235,65 @@ public:
         gridLayout_2->addWidget(RunTest_pushButton, 3, 1, 1, 1);
 
 
-        gridLayout_8->addWidget(Application_Group, 0, 2, 1, 1);
+        gridLayout_8->addWidget(Application_Group, 0, 3, 2, 1);
+
+        Breakdown_Group = new QGroupBox(centralWidget);
+        Breakdown_Group->setObjectName(QStringLiteral("Breakdown_Group"));
+        sizePolicy3.setHeightForWidth(Breakdown_Group->sizePolicy().hasHeightForWidth());
+        Breakdown_Group->setSizePolicy(sizePolicy3);
+        Breakdown_Group->setMinimumSize(QSize(191, 50));
+        gridLayout_13 = new QGridLayout(Breakdown_Group);
+        gridLayout_13->setSpacing(6);
+        gridLayout_13->setContentsMargins(11, 11, 11, 11);
+        gridLayout_13->setObjectName(QStringLiteral("gridLayout_13"));
+        Breakdown_pushButton = new QPushButton(Breakdown_Group);
+        Breakdown_pushButton->setObjectName(QStringLiteral("Breakdown_pushButton"));
+        sizePolicy4.setHeightForWidth(Breakdown_pushButton->sizePolicy().hasHeightForWidth());
+        Breakdown_pushButton->setSizePolicy(sizePolicy4);
+        Breakdown_pushButton->setMaximumSize(QSize(150, 30));
+
+        gridLayout_13->addWidget(Breakdown_pushButton, 0, 0, 1, 1);
+
+
+        gridLayout_8->addWidget(Breakdown_Group, 1, 2, 1, 1);
+
+        LikwidCommand_Label = new QLabel(centralWidget);
+        LikwidCommand_Label->setObjectName(QStringLiteral("LikwidCommand_Label"));
+        sizePolicy2.setHeightForWidth(LikwidCommand_Label->sizePolicy().hasHeightForWidth());
+        LikwidCommand_Label->setSizePolicy(sizePolicy2);
+        LikwidCommand_Label->setMaximumSize(QSize(161, 17));
+        LikwidCommand_Label->setAlignment(Qt::AlignCenter);
+
+        gridLayout_8->addWidget(LikwidCommand_Label, 2, 0, 1, 1);
+
+        LikwidCommand_Text = new QTextEdit(centralWidget);
+        LikwidCommand_Text->setObjectName(QStringLiteral("LikwidCommand_Text"));
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(LikwidCommand_Text->sizePolicy().hasHeightForWidth());
+        LikwidCommand_Text->setSizePolicy(sizePolicy5);
+        LikwidCommand_Text->setMaximumSize(QSize(16777215, 31));
+        LikwidCommand_Text->setLineWrapMode(QTextEdit::NoWrap);
+        LikwidCommand_Text->setReadOnly(true);
+        LikwidCommand_Text->setAcceptRichText(true);
+
+        gridLayout_8->addWidget(LikwidCommand_Text, 2, 1, 1, 3);
 
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy5.setHorizontalStretch(1);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
-        tabWidget->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy6.setHorizontalStretch(1);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy6);
         Topology_Tab = new QWidget();
         Topology_Tab->setObjectName(QStringLiteral("Topology_Tab"));
-        QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(Topology_Tab->sizePolicy().hasHeightForWidth());
-        Topology_Tab->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(Topology_Tab->sizePolicy().hasHeightForWidth());
+        Topology_Tab->setSizePolicy(sizePolicy7);
         gridLayout_4 = new QGridLayout(Topology_Tab);
         gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -334,25 +386,25 @@ public:
         gridLayout_11->setObjectName(QStringLiteral("gridLayout_11"));
         FeatureOperations_Text = new QTextBrowser(Features_Tab);
         FeatureOperations_Text->setObjectName(QStringLiteral("FeatureOperations_Text"));
-        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy7.setHorizontalStretch(1);
-        sizePolicy7.setVerticalStretch(1);
-        sizePolicy7.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
-        FeatureOperations_Text->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy8(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy8.setHorizontalStretch(1);
+        sizePolicy8.setVerticalStretch(1);
+        sizePolicy8.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
+        FeatureOperations_Text->setSizePolicy(sizePolicy8);
 
         gridLayout_11->addWidget(FeatureOperations_Text, 1, 2, 1, 1);
 
         Features_List = new QListWidget(Features_Tab);
         Features_List->setObjectName(QStringLiteral("Features_List"));
-        sizePolicy7.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
-        Features_List->setSizePolicy(sizePolicy7);
+        sizePolicy8.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
+        Features_List->setSizePolicy(sizePolicy8);
 
         gridLayout_11->addWidget(Features_List, 1, 0, 1, 1);
 
         groupBox = new QGroupBox(Features_Tab);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        sizePolicy6.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
-        groupBox->setSizePolicy(sizePolicy6);
+        sizePolicy7.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy7);
         gridLayout_10 = new QGridLayout(groupBox);
         gridLayout_10->setSpacing(6);
         gridLayout_10->setContentsMargins(11, 11, 11, 11);
@@ -378,11 +430,11 @@ public:
 
         FeaturesList_Label = new QLabel(Features_Tab);
         FeaturesList_Label->setObjectName(QStringLiteral("FeaturesList_Label"));
-        QSizePolicy sizePolicy8(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy8.setHorizontalStretch(0);
-        sizePolicy8.setVerticalStretch(0);
-        sizePolicy8.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
-        FeaturesList_Label->setSizePolicy(sizePolicy8);
+        QSizePolicy sizePolicy9(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
+        FeaturesList_Label->setSizePolicy(sizePolicy9);
         FeaturesList_Label->setMinimumSize(QSize(343, 17));
         FeaturesList_Label->setMaximumSize(QSize(343, 17));
 
@@ -390,8 +442,8 @@ public:
 
         ChosenPerfCoutners_Label_2 = new QLabel(Features_Tab);
         ChosenPerfCoutners_Label_2->setObjectName(QStringLiteral("ChosenPerfCoutners_Label_2"));
-        sizePolicy8.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
-        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy8);
+        sizePolicy9.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
+        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy9);
         ChosenPerfCoutners_Label_2->setMinimumSize(QSize(343, 17));
         ChosenPerfCoutners_Label_2->setMaximumSize(QSize(343, 17));
 
@@ -410,6 +462,30 @@ public:
         gridLayout_6->addWidget(CPI_Stack_GraphicsView, 0, 0, 1, 1);
 
         tabWidget->addTab(CPIStack_Tab, QString());
+        Breakdown_Tab = new QWidget();
+        Breakdown_Tab->setObjectName(QStringLiteral("Breakdown_Tab"));
+        gridLayout_12 = new QGridLayout(Breakdown_Tab);
+        gridLayout_12->setSpacing(6);
+        gridLayout_12->setContentsMargins(11, 11, 11, 11);
+        gridLayout_12->setObjectName(QStringLiteral("gridLayout_12"));
+        BreakdownChart_GraphicsView = new CustomView(Breakdown_Tab);
+        BreakdownChart_GraphicsView->setObjectName(QStringLiteral("BreakdownChart_GraphicsView"));
+        BreakdownChart_GraphicsView->setMinimumSize(QSize(651, 361));
+
+        gridLayout_12->addWidget(BreakdownChart_GraphicsView, 0, 0, 1, 1);
+
+        BreakdownOutput_Text = new QTextBrowser(Breakdown_Tab);
+        BreakdownOutput_Text->setObjectName(QStringLiteral("BreakdownOutput_Text"));
+        QSizePolicy sizePolicy10(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy10.setHorizontalStretch(0);
+        sizePolicy10.setVerticalStretch(0);
+        sizePolicy10.setHeightForWidth(BreakdownOutput_Text->sizePolicy().hasHeightForWidth());
+        BreakdownOutput_Text->setSizePolicy(sizePolicy10);
+        BreakdownOutput_Text->setMinimumSize(QSize(391, 361));
+
+        gridLayout_12->addWidget(BreakdownOutput_Text, 0, 1, 1, 1);
+
+        tabWidget->addTab(Breakdown_Tab, QString());
         ApplicationOutput_Tab = new QWidget();
         ApplicationOutput_Tab->setObjectName(QStringLiteral("ApplicationOutput_Tab"));
         gridLayout_7 = new QGridLayout(ApplicationOutput_Tab);
@@ -423,12 +499,12 @@ public:
 
         tabWidget->addTab(ApplicationOutput_Tab, QString());
 
-        gridLayout_8->addWidget(tabWidget, 1, 0, 1, 3);
+        gridLayout_8->addWidget(tabWidget, 3, 0, 1, 4);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1082, 22));
+        menuBar->setGeometry(QRect(0, 0, 1088, 22));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -453,13 +529,16 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
         Logo_Group->setTitle(QString());
         Logo->setText(QString());
-        Stethoscope_Group->setTitle(QString());
-        StethoscopeMode_pushButton->setText(QApplication::translate("MainWindow", "Perf Scope", Q_NULLPTR));
+        Perfscope_Group->setTitle(QString());
+        Perfscope_pushButton->setText(QApplication::translate("MainWindow", "Perf Scope", Q_NULLPTR));
         Application_Group->setTitle(QString());
         Application_Label->setText(QApplication::translate("MainWindow", "Application Under Test", Q_NULLPTR));
         ApplicationLoad_pushButton->setText(QApplication::translate("MainWindow", "Load", Q_NULLPTR));
         CommandLineArgs_Label->setText(QApplication::translate("MainWindow", "Command Line Arguments", Q_NULLPTR));
         RunTest_pushButton->setText(QApplication::translate("MainWindow", "Run Test", Q_NULLPTR));
+        Breakdown_Group->setTitle(QString());
+        Breakdown_pushButton->setText(QApplication::translate("MainWindow", "Create Breakdown", Q_NULLPTR));
+        LikwidCommand_Label->setText(QApplication::translate("MainWindow", "LIKWID Command", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Topology_Tab), QApplication::translate("MainWindow", "Architecture Topology", Q_NULLPTR));
         Application_Label_2->setText(QApplication::translate("MainWindow", "Performance Groups", Q_NULLPTR));
         Application_Label_3->setText(QApplication::translate("MainWindow", "Chosen Performance Groups", Q_NULLPTR));
@@ -476,6 +555,7 @@ public:
         ChosenPerfCoutners_Label_2->setText(QApplication::translate("MainWindow", "Operation Results", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Features_Tab), QApplication::translate("MainWindow", "Feature Control", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(Breakdown_Tab), QApplication::translate("MainWindow", "Break Down", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", Q_NULLPTR));
     } // retranslateUi

@@ -19,7 +19,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //this->setPalette(pal);
 
     // Initially don't start in this mode
-    stethoscopeMode_ = false;
+    perfscopeMode_ = false;
+
+    // Initial perf command string
+    likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
+    ui->LikwidCommand_Text->setText(likwidPerfCommand_);
 
     // Setup the Logo
     QPixmap logo("../bin/Logo/UAH_Logo.png");
@@ -292,23 +296,19 @@ void MainWindow::generateLikwidPerfCommand()
 {
     // Add user specified groups
     QString perfString;
-    if (!stethoscopeMode_)
+
+    // Base Command
+    likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
+    if (!perfscopeMode_)
     {
         if (ui->PerfGroup_Tab->isEnabled())
         {
             for (int i = 0; i < ui->ChosenPerfGroups_List->count(); ++i)
-            {
                 perfString += ("-g " + ui->ChosenPerfGroups_List->item(i)->text() + " ");
-            }
 
             // Update overall likwid command
             if (!perfString.isNull())
-            {
-                likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
                 likwidPerfCommand_ += perfString;
-            }
-            else
-                likwidPerfCommand_ = "";
         }
         else if (ui->PerfMetric_Tab->isEnabled())
         {
@@ -316,48 +316,22 @@ void MainWindow::generateLikwidPerfCommand()
             if (ui->ChosenPerfMetrics_List->count() != ui->ChosenPerfCounters_List->count())
                 return;
 
-
             for (int i = 0; i < ui->ChosenPerfMetrics_List->count(); ++i)
             {
                 perfString += ("-g " +                                                      // Group
                          ui->ChosenPerfMetrics_List->item(i)->text().split(',').at(0) +     // Metric
                          ":" +                                                              // Separator
-                         ui->ChosenPerfCounters_List->item(i)->text().split(',').at(0) +    // Counter
-                         " -f ");
+                         ui->ChosenPerfCounters_List->item(i)->text().split(',').at(0));    // Counter
             }
 
             // Update overall likwid command
             if (!perfString.isNull())
-            {
-                likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
                 likwidPerfCommand_ += perfString;
-            }
-            else
-                likwidPerfCommand_ = "";
         }
     }
-    else // TODO: Figure out if stethoscope should happen
-    { // Stethoscope mode is on so process accordingly
-//        if (ui->ChosenPerfGroups_List->count() > 0)
-//            perfString += ("-g " + ui->ChosenPerfGroups_List->item(0)->text());
-//        else
-//            perfString += ("-g " + ui->PerfGroups_List->item(0)->text());
 
-//        perfString += " ";
-
-//        QString refreshRateString = ui->RefreshRate_Text->toPlainText().remove("");
-//        if (refreshRateString.isEmpty())
-//            perfString += "-S 500ms ";
-//        else
-//            perfString += "-S " + refreshRateString + "ms ";
-
-//        // Update overall likwid command
-//        if (!perfString.isNull())
-//        {
-//            likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
-//            likwidPerfCommand_ += perfString;
-//        }
-    }
+    likwidPerfCommand_ += " -f " + application_ + " " + commandLineArgs_ + " 2>&1 | tee output.txt";;
+    ui->LikwidCommand_Text->setText(likwidPerfCommand_);
 }
 
 void MainWindow::readCommandLineArgs()
@@ -369,7 +343,7 @@ void MainWindow::readCommandLineArgs()
 void MainWindow::executeUserApplication()
 {
     //TODO: Write in all of the likwid tools
-    QString runString = likwidPerfCommand_ + application_ + " " + commandLineArgs_ + " 2>&1 | tee output.txt";
+    QString runString = likwidPerfCommand_;
     //QString test = "likwid-perfscope -g ENERGY -C 0 -r 10 -t 500ms ";
     //test += runString;
     system(runString.toStdString().c_str());
@@ -405,6 +379,9 @@ void MainWindow::generateCPIStack()
     // TODO: Update the python post processing to accept data from the gui
     // This may just have the python script parsing the data output.txt
     // from this application and feeding it back.
+
+    // Likwid doesn't really support CPI for individual components like originally thought
+    // Will probably try to add a sort of breakdown chart instead of cpi stack
 
     // Read CPI Information from the resulting file
     QFile cpiInFile("./output.txt");
@@ -475,6 +452,64 @@ void MainWindow::generateCPIStack()
     scene_->addItem(item_);
 }
 
+void MainWindow::generateBreakdown()
+{
+    if (!application_.isEmpty())
+    {
+        // Run perf command on the application on another core to streamline it
+        QString perfCommand = "perf stat -e branch-instructions,branch-misses,cache-misses,cache-references,mem-loads,mem-stores,instructions ";
+        perfCommand += application_ + " 2>&1 | tee breakDown.txt" ;
+        system(perfCommand.toStdString().c_str());
+
+        // TODO: Update the python post processing to accept data from the gui
+        // This may just have the python script parsing the data output.txt
+        // from this application and feeding it back.
+
+        // Likwid doesn't really support CPI for individual components like originally thought
+        // Will probably try to add a sort of breakdown chart instead of cpi stack
+
+        // Read CPI Information from the resulting file
+        QFile breakdownFile("./breakDown.txt");
+
+        // Error Check the file
+        if (!breakdownFile.open(QIODevice::ReadOnly))
+            QMessageBox::information(0, "info", breakdownFile.errorString());
+
+        // Convert file into stream to show it in text box
+        QTextStream breakdownInStream(&breakdownFile);
+        breakdownInStream.setCodec("UTF-8");
+        ui->BreakdownOutput_Text->setText(breakdownInStream.readAll());
+
+        breakdownFile.close();
+
+//        // Run Python Post Processing Script
+//        QString runString = "python ../UI_PostProcessing/genCPIStack.py";
+//        //QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
+//        system(runString.toStdString().c_str());
+
+//        // Give the image time to process
+//        //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+
+//        // Setup the image
+//        QImage image("../bin/Results/CPI_Stack.png");
+//        if (item_ == nullptr)
+//            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+//        else
+//        {
+//            // Remove the current item
+//            scene_->removeItem(item_);
+//            delete item_;
+
+//            // Build the new item
+//            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+//        }
+
+//        // Set the scene and place the item
+//        ui->CPI_Stack_GraphicsView->setScene(scene_);
+//        scene_->addItem(item_);
+    }
+}
+
 void MainWindow::on_PerfGroups_List_doubleClicked(const QModelIndex &index)
 {
     // Check for valid index
@@ -490,6 +525,9 @@ void MainWindow::on_PerfGroups_List_doubleClicked(const QModelIndex &index)
         // Disable the perf metric because counters can already be taken up
         ui->PerfMetric_Tab->setDisabled(true);
     }
+
+    // Update current command
+    generateLikwidPerfCommand();
 }
 
 void MainWindow::on_ChosenPerfGroups_List_doubleClicked(const QModelIndex &index)
@@ -504,6 +542,9 @@ void MainWindow::on_ChosenPerfGroups_List_doubleClicked(const QModelIndex &index
         if (ui->ChosenPerfGroups_List->count() == 0)
             ui->PerfMetric_Tab->setDisabled(false);
     }
+
+    // Update current command
+    generateLikwidPerfCommand();
 }
 
 void MainWindow::on_PerfCounters_List_doubleClicked(const QModelIndex &index)
@@ -522,6 +563,9 @@ void MainWindow::on_PerfCounters_List_doubleClicked(const QModelIndex &index)
         // Disable the perf group because counters can already be taken up
         ui->PerfGroup_Tab->setDisabled(true);
     }
+
+    // Update current command
+    generateLikwidPerfCommand();
 }
 
 void MainWindow::on_PerfMetrics_List_doubleClicked(const QModelIndex &index)
@@ -543,6 +587,9 @@ void MainWindow::on_PerfMetrics_List_doubleClicked(const QModelIndex &index)
         // Disable CPI Stack for now
         ui->CPIStack_Tab->setDisabled(true);
     }
+
+    // Update current command
+    generateLikwidPerfCommand();
 }
 
 void MainWindow::on_ChosenPerfCounters_List_doubleClicked(const QModelIndex &index)
@@ -557,6 +604,9 @@ void MainWindow::on_ChosenPerfCounters_List_doubleClicked(const QModelIndex &ind
         if ((ui->ChosenPerfCounters_List->count() == 0) && (ui->ChosenPerfMetrics_List->count() == 0))
             ui->PerfGroup_Tab->setDisabled(false);
     }
+
+    // Update current command
+    generateLikwidPerfCommand();
 }
 
 void MainWindow::on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &index)
@@ -574,41 +624,9 @@ void MainWindow::on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &inde
             ui->CPIStack_Tab->setDisabled(false);
         }
     }
-}
 
-void MainWindow::on_StethoscopeMode_pushButton_clicked()
-{
-    // Change color of the button to notify the user of which mode
-    // White = Normal
-    // Green = Stethoscope Mode
-    QPalette pal = QPalette();
-    pal.setColor(QPalette::Button, (stethoscopeMode_ ? Qt::white : Qt::green));
-    ui->StethoscopeMode_pushButton->setPalette(pal);
-
-    // Control what is enabled based on this button press
-    if (stethoscopeMode_)
-    { // will be turning it off so activate other widgets
-        ui->PerfGroup_Tab->setDisabled(false);
-        ui->PerfMetric_Tab->setDisabled(false);
-        ui->CPIStack_Tab->setDisabled(false);
-        //ui->RefreshRate_Text->setReadOnly(true);
-
-        // Turn off perfscope
-        enableLikwidPerfScope(false);
-    }
-    else
-    { // will be turning it on so deactive other widgets
-        ui->PerfGroup_Tab->setDisabled(true);
-        ui->PerfMetric_Tab->setDisabled(true);
-        ui->CPIStack_Tab->setDisabled(true);
-        //ui->RefreshRate_Text->setReadOnly(false);
-
-        // Start Perfscope
-        enableLikwidPerfScope(true);
-    }
-
-    // Invert the flag
-    stethoscopeMode_ = !stethoscopeMode_;
+    // Update current command
+    generateLikwidPerfCommand();
 }
 
 void MainWindow::enableFeature(bool enable)
@@ -640,4 +658,59 @@ void MainWindow::on_FeatureEnable_pushButton_clicked()
 void MainWindow::on_FeatureDisable_pushButton_clicked()
 {
     enableFeature(false);
+}
+
+void MainWindow::on_Application_Text_textChanged()
+{
+    // Update the current command
+    generateLikwidPerfCommand();
+}
+
+void MainWindow::on_CommandLineArgs_Text_textChanged()
+{
+    // Read Command Line Arguments from the Text Box if any
+    commandLineArgs_ = ui->CommandLineArgs_Text->toPlainText();
+
+    // Update current command
+    generateLikwidPerfCommand();
+}
+
+void MainWindow::on_Breakdown_pushButton_clicked()
+{
+    generateBreakdown();
+}
+
+void MainWindow::on_Perfscope_pushButton_clicked()
+{
+    // Change color of the button to notify the user of which mode
+    // White = Normal
+    // Green = Stethoscope Mode
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Button, (perfscopeMode_ ? Qt::white : Qt::green));
+    ui->Perfscope_pushButton->setPalette(pal);
+
+    // Control what is enabled based on this button press
+    if (perfscopeMode_)
+    { // will be turning it off so activate other widgets
+        ui->PerfGroup_Tab->setDisabled(false);
+        ui->PerfMetric_Tab->setDisabled(false);
+        ui->CPIStack_Tab->setDisabled(false);
+        //ui->RefreshRate_Text->setReadOnly(true);
+
+        // Turn off perfscope
+        enableLikwidPerfScope(false);
+    }
+    else
+    { // will be turning it on so deactive other widgets
+        ui->PerfGroup_Tab->setDisabled(true);
+        ui->PerfMetric_Tab->setDisabled(true);
+        ui->CPIStack_Tab->setDisabled(true);
+        //ui->RefreshRate_Text->setReadOnly(false);
+
+        // Start Perfscope
+        enableLikwidPerfScope(true);
+    }
+
+    // Invert the flag
+    perfscopeMode_ = !perfscopeMode_;
 }

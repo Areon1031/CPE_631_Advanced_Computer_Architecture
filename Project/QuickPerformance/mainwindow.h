@@ -23,6 +23,7 @@ enum QuickTabs
     PERF_METRICS,
     FEATURE_CONTROL,
     CPI,
+    BREAKDOWN,
     APP_OUT
 };
 
@@ -54,12 +55,17 @@ private slots:
     void on_ChosenPerfCounters_List_doubleClicked(const QModelIndex &index);
     void on_ChosenPerfMetrics_List_doubleClicked(const QModelIndex &index);
 
-
-    void on_StethoscopeMode_pushButton_clicked();
-
+    // Feature Control
     void on_FeatureEnable_pushButton_clicked();
-
     void on_FeatureDisable_pushButton_clicked();
+
+    // Application Selection
+    void on_Application_Text_textChanged();
+    void on_CommandLineArgs_Text_textChanged();
+
+    // Special Buttons
+    void on_Breakdown_pushButton_clicked();
+    void on_Perfscope_pushButton_clicked();
 
 private:
     // Reference to the UI
@@ -75,7 +81,7 @@ private:
     QString likwidPerfCommand_;
 
     // Stethoscope Mode
-    bool stethoscopeMode_;
+    bool perfscopeMode_;
 
     QGraphicsItem* item_;
     QGraphicsScene* scene_;
@@ -85,6 +91,7 @@ private:
     void readCommandLineArgs();
     void executeUserApplication();
     void generateCPIStack();
+    void generateBreakdown();
 
     // Likwid Utility
     void getTopology();

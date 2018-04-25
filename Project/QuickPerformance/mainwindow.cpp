@@ -470,17 +470,60 @@ void MainWindow::generateBreakdown()
 
         // Read CPI Information from the resulting file
         QFile breakdownFile("./breakDown.txt");
+        QFile breakdownOutFile("./breakDownOut.txt");
 
         // Error Check the file
         if (!breakdownFile.open(QIODevice::ReadOnly))
             QMessageBox::information(0, "info", breakdownFile.errorString());
 
+        // Error Check the file
+        if (!breakdownOutFile.open(QIODevice::WriteOnly))
+            QMessageBox::information(0, "info", breakdownOutFile.errorString());
+
+
         // Convert file into stream to show it in text box
         QTextStream breakdownInStream(&breakdownFile);
         breakdownInStream.setCodec("UTF-8");
-        ui->BreakdownOutput_Text->setText(breakdownInStream.readAll());
 
+        QTextStream breakdownOutStream(&breakdownOutFile);
+        breakdownOutStream.setCodec("UTF-8");
+
+        QStringList values;
+        QStringList finalValues;
+        QStringList finalMetrics;
+
+        while(!breakdownInStream.atEnd())
+        {
+            QString currLine = breakdownInStream.readLine();
+
+            if (currLine.contains("branch-instructions", Qt::CaseInsensitive) ||
+                    currLine.contains("branch-misses", Qt::CaseInsensitive) ||
+                    currLine.contains("cache-misses", Qt::CaseInsensitive) ||
+                    currLine.contains("cache-references", Qt::CaseInsensitive) ||
+                    currLine.contains("mem-loads", Qt::CaseInsensitive) ||
+                    currLine.contains("mem-stores", Qt::CaseInsensitive))
+            {
+                currLine = currLine.remove(",");
+                values = currLine.split(" ");
+                values.removeAll("");
+                finalValues.append(values.at(0));
+                finalMetrics.append(values.at(1));
+            }
+        }
+
+        QString breakdownOut;
+        for (int i = 0; i < finalValues.count(); ++i)
+            breakdownOut += finalMetrics.at(i) + ":" + finalValues.at(i) + " \n";
+
+        breakdownOutStream << breakdownOut;
+
+        //ui->BreakdownOutput_Text->setText(breakdownInStream.readAll());
+        ui->BreakdownOutput_Text->setText(breakdownOut);
         breakdownFile.close();
+        breakdownOutFile.close();
+
+        // Read the breakdown file and run python to process the perf data
+
 
 //        // Run Python Post Processing Script
 //        QString runString = "python ../UI_PostProcessing/genCPIStack.py";

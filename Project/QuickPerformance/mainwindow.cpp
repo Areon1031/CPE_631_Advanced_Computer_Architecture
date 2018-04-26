@@ -18,6 +18,25 @@ MainWindow::MainWindow(QWidget *parent) :
     //this->setAutoFillBackground(true);
     //this->setPalette(pal);
 
+    // Set up tool tips
+    ui->ExecuteCore_Text->setToolTip("Provide the core ID that you want to execute your application on.");
+    ui->Perfscope_pushButton->setToolTip("Start real time graphing of power and energy consumed");
+    ui->RunTest_pushButton->setToolTip("Run executable with performance metrics selected");
+    ui->ApplicationLoad_pushButton->setToolTip("Load application executable");
+    ui->PerfGroups_List->setToolTip("Double click to add");
+    ui->PerfMetrics_List->setToolTip("Double click to add metric, make sure to add a compatible counter (match counter with last entry in metric i.e. PMC use PMC0-4)");
+    ui->PerfCounters_List->setToolTip("Double click to add");
+    ui->ChosenPerfGroups_List->setToolTip("Double click to remove");
+    ui->ChosenPerfMetrics_List->setToolTip("Double click to remove");
+    ui->ChosenPerfCounters_List->setToolTip("Double click to remove");
+    ui->Features_List->setToolTip("Select and use enable/disable button to turn feature on/off");
+    ui->Breakdown_pushButton->setToolTip("Run loaded application with perf and collect generic measurements, provides graphical view of counts.");
+    ui->LikwidCommand_Text->setToolTip("Likwid perfctr command using current selections");
+
+    // Alignment
+    ui->ExecuteCore_Text->setText("0");
+    ui->ExecuteCore_Text->setAlignment(Qt::AlignCenter);
+
     // Initially don't start in this mode
     perfscopeMode_ = false;
 
@@ -297,8 +316,8 @@ void MainWindow::generateLikwidPerfCommand()
     // Add user specified groups
     QString perfString;
 
-    // Base Command
-    likwidPerfCommand_ = "likwid-perfctr -C 0 -M 1 ";
+    // Base Command, only working on one core in this version
+    likwidPerfCommand_ = "likwid-perfctr -C " + (executeCore_.isEmpty() ? "0" : executeCore_) + " -M 1 ";
     if (!perfscopeMode_)
     {
         if (ui->PerfGroup_Tab->isEnabled())
@@ -456,104 +475,139 @@ void MainWindow::generateBreakdown()
 {
     if (!application_.isEmpty())
     {
-        // Run perf command on the application on another core to streamline it
-        QString perfCommand = "perf stat -e branch-instructions,branch-misses,cache-misses,cache-references,mem-loads,mem-stores,instructions ";
-        perfCommand += application_ + " 2>&1 | tee breakDown.txt" ;
-        system(perfCommand.toStdString().c_str());
-
-        // TODO: Update the python post processing to accept data from the gui
-        // This may just have the python script parsing the data output.txt
-        // from this application and feeding it back.
-
-        // Likwid doesn't really support CPI for individual components like originally thought
-        // Will probably try to add a sort of breakdown chart instead of cpi stack
-
-        // Read CPI Information from the resulting file
-        QFile breakdownFile("./breakDown.txt");
-        QFile breakdownOutFile("./breakdownInfo.txt");
-
-        // Error Check the file
-        if (!breakdownFile.open(QIODevice::ReadOnly))
-            QMessageBox::information(0, "info", breakdownFile.errorString());
-
-        // Error Check the file
-        if (!breakdownOutFile.open(QIODevice::WriteOnly))
-            QMessageBox::information(0, "info", breakdownOutFile.errorString());
-
-
-        // Convert file into stream to show it in text box
-        QTextStream breakdownInStream(&breakdownFile);
-        breakdownInStream.setCodec("UTF-8");
-
-        QTextStream breakdownOutStream(&breakdownOutFile);
-        breakdownOutStream.setCodec("UTF-8");
-
-        QStringList values;
-        QStringList finalValues;
-        QStringList finalMetrics;
-
-        while(!breakdownInStream.atEnd())
+        if (ui->PerfBranches_checkBox->isChecked() ||
+        ui->PerfCache_checkBox->isChecked() ||
+        ui->PerfMemory_checkBox->isChecked())
         {
-            QString currLine = breakdownInStream.readLine();
+            // Run perf command on the application on another core to streamline it
+            // TODO: Only run the options selected by the user
+            QString perfCommand = "perf stat -C " + (executeCore_.isEmpty() ? "0" : executeCore_) + " ";
+            perfCommand += "-e branch-instructions,branch-misses,cache-misses,cache-references,mem-loads,mem-stores,instructions ";
+            perfCommand += application_ + " " + commandLineArgs_ + " 2>&1 | tee breakDown.txt" ;
+            system(perfCommand.toStdString().c_str());
 
-            if (currLine.contains("branch-instructions", Qt::CaseInsensitive) ||
-                    currLine.contains("branch-misses", Qt::CaseInsensitive) ||
-                    currLine.contains("cache-misses", Qt::CaseInsensitive) ||
-                    currLine.contains("cache-references", Qt::CaseInsensitive) ||
-                    currLine.contains("mem-loads", Qt::CaseInsensitive) ||
-                    currLine.contains("mem-stores", Qt::CaseInsensitive))
+            // TODO: Update the python post processing to accept data from the gui
+            // This may just have the python script parsing the data output.txt
+            // from this application and feeding it back.
+
+            // Likwid doesn't really support CPI for individual components like originally thought
+            // Will probably try to add a sort of breakdown chart instead of cpi stack
+
+            // Read CPI Information from the resulting file
+            QFile breakdownFile("./breakDown.txt");
+            QFile breakdownOutFile("./breakdownInfo.txt");
+
+            // Error Check the file
+            if (!breakdownFile.open(QIODevice::ReadOnly))
+                QMessageBox::information(0, "info", breakdownFile.errorString());
+
+            // Error Check the file
+            if (!breakdownOutFile.open(QIODevice::WriteOnly))
+                QMessageBox::information(0, "info", breakdownOutFile.errorString());
+
+
+            // Convert file into stream to show it in text box
+            QTextStream breakdownInStream(&breakdownFile);
+            breakdownInStream.setCodec("UTF-8");
+
+            QTextStream breakdownOutStream(&breakdownOutFile);
+            breakdownOutStream.setCodec("UTF-8");
+
+            QStringList values;
+            QStringList finalValues;
+            QStringList finalMetrics;
+
+            while(!breakdownInStream.atEnd())
             {
-                values = currLine.remove(",").split(" ");
-                values.removeAll("");
-                finalValues.append(values.at(0));
-                finalMetrics.append(values.at(1));
+                QString currLine = breakdownInStream.readLine();
+
+                if (currLine.contains("branch-instructions", Qt::CaseInsensitive) ||
+                        currLine.contains("branch-misses", Qt::CaseInsensitive))
+                {
+                    if (ui->PerfBranches_checkBox->isChecked())
+                    {
+                        values = currLine.remove(",").split(" ");
+                        values.removeAll("");
+                        finalValues.append(values.at(0));
+                        finalMetrics.append(values.at(1));
+                        continue;
+                    }
+                }
+                else if (currLine.contains("cache-misses", Qt::CaseInsensitive) ||
+                        currLine.contains("cache-references", Qt::CaseInsensitive))
+                {
+                    if (ui->PerfCache_checkBox->isChecked())
+                    {
+                        values = currLine.remove(",").split(" ");
+                        values.removeAll("");
+                        finalValues.append(values.at(0));
+                        finalMetrics.append(values.at(1));
+                        continue;
+                    }
+                }
+                else if (currLine.contains("mem-loads", Qt::CaseInsensitive) ||
+                         currLine.contains("mem-stores", Qt::CaseInsensitive))
+                {
+                    if (ui->PerfMemory_checkBox->isChecked())
+                    {
+                        values = currLine.remove(",").split(" ");
+                        values.removeAll("");
+                        finalValues.append(values.at(0));
+                        finalMetrics.append(values.at(1));
+                        continue;
+                    }
+                }
             }
+
+            QString breakdownOut;
+            for (int i = 0; i < finalValues.count(); ++i)
+                breakdownOut += finalMetrics.at(i) + ":" + finalValues.at(i) + " \n";
+
+            // Write the value to the file
+            breakdownOutStream << breakdownOut;
+
+            // Output the GUI element
+            //ui->BreakdownOutput_Text->setText(breakdownInStream.readAll());
+            ui->BreakdownOutput_Text->setText(breakdownOut);
+
+            // Close the files
+            breakdownFile.close();
+            breakdownOutFile.close();
+
+            // Read the breakdown file and run python to process the perf data
+            //QString runString = "python ../UI_PostProcessing/genBreakdownChart.py";
+
+    //        // Run Python Post Processing Script
+    //        QString runString = "python ../UI_PostProcessing/genCPIStack.py";
+    //        //QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
+    //        system(runString.toStdString().c_str());
+
+    //        // Give the image time to process
+    //        //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+
+    //        // Setup the image
+    //        QImage image("../bin/Results/CPI_Stack.png");
+    //        if (item_ == nullptr)
+    //            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+    //        else
+    //        {
+    //            // Remove the current item
+    //            scene_->removeItem(item_);
+    //            delete item_;
+
+    //            // Build the new item
+    //            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+    //        }
+
+    //        // Set the scene and place the item
+    //        ui->CPI_Stack_GraphicsView->setScene(scene_);
+    //        scene_->addItem(item_);
         }
-
-        QString breakdownOut;
-        for (int i = 0; i < finalValues.count(); ++i)
-            breakdownOut += finalMetrics.at(i) + ":" + finalValues.at(i) + " \n";
-
-        // Write the value to the file
-        breakdownOutStream << breakdownOut;
-
-        // Output the GUI element
-        //ui->BreakdownOutput_Text->setText(breakdownInStream.readAll());
-        ui->BreakdownOutput_Text->setText(breakdownOut);
-
-        // Close the files
-        breakdownFile.close();
-        breakdownOutFile.close();
-
-        // Read the breakdown file and run python to process the perf data
-        QString runString = "python ../UI_PostProcessing/genBreakdownChart.py";
-
-//        // Run Python Post Processing Script
-//        QString runString = "python ../UI_PostProcessing/genCPIStack.py";
-//        //QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
-//        system(runString.toStdString().c_str());
-
-//        // Give the image time to process
-//        //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-
-//        // Setup the image
-//        QImage image("../bin/Results/CPI_Stack.png");
-//        if (item_ == nullptr)
-//            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-//        else
-//        {
-//            // Remove the current item
-//            scene_->removeItem(item_);
-//            delete item_;
-
-//            // Build the new item
-//            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-//        }
-
-//        // Set the scene and place the item
-//        ui->CPI_Stack_GraphicsView->setScene(scene_);
-//        scene_->addItem(item_);
+        else
+            ui->BreakdownOutput_Text->setText("Please check one of the modules before running breakdown!");
     }
+    else
+        ui->Application_Text->setText("Load an application!");
 }
 
 void MainWindow::on_PerfGroups_List_doubleClicked(const QModelIndex &index)
@@ -759,4 +813,11 @@ void MainWindow::on_Perfscope_pushButton_clicked()
 
     // Invert the flag
     perfscopeMode_ = !perfscopeMode_;
+}
+
+void MainWindow::on_ExecuteCore_Text_textChanged()
+{
+    // TODO: Clean up the regex
+    executeCore_ = ui->ExecuteCore_Text->toPlainText().remove(QRegExp("[^a-zA-Z\\d\\s]")).remove(QRegExp("[a-zA-Z]+(?: [a-zA-Z]+)*"));
+    generateLikwidPerfCommand();
 }

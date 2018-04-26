@@ -19,73 +19,57 @@ import matplotlib.pyplot as plt
 
 # TODO: Evenutally this will be passed in as a parameter to python
 breakdownFile = open("../build-QuickPerformance-Desktop-Debug/breakdownInfo.txt", 'r')
-count = 0
 
 # Containers to hold the information
-groupCPIList = list()
-groupList = list()
+metricList = list()
+metricCountList = list()
 
 # Loop through the file and parse the information
-for line in cpiFile:
-    # Don't process the first line if using perf-scope
-    #if count != 0:
+for line in breakdownFile:
     # Get the pieces of information
     parseString = line.split(':') 
 
-    # Get the group from the info
-    group = parseString[1]
+    # Get the metric from the info
+    metric = parseString[0]
 
-    # Create the group list for the legend
-    groupList.append(group)
+    # Create the metric list for the legend
+    metricList.append(metric)
 
     # Gather the CPI information if any
-    cpiList = parseString[2].split('|')
+    count = parseString[1]
 
-    # Don't use if CPI not reported
-    if cpiList[1].find('-') == -1 and cpiList[1].find('nan') == -1:
-        cpiString = cpiList[1]
-    else:
-        cpiString = '0'
+    metricCountList.append((metric, float(count)))
     #end if
-
-    groupCPIList.append((group, float(cpiString)))
-    #end if
-    count += 1
 #end for
 
-print groupList
-print groupCPIList
+print metricList
+print metricCountList
 
 arrayList = list()
 colorList = list()
 
 # Generate containers with numpy arrays and assigned colors
-for i in range(0, len(groupCPIList)):
-    arrayList.append(np.array(groupCPIList[i][1]))
+for i in range(0, len(metricCountList)):
+    arrayList.append(np.array(metricCountList[i][1]))
     colorList.append(np.random.random(3))
 
 # Plot the data on a bar graph
-cpiSum = 0
-if (len(groupCPIList) > 0):
-    plt.bar(0, arrayList[0], color = colorList[0])
-    margin = arrayList[0]
-    cpiSum += arrayList[0]
-    for i in range(1, len(groupCPIList)):
-        print arrayList[i]
-        plt.bar(0, arrayList[i], color = colorList[i], bottom = margin)
-        margin += arrayList[i]
-        cpiSum += arrayList[i]
-    # end for
-# end if
+for i in range(0, len(metricCountList)):
+    plt.bar(i, arrayList[i], color = colorList[i])
+
+ind = np.arange(1, len(metricCountList))
+#plt.set_xticks(ind)
+#plt.set_xticklabels(metricCountList[ind][0])
+
 
 # Set the axis
-plt.axis([-1, 1, 0, cpiSum + 1])
-plt.gca().legend(groupList)
-plt.title("CPI Stack")
+#plt.axis([-1, 1, 0, 1])
+plt.gca().legend(metricList)
+plt.title("Break Down Chart")
 
 # Show the plot
-#plt.show()
-plt.plot()
+plt.show()
+#plt.plot()
 
 # Save the figure
 # TODO: Have this save the png in the same directory that is passed in, when that part is finished.

@@ -67,6 +67,8 @@ private slots:
     void on_Breakdown_pushButton_clicked();
     void on_Perfscope_pushButton_clicked();
 
+    void on_ExecuteCore_Text_textChanged();
+
 private:
     // Reference to the UI
     Ui::MainWindow *ui;
@@ -82,6 +84,9 @@ private:
 
     // Stethoscope Mode
     bool perfscopeMode_;
+
+    // Current Core
+    QString executeCore_;
 
     QGraphicsItem* item_;
     QGraphicsScene* scene_;

@@ -101,6 +101,9 @@ public:
     QWidget *ApplicationOutput_Tab;
     QGridLayout *gridLayout_7;
     QTextBrowser *ApplicationOutput_Text;
+    QLabel *OutDirectory_Label;
+    QTextEdit *OutDirectory_Text;
+    QPushButton *OutDirectory_pushButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -110,7 +113,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1088, 694);
+        MainWindow->resize(1094, 739);
         QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy.setHorizontalStretch(1);
         sizePolicy.setVerticalStretch(1);
@@ -127,7 +130,7 @@ public:
         gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
         Logo_Group = new QGroupBox(centralWidget);
         Logo_Group->setObjectName(QStringLiteral("Logo_Group"));
-        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(Logo_Group->sizePolicy().hasHeightForWidth());
@@ -202,25 +205,32 @@ public:
 
         Application_Group = new QGroupBox(centralWidget);
         Application_Group->setObjectName(QStringLiteral("Application_Group"));
-        sizePolicy2.setHeightForWidth(Application_Group->sizePolicy().hasHeightForWidth());
-        Application_Group->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy5(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(Application_Group->sizePolicy().hasHeightForWidth());
+        Application_Group->setSizePolicy(sizePolicy5);
         gridLayout_2 = new QGridLayout(Application_Group);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         Application_Label = new QLabel(Application_Group);
         Application_Label->setObjectName(QStringLiteral("Application_Label"));
-        sizePolicy2.setHeightForWidth(Application_Label->sizePolicy().hasHeightForWidth());
-        Application_Label->setSizePolicy(sizePolicy2);
-        Application_Label->setMaximumSize(QSize(161, 17));
+        QSizePolicy sizePolicy6(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(Application_Label->sizePolicy().hasHeightForWidth());
+        Application_Label->setSizePolicy(sizePolicy6);
+        Application_Label->setMaximumSize(QSize(1666666, 17));
 
         gridLayout_2->addWidget(Application_Label, 0, 0, 1, 1);
 
         Application_Text = new QTextEdit(Application_Group);
         Application_Text->setObjectName(QStringLiteral("Application_Text"));
-        sizePolicy2.setHeightForWidth(Application_Text->sizePolicy().hasHeightForWidth());
-        Application_Text->setSizePolicy(sizePolicy2);
-        Application_Text->setMaximumSize(QSize(281, 31));
+        sizePolicy6.setHeightForWidth(Application_Text->sizePolicy().hasHeightForWidth());
+        Application_Text->setSizePolicy(sizePolicy6);
+        Application_Text->setMinimumSize(QSize(256, 31));
+        Application_Text->setMaximumSize(QSize(166666, 31));
         Application_Text->setLineWrapMode(QTextEdit::NoWrap);
         Application_Text->setLineWrapColumnOrWidth(0);
         Application_Text->setReadOnly(true);
@@ -229,25 +239,26 @@ public:
 
         ApplicationLoad_pushButton = new QPushButton(Application_Group);
         ApplicationLoad_pushButton->setObjectName(QStringLiteral("ApplicationLoad_pushButton"));
-        sizePolicy2.setHeightForWidth(ApplicationLoad_pushButton->sizePolicy().hasHeightForWidth());
-        ApplicationLoad_pushButton->setSizePolicy(sizePolicy2);
-        ApplicationLoad_pushButton->setMaximumSize(QSize(89, 30));
+        sizePolicy6.setHeightForWidth(ApplicationLoad_pushButton->sizePolicy().hasHeightForWidth());
+        ApplicationLoad_pushButton->setSizePolicy(sizePolicy6);
+        ApplicationLoad_pushButton->setMaximumSize(QSize(100, 30));
 
         gridLayout_2->addWidget(ApplicationLoad_pushButton, 1, 1, 1, 1);
 
         CommandLineArgs_Label = new QLabel(Application_Group);
         CommandLineArgs_Label->setObjectName(QStringLiteral("CommandLineArgs_Label"));
-        sizePolicy2.setHeightForWidth(CommandLineArgs_Label->sizePolicy().hasHeightForWidth());
-        CommandLineArgs_Label->setSizePolicy(sizePolicy2);
-        CommandLineArgs_Label->setMaximumSize(QSize(190, 17));
+        sizePolicy6.setHeightForWidth(CommandLineArgs_Label->sizePolicy().hasHeightForWidth());
+        CommandLineArgs_Label->setSizePolicy(sizePolicy6);
+        CommandLineArgs_Label->setMaximumSize(QSize(1666666, 17));
 
         gridLayout_2->addWidget(CommandLineArgs_Label, 2, 0, 1, 1);
 
         CommandLineArgs_Text = new QTextEdit(Application_Group);
         CommandLineArgs_Text->setObjectName(QStringLiteral("CommandLineArgs_Text"));
-        sizePolicy2.setHeightForWidth(CommandLineArgs_Text->sizePolicy().hasHeightForWidth());
-        CommandLineArgs_Text->setSizePolicy(sizePolicy2);
-        CommandLineArgs_Text->setMaximumSize(QSize(281, 31));
+        sizePolicy6.setHeightForWidth(CommandLineArgs_Text->sizePolicy().hasHeightForWidth());
+        CommandLineArgs_Text->setSizePolicy(sizePolicy6);
+        CommandLineArgs_Text->setMinimumSize(QSize(256, 31));
+        CommandLineArgs_Text->setMaximumSize(QSize(166666, 31));
         CommandLineArgs_Text->setLineWrapMode(QTextEdit::NoWrap);
         CommandLineArgs_Text->setReadOnly(false);
         CommandLineArgs_Text->setAcceptRichText(true);
@@ -256,14 +267,18 @@ public:
 
         RunTest_pushButton = new QPushButton(Application_Group);
         RunTest_pushButton->setObjectName(QStringLiteral("RunTest_pushButton"));
-        sizePolicy2.setHeightForWidth(RunTest_pushButton->sizePolicy().hasHeightForWidth());
-        RunTest_pushButton->setSizePolicy(sizePolicy2);
-        RunTest_pushButton->setMaximumSize(QSize(89, 30));
+        sizePolicy6.setHeightForWidth(RunTest_pushButton->sizePolicy().hasHeightForWidth());
+        RunTest_pushButton->setSizePolicy(sizePolicy6);
+        RunTest_pushButton->setMaximumSize(QSize(100, 30));
+        QIcon icon;
+        icon.addFile(QStringLiteral("../programBin/Logo/QuickPerformance.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        RunTest_pushButton->setIcon(icon);
+        RunTest_pushButton->setIconSize(QSize(16, 16));
 
         gridLayout_2->addWidget(RunTest_pushButton, 3, 1, 1, 1);
 
 
-        gridLayout_9->addWidget(Application_Group, 0, 3, 1, 1);
+        gridLayout_9->addWidget(Application_Group, 0, 3, 1, 2);
 
         LikwidCommand_Label = new QLabel(centralWidget);
         LikwidCommand_Label->setObjectName(QStringLiteral("LikwidCommand_Label"));
@@ -276,32 +291,32 @@ public:
 
         LikwidCommand_Text = new QTextEdit(centralWidget);
         LikwidCommand_Text->setObjectName(QStringLiteral("LikwidCommand_Text"));
-        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(LikwidCommand_Text->sizePolicy().hasHeightForWidth());
-        LikwidCommand_Text->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(LikwidCommand_Text->sizePolicy().hasHeightForWidth());
+        LikwidCommand_Text->setSizePolicy(sizePolicy7);
         LikwidCommand_Text->setMaximumSize(QSize(16777215, 31));
         LikwidCommand_Text->setLineWrapMode(QTextEdit::NoWrap);
         LikwidCommand_Text->setReadOnly(true);
         LikwidCommand_Text->setAcceptRichText(true);
 
-        gridLayout_9->addWidget(LikwidCommand_Text, 1, 1, 1, 3);
+        gridLayout_9->addWidget(LikwidCommand_Text, 1, 1, 1, 4);
 
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy6.setHorizontalStretch(1);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
-        tabWidget->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy8(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy8.setHorizontalStretch(1);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy8);
         Topology_Tab = new QWidget();
         Topology_Tab->setObjectName(QStringLiteral("Topology_Tab"));
-        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(Topology_Tab->sizePolicy().hasHeightForWidth());
-        Topology_Tab->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy9(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(Topology_Tab->sizePolicy().hasHeightForWidth());
+        Topology_Tab->setSizePolicy(sizePolicy9);
         gridLayout_4 = new QGridLayout(Topology_Tab);
         gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -326,11 +341,11 @@ public:
 
         Breakdown_Group = new QGroupBox(Breakdown_Tab);
         Breakdown_Group->setObjectName(QStringLiteral("Breakdown_Group"));
-        QSizePolicy sizePolicy8(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy8.setHorizontalStretch(0);
-        sizePolicy8.setVerticalStretch(0);
-        sizePolicy8.setHeightForWidth(Breakdown_Group->sizePolicy().hasHeightForWidth());
-        Breakdown_Group->setSizePolicy(sizePolicy8);
+        QSizePolicy sizePolicy10(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy10.setHorizontalStretch(0);
+        sizePolicy10.setVerticalStretch(0);
+        sizePolicy10.setHeightForWidth(Breakdown_Group->sizePolicy().hasHeightForWidth());
+        Breakdown_Group->setSizePolicy(sizePolicy10);
         Breakdown_Group->setMinimumSize(QSize(191, 50));
         gridLayout_12 = new QGridLayout(Breakdown_Group);
         gridLayout_12->setSpacing(6);
@@ -355,8 +370,8 @@ public:
 
         Breakdown_pushButton = new QPushButton(Breakdown_Group);
         Breakdown_pushButton->setObjectName(QStringLiteral("Breakdown_pushButton"));
-        sizePolicy8.setHeightForWidth(Breakdown_pushButton->sizePolicy().hasHeightForWidth());
-        Breakdown_pushButton->setSizePolicy(sizePolicy8);
+        sizePolicy10.setHeightForWidth(Breakdown_pushButton->sizePolicy().hasHeightForWidth());
+        Breakdown_pushButton->setSizePolicy(sizePolicy10);
         Breakdown_pushButton->setMaximumSize(QSize(375, 30));
 
         gridLayout_12->addWidget(Breakdown_pushButton, 1, 0, 1, 3);
@@ -366,11 +381,11 @@ public:
 
         BreakdownOutput_Text = new QTextBrowser(Breakdown_Tab);
         BreakdownOutput_Text->setObjectName(QStringLiteral("BreakdownOutput_Text"));
-        QSizePolicy sizePolicy9(QSizePolicy::Minimum, QSizePolicy::Expanding);
-        sizePolicy9.setHorizontalStretch(0);
-        sizePolicy9.setVerticalStretch(0);
-        sizePolicy9.setHeightForWidth(BreakdownOutput_Text->sizePolicy().hasHeightForWidth());
-        BreakdownOutput_Text->setSizePolicy(sizePolicy9);
+        QSizePolicy sizePolicy11(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy11.setHorizontalStretch(0);
+        sizePolicy11.setVerticalStretch(0);
+        sizePolicy11.setHeightForWidth(BreakdownOutput_Text->sizePolicy().hasHeightForWidth());
+        BreakdownOutput_Text->setSizePolicy(sizePolicy11);
         BreakdownOutput_Text->setMinimumSize(QSize(391, 200));
 
         gridLayout_13->addWidget(BreakdownOutput_Text, 1, 1, 1, 1);
@@ -458,25 +473,25 @@ public:
         gridLayout_11->setObjectName(QStringLiteral("gridLayout_11"));
         FeatureOperations_Text = new QTextBrowser(Features_Tab);
         FeatureOperations_Text->setObjectName(QStringLiteral("FeatureOperations_Text"));
-        QSizePolicy sizePolicy10(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy10.setHorizontalStretch(1);
-        sizePolicy10.setVerticalStretch(1);
-        sizePolicy10.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
-        FeatureOperations_Text->setSizePolicy(sizePolicy10);
+        QSizePolicy sizePolicy12(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy12.setHorizontalStretch(1);
+        sizePolicy12.setVerticalStretch(1);
+        sizePolicy12.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
+        FeatureOperations_Text->setSizePolicy(sizePolicy12);
 
         gridLayout_11->addWidget(FeatureOperations_Text, 1, 2, 1, 1);
 
         Features_List = new QListWidget(Features_Tab);
         Features_List->setObjectName(QStringLiteral("Features_List"));
-        sizePolicy10.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
-        Features_List->setSizePolicy(sizePolicy10);
+        sizePolicy12.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
+        Features_List->setSizePolicy(sizePolicy12);
 
         gridLayout_11->addWidget(Features_List, 1, 0, 1, 1);
 
         groupBox = new QGroupBox(Features_Tab);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        sizePolicy7.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
-        groupBox->setSizePolicy(sizePolicy7);
+        sizePolicy9.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy9);
         gridLayout_10 = new QGridLayout(groupBox);
         gridLayout_10->setSpacing(6);
         gridLayout_10->setContentsMargins(11, 11, 11, 11);
@@ -502,11 +517,11 @@ public:
 
         FeaturesList_Label = new QLabel(Features_Tab);
         FeaturesList_Label->setObjectName(QStringLiteral("FeaturesList_Label"));
-        QSizePolicy sizePolicy11(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy11.setHorizontalStretch(0);
-        sizePolicy11.setVerticalStretch(0);
-        sizePolicy11.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
-        FeaturesList_Label->setSizePolicy(sizePolicy11);
+        QSizePolicy sizePolicy13(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy13.setHorizontalStretch(0);
+        sizePolicy13.setVerticalStretch(0);
+        sizePolicy13.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
+        FeaturesList_Label->setSizePolicy(sizePolicy13);
         FeaturesList_Label->setMinimumSize(QSize(343, 17));
         FeaturesList_Label->setMaximumSize(QSize(343, 17));
 
@@ -514,8 +529,8 @@ public:
 
         ChosenPerfCoutners_Label_2 = new QLabel(Features_Tab);
         ChosenPerfCoutners_Label_2->setObjectName(QStringLiteral("ChosenPerfCoutners_Label_2"));
-        sizePolicy11.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
-        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy11);
+        sizePolicy13.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
+        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy13);
         ChosenPerfCoutners_Label_2->setMinimumSize(QSize(343, 17));
         ChosenPerfCoutners_Label_2->setMaximumSize(QSize(343, 17));
 
@@ -547,12 +562,40 @@ public:
 
         tabWidget->addTab(ApplicationOutput_Tab, QString());
 
-        gridLayout_9->addWidget(tabWidget, 2, 0, 1, 4);
+        gridLayout_9->addWidget(tabWidget, 2, 0, 1, 5);
+
+        OutDirectory_Label = new QLabel(centralWidget);
+        OutDirectory_Label->setObjectName(QStringLiteral("OutDirectory_Label"));
+        sizePolicy2.setHeightForWidth(OutDirectory_Label->sizePolicy().hasHeightForWidth());
+        OutDirectory_Label->setSizePolicy(sizePolicy2);
+        OutDirectory_Label->setMaximumSize(QSize(161, 17));
+        OutDirectory_Label->setAlignment(Qt::AlignCenter);
+
+        gridLayout_9->addWidget(OutDirectory_Label, 3, 0, 1, 1);
+
+        OutDirectory_Text = new QTextEdit(centralWidget);
+        OutDirectory_Text->setObjectName(QStringLiteral("OutDirectory_Text"));
+        sizePolicy7.setHeightForWidth(OutDirectory_Text->sizePolicy().hasHeightForWidth());
+        OutDirectory_Text->setSizePolicy(sizePolicy7);
+        OutDirectory_Text->setMaximumSize(QSize(16777215, 31));
+        OutDirectory_Text->setLineWrapMode(QTextEdit::NoWrap);
+        OutDirectory_Text->setReadOnly(false);
+        OutDirectory_Text->setAcceptRichText(true);
+
+        gridLayout_9->addWidget(OutDirectory_Text, 3, 1, 1, 3);
+
+        OutDirectory_pushButton = new QPushButton(centralWidget);
+        OutDirectory_pushButton->setObjectName(QStringLiteral("OutDirectory_pushButton"));
+        sizePolicy2.setHeightForWidth(OutDirectory_pushButton->sizePolicy().hasHeightForWidth());
+        OutDirectory_pushButton->setSizePolicy(sizePolicy2);
+        OutDirectory_pushButton->setMaximumSize(QSize(89, 30));
+
+        gridLayout_9->addWidget(OutDirectory_pushButton, 3, 4, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1088, 22));
+        menuBar->setGeometry(QRect(0, 0, 1094, 22));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -610,6 +653,8 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(Features_Tab), QApplication::translate("MainWindow", "Feature Control", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
+        OutDirectory_Label->setText(QApplication::translate("MainWindow", "Output Directory", Q_NULLPTR));
+        OutDirectory_pushButton->setText(QApplication::translate("MainWindow", "Select Dir", Q_NULLPTR));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", Q_NULLPTR));
     } // retranslateUi
 

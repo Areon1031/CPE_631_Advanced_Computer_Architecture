@@ -69,12 +69,17 @@ private slots:
 
     void on_ExecuteCore_Text_textChanged();
 
+    void on_OutDirectory_pushButton_clicked();
+
 private:
     // Reference to the UI
     Ui::MainWindow *ui;
 
     // Application File
     QString application_;
+
+    // Output Directory
+    QString outputDir_;
 
     // Command Line Arguments for Application
     QString commandLineArgs_;

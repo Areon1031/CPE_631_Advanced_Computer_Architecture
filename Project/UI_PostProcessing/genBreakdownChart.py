@@ -6,6 +6,7 @@
 # Script to generate break down chart from perf output
 
 # Imports
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -18,7 +19,7 @@ import matplotlib.pyplot as plt
 # metric:count
 
 # TODO: Evenutally this will be passed in as a parameter to python
-breakdownFile = open("../build-QuickPerformance-Desktop-Debug/breakdownInfo.txt", 'r')
+breakdownFile = open(sys.argv[1], 'r')
 
 # Containers to hold the information
 metricList = list()
@@ -71,4 +72,4 @@ plt.plot()
 
 # Save the figure
 # TODO: Have this save the png in the same directory that is passed in, when that part is finished.
-plt.savefig("../bin/Results/PerfBreakdown.png")
+plt.savefig(sys.argv[2] + "/PerfBreakdown.png")

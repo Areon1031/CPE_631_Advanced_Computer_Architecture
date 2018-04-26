@@ -6,6 +6,7 @@
 # Script to generate CPI stack from Likwid output
 
 # Imports
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -21,7 +22,7 @@ import matplotlib.pyplot as plt
 # generate the stacked bar graph for the gui to use
 
 # TODO: Evenutally this will be passed in as a parameter to python
-cpiFile = open("../build-QuickPerformance-Desktop-Debug/cpiInfo.txt", 'r')
+cpiFile = open(sys.argv[1], 'r')
 count = 0
 
 # Containers to hold the information
@@ -92,4 +93,4 @@ plt.plot()
 
 # Save the figure
 # TODO: Have this save the png in the same directory that is passed in, when that part is finished.
-plt.savefig("../bin/Results/CPI_Stack.png")
+plt.savefig(sys.argv[2] + "/CPI_Stack.png")

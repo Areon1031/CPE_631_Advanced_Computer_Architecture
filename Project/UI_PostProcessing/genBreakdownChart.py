@@ -57,20 +57,18 @@ for i in range(0, len(metricCountList)):
 for i in range(0, len(metricCountList)):
     plt.bar(i, arrayList[i], color = colorList[i])
 
-ind = np.arange(1, len(metricCountList))
-#plt.set_xticks(ind)
-#plt.set_xticklabels(metricCountList[ind][0])
-
+ind = np.arange(0, len(metricCountList))
+plt.xticks(ind, metricList, rotation=45)
+plt.tight_layout()
 
 # Set the axis
 #plt.axis([-1, 1, 0, 1])
-plt.gca().legend(metricList)
 plt.title("Break Down Chart")
 
 # Show the plot
-plt.show()
-#plt.plot()
+#plt.show()
+plt.plot()
 
 # Save the figure
 # TODO: Have this save the png in the same directory that is passed in, when that part is finished.
-plt.savefig("../bin/Results/CPI_Stack.png")
+plt.savefig("../bin/Results/PerfBreakdown.png")

@@ -59,6 +59,16 @@ public:
     QWidget *Topology_Tab;
     QGridLayout *gridLayout_4;
     QTextBrowser *Topology_Text;
+    QWidget *Breakdown_Tab;
+    QGridLayout *gridLayout_13;
+    CustomView *BreakdownChart_GraphicsView;
+    QGroupBox *Breakdown_Group;
+    QGridLayout *gridLayout_12;
+    QCheckBox *PerfBranches_checkBox;
+    QCheckBox *PerfCache_checkBox;
+    QCheckBox *PerfMemory_checkBox;
+    QPushButton *Breakdown_pushButton;
+    QTextBrowser *BreakdownOutput_Text;
     QWidget *PerfGroup_Tab;
     QGridLayout *gridLayout_5;
     QLabel *Application_Label_2;
@@ -88,16 +98,6 @@ public:
     QWidget *CPIStack_Tab;
     QGridLayout *gridLayout_6;
     CustomView *CPI_Stack_GraphicsView;
-    QWidget *Breakdown_Tab;
-    QGridLayout *gridLayout_13;
-    CustomView *BreakdownChart_GraphicsView;
-    QGroupBox *Breakdown_Group;
-    QGridLayout *gridLayout_12;
-    QCheckBox *PerfBranches_checkBox;
-    QCheckBox *PerfCache_checkBox;
-    QCheckBox *PerfMemory_checkBox;
-    QPushButton *Breakdown_pushButton;
-    QTextBrowser *BreakdownOutput_Text;
     QWidget *ApplicationOutput_Tab;
     QGridLayout *gridLayout_7;
     QTextBrowser *ApplicationOutput_Text;
@@ -312,6 +312,70 @@ public:
         gridLayout_4->addWidget(Topology_Text, 0, 0, 1, 1);
 
         tabWidget->addTab(Topology_Tab, QString());
+        Breakdown_Tab = new QWidget();
+        Breakdown_Tab->setObjectName(QStringLiteral("Breakdown_Tab"));
+        gridLayout_13 = new QGridLayout(Breakdown_Tab);
+        gridLayout_13->setSpacing(6);
+        gridLayout_13->setContentsMargins(11, 11, 11, 11);
+        gridLayout_13->setObjectName(QStringLiteral("gridLayout_13"));
+        BreakdownChart_GraphicsView = new CustomView(Breakdown_Tab);
+        BreakdownChart_GraphicsView->setObjectName(QStringLiteral("BreakdownChart_GraphicsView"));
+        BreakdownChart_GraphicsView->setMinimumSize(QSize(651, 361));
+
+        gridLayout_13->addWidget(BreakdownChart_GraphicsView, 0, 0, 2, 1);
+
+        Breakdown_Group = new QGroupBox(Breakdown_Tab);
+        Breakdown_Group->setObjectName(QStringLiteral("Breakdown_Group"));
+        QSizePolicy sizePolicy8(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(Breakdown_Group->sizePolicy().hasHeightForWidth());
+        Breakdown_Group->setSizePolicy(sizePolicy8);
+        Breakdown_Group->setMinimumSize(QSize(191, 50));
+        gridLayout_12 = new QGridLayout(Breakdown_Group);
+        gridLayout_12->setSpacing(6);
+        gridLayout_12->setContentsMargins(11, 11, 11, 11);
+        gridLayout_12->setObjectName(QStringLiteral("gridLayout_12"));
+        PerfBranches_checkBox = new QCheckBox(Breakdown_Group);
+        PerfBranches_checkBox->setObjectName(QStringLiteral("PerfBranches_checkBox"));
+        PerfBranches_checkBox->setChecked(true);
+
+        gridLayout_12->addWidget(PerfBranches_checkBox, 0, 0, 1, 1);
+
+        PerfCache_checkBox = new QCheckBox(Breakdown_Group);
+        PerfCache_checkBox->setObjectName(QStringLiteral("PerfCache_checkBox"));
+        PerfCache_checkBox->setChecked(true);
+
+        gridLayout_12->addWidget(PerfCache_checkBox, 0, 1, 1, 1);
+
+        PerfMemory_checkBox = new QCheckBox(Breakdown_Group);
+        PerfMemory_checkBox->setObjectName(QStringLiteral("PerfMemory_checkBox"));
+
+        gridLayout_12->addWidget(PerfMemory_checkBox, 0, 2, 1, 1);
+
+        Breakdown_pushButton = new QPushButton(Breakdown_Group);
+        Breakdown_pushButton->setObjectName(QStringLiteral("Breakdown_pushButton"));
+        sizePolicy8.setHeightForWidth(Breakdown_pushButton->sizePolicy().hasHeightForWidth());
+        Breakdown_pushButton->setSizePolicy(sizePolicy8);
+        Breakdown_pushButton->setMaximumSize(QSize(375, 30));
+
+        gridLayout_12->addWidget(Breakdown_pushButton, 1, 0, 1, 3);
+
+
+        gridLayout_13->addWidget(Breakdown_Group, 0, 1, 1, 1);
+
+        BreakdownOutput_Text = new QTextBrowser(Breakdown_Tab);
+        BreakdownOutput_Text->setObjectName(QStringLiteral("BreakdownOutput_Text"));
+        QSizePolicy sizePolicy9(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(BreakdownOutput_Text->sizePolicy().hasHeightForWidth());
+        BreakdownOutput_Text->setSizePolicy(sizePolicy9);
+        BreakdownOutput_Text->setMinimumSize(QSize(391, 200));
+
+        gridLayout_13->addWidget(BreakdownOutput_Text, 1, 1, 1, 1);
+
+        tabWidget->addTab(Breakdown_Tab, QString());
         PerfGroup_Tab = new QWidget();
         PerfGroup_Tab->setObjectName(QStringLiteral("PerfGroup_Tab"));
         gridLayout_5 = new QGridLayout(PerfGroup_Tab);
@@ -394,18 +458,18 @@ public:
         gridLayout_11->setObjectName(QStringLiteral("gridLayout_11"));
         FeatureOperations_Text = new QTextBrowser(Features_Tab);
         FeatureOperations_Text->setObjectName(QStringLiteral("FeatureOperations_Text"));
-        QSizePolicy sizePolicy8(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy8.setHorizontalStretch(1);
-        sizePolicy8.setVerticalStretch(1);
-        sizePolicy8.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
-        FeatureOperations_Text->setSizePolicy(sizePolicy8);
+        QSizePolicy sizePolicy10(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy10.setHorizontalStretch(1);
+        sizePolicy10.setVerticalStretch(1);
+        sizePolicy10.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
+        FeatureOperations_Text->setSizePolicy(sizePolicy10);
 
         gridLayout_11->addWidget(FeatureOperations_Text, 1, 2, 1, 1);
 
         Features_List = new QListWidget(Features_Tab);
         Features_List->setObjectName(QStringLiteral("Features_List"));
-        sizePolicy8.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
-        Features_List->setSizePolicy(sizePolicy8);
+        sizePolicy10.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
+        Features_List->setSizePolicy(sizePolicy10);
 
         gridLayout_11->addWidget(Features_List, 1, 0, 1, 1);
 
@@ -438,11 +502,11 @@ public:
 
         FeaturesList_Label = new QLabel(Features_Tab);
         FeaturesList_Label->setObjectName(QStringLiteral("FeaturesList_Label"));
-        QSizePolicy sizePolicy9(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy9.setHorizontalStretch(0);
-        sizePolicy9.setVerticalStretch(0);
-        sizePolicy9.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
-        FeaturesList_Label->setSizePolicy(sizePolicy9);
+        QSizePolicy sizePolicy11(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy11.setHorizontalStretch(0);
+        sizePolicy11.setVerticalStretch(0);
+        sizePolicy11.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
+        FeaturesList_Label->setSizePolicy(sizePolicy11);
         FeaturesList_Label->setMinimumSize(QSize(343, 17));
         FeaturesList_Label->setMaximumSize(QSize(343, 17));
 
@@ -450,8 +514,8 @@ public:
 
         ChosenPerfCoutners_Label_2 = new QLabel(Features_Tab);
         ChosenPerfCoutners_Label_2->setObjectName(QStringLiteral("ChosenPerfCoutners_Label_2"));
-        sizePolicy9.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
-        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy9);
+        sizePolicy11.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
+        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy11);
         ChosenPerfCoutners_Label_2->setMinimumSize(QSize(343, 17));
         ChosenPerfCoutners_Label_2->setMaximumSize(QSize(343, 17));
 
@@ -470,70 +534,6 @@ public:
         gridLayout_6->addWidget(CPI_Stack_GraphicsView, 0, 0, 1, 1);
 
         tabWidget->addTab(CPIStack_Tab, QString());
-        Breakdown_Tab = new QWidget();
-        Breakdown_Tab->setObjectName(QStringLiteral("Breakdown_Tab"));
-        gridLayout_13 = new QGridLayout(Breakdown_Tab);
-        gridLayout_13->setSpacing(6);
-        gridLayout_13->setContentsMargins(11, 11, 11, 11);
-        gridLayout_13->setObjectName(QStringLiteral("gridLayout_13"));
-        BreakdownChart_GraphicsView = new CustomView(Breakdown_Tab);
-        BreakdownChart_GraphicsView->setObjectName(QStringLiteral("BreakdownChart_GraphicsView"));
-        BreakdownChart_GraphicsView->setMinimumSize(QSize(651, 361));
-
-        gridLayout_13->addWidget(BreakdownChart_GraphicsView, 0, 0, 2, 1);
-
-        Breakdown_Group = new QGroupBox(Breakdown_Tab);
-        Breakdown_Group->setObjectName(QStringLiteral("Breakdown_Group"));
-        QSizePolicy sizePolicy10(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy10.setHorizontalStretch(0);
-        sizePolicy10.setVerticalStretch(0);
-        sizePolicy10.setHeightForWidth(Breakdown_Group->sizePolicy().hasHeightForWidth());
-        Breakdown_Group->setSizePolicy(sizePolicy10);
-        Breakdown_Group->setMinimumSize(QSize(191, 50));
-        gridLayout_12 = new QGridLayout(Breakdown_Group);
-        gridLayout_12->setSpacing(6);
-        gridLayout_12->setContentsMargins(11, 11, 11, 11);
-        gridLayout_12->setObjectName(QStringLiteral("gridLayout_12"));
-        PerfBranches_checkBox = new QCheckBox(Breakdown_Group);
-        PerfBranches_checkBox->setObjectName(QStringLiteral("PerfBranches_checkBox"));
-        PerfBranches_checkBox->setChecked(true);
-
-        gridLayout_12->addWidget(PerfBranches_checkBox, 0, 0, 1, 1);
-
-        PerfCache_checkBox = new QCheckBox(Breakdown_Group);
-        PerfCache_checkBox->setObjectName(QStringLiteral("PerfCache_checkBox"));
-        PerfCache_checkBox->setChecked(true);
-
-        gridLayout_12->addWidget(PerfCache_checkBox, 0, 1, 1, 1);
-
-        PerfMemory_checkBox = new QCheckBox(Breakdown_Group);
-        PerfMemory_checkBox->setObjectName(QStringLiteral("PerfMemory_checkBox"));
-
-        gridLayout_12->addWidget(PerfMemory_checkBox, 0, 2, 1, 1);
-
-        Breakdown_pushButton = new QPushButton(Breakdown_Group);
-        Breakdown_pushButton->setObjectName(QStringLiteral("Breakdown_pushButton"));
-        sizePolicy10.setHeightForWidth(Breakdown_pushButton->sizePolicy().hasHeightForWidth());
-        Breakdown_pushButton->setSizePolicy(sizePolicy10);
-        Breakdown_pushButton->setMaximumSize(QSize(375, 30));
-
-        gridLayout_12->addWidget(Breakdown_pushButton, 1, 0, 1, 3);
-
-
-        gridLayout_13->addWidget(Breakdown_Group, 0, 1, 1, 1);
-
-        BreakdownOutput_Text = new QTextBrowser(Breakdown_Tab);
-        BreakdownOutput_Text->setObjectName(QStringLiteral("BreakdownOutput_Text"));
-        QSizePolicy sizePolicy11(QSizePolicy::Minimum, QSizePolicy::Expanding);
-        sizePolicy11.setHorizontalStretch(0);
-        sizePolicy11.setVerticalStretch(0);
-        sizePolicy11.setHeightForWidth(BreakdownOutput_Text->sizePolicy().hasHeightForWidth());
-        BreakdownOutput_Text->setSizePolicy(sizePolicy11);
-        BreakdownOutput_Text->setMinimumSize(QSize(391, 200));
-
-        gridLayout_13->addWidget(BreakdownOutput_Text, 1, 1, 1, 1);
-
-        tabWidget->addTab(Breakdown_Tab, QString());
         ApplicationOutput_Tab = new QWidget();
         ApplicationOutput_Tab->setObjectName(QStringLiteral("ApplicationOutput_Tab"));
         gridLayout_7 = new QGridLayout(ApplicationOutput_Tab);
@@ -566,7 +566,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(5);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -588,6 +588,12 @@ public:
         RunTest_pushButton->setText(QApplication::translate("MainWindow", "Run Test", Q_NULLPTR));
         LikwidCommand_Label->setText(QApplication::translate("MainWindow", "LIKWID Command", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Topology_Tab), QApplication::translate("MainWindow", "Architecture Topology", Q_NULLPTR));
+        Breakdown_Group->setTitle(QString());
+        PerfBranches_checkBox->setText(QApplication::translate("MainWindow", "Branches", Q_NULLPTR));
+        PerfCache_checkBox->setText(QApplication::translate("MainWindow", "Cache", Q_NULLPTR));
+        PerfMemory_checkBox->setText(QApplication::translate("MainWindow", "Memory", Q_NULLPTR));
+        Breakdown_pushButton->setText(QApplication::translate("MainWindow", "Create Breakdown", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(Breakdown_Tab), QApplication::translate("MainWindow", "Perf First Stop", Q_NULLPTR));
         Application_Label_2->setText(QApplication::translate("MainWindow", "Performance Groups", Q_NULLPTR));
         Application_Label_3->setText(QApplication::translate("MainWindow", "Chosen Performance Groups", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(PerfGroup_Tab), QApplication::translate("MainWindow", "Performance Group Selection", Q_NULLPTR));
@@ -603,12 +609,6 @@ public:
         ChosenPerfCoutners_Label_2->setText(QApplication::translate("MainWindow", "Operation Results", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Features_Tab), QApplication::translate("MainWindow", "Feature Control", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));
-        Breakdown_Group->setTitle(QString());
-        PerfBranches_checkBox->setText(QApplication::translate("MainWindow", "Branches", Q_NULLPTR));
-        PerfCache_checkBox->setText(QApplication::translate("MainWindow", "Cache", Q_NULLPTR));
-        PerfMemory_checkBox->setText(QApplication::translate("MainWindow", "Memory", Q_NULLPTR));
-        Breakdown_pushButton->setText(QApplication::translate("MainWindow", "Create Breakdown", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(Breakdown_Tab), QApplication::translate("MainWindow", "Break Down", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(ApplicationOutput_Tab), QApplication::translate("MainWindow", "Application Output", Q_NULLPTR));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", Q_NULLPTR));
     } // retranslateUi

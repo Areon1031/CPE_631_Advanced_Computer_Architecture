@@ -375,7 +375,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Topology_Tab">
        <property name="sizePolicy">
@@ -390,6 +390,106 @@
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
          <widget class="QTextBrowser" name="Topology_Text"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="Breakdown_Tab">
+       <attribute name="title">
+        <string>Perf First Stop</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_13">
+        <item row="0" column="0" rowspan="2">
+         <widget class="CustomView" name="BreakdownChart_GraphicsView">
+          <property name="minimumSize">
+           <size>
+            <width>651</width>
+            <height>361</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="Breakdown_Group">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>191</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="title">
+           <string/>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_12">
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="PerfBranches_checkBox">
+             <property name="text">
+              <string>Branches</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QCheckBox" name="PerfCache_checkBox">
+             <property name="text">
+              <string>Cache</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QCheckBox" name="PerfMemory_checkBox">
+             <property name="text">
+              <string>Memory</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QPushButton" name="Breakdown_pushButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>375</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Create Breakdown</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTextBrowser" name="BreakdownOutput_Text">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>391</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -604,106 +704,6 @@
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
          <widget class="CustomView" name="CPI_Stack_GraphicsView"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="Breakdown_Tab">
-       <attribute name="title">
-        <string>Break Down</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_13">
-        <item row="0" column="0" rowspan="2">
-         <widget class="CustomView" name="BreakdownChart_GraphicsView">
-          <property name="minimumSize">
-           <size>
-            <width>651</width>
-            <height>361</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QGroupBox" name="Breakdown_Group">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>191</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="title">
-           <string/>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="PerfBranches_checkBox">
-             <property name="text">
-              <string>Branches</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QCheckBox" name="PerfCache_checkBox">
-             <property name="text">
-              <string>Cache</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QCheckBox" name="PerfMemory_checkBox">
-             <property name="text">
-              <string>Memory</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="3">
-            <widget class="QPushButton" name="Breakdown_pushButton">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>375</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Create Breakdown</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QTextBrowser" name="BreakdownOutput_Text">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>391</width>
-            <height>200</height>
-           </size>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>

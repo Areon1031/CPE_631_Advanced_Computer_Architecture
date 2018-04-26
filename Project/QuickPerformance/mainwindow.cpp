@@ -62,15 +62,21 @@ MainWindow::MainWindow(QWidget *parent) :
     getFeatureList();
 
     // Setup CPI Stack Items
-    item_ = nullptr;
-    scene_ = new QGraphicsScene(this);
+    cpiItem_ = nullptr;
+    cpiScene_ = new QGraphicsScene(this);
+
+    // Setup Breakdown Items
+    perfItem_ = nullptr;
+    perfScene_ = new QGraphicsScene(this);
 }
 
 MainWindow::~MainWindow()
 {
     // Clean up
-    delete item_;
-    delete scene_;
+    delete cpiItem_;
+    delete perfItem_;
+    delete cpiScene_;
+    delete perfScene_;
     delete ui;
 }
 
@@ -454,21 +460,21 @@ void MainWindow::generateCPIStack()
 
     // Setup the image
     QImage image("../bin/Results/CPI_Stack.png");
-    if (item_ == nullptr)
-        item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+    if (cpiItem_ == nullptr)
+        cpiItem_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
     else
     {
         // Remove the current item
-        scene_->removeItem(item_);
-        delete item_;
+        cpiScene_->removeItem(cpiItem_);
+        delete cpiItem_;
 
         // Build the new item
-        item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+        cpiItem_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
     }
 
     // Set the scene and place the item
-    ui->CPI_Stack_GraphicsView->setScene(scene_);
-    scene_->addItem(item_);
+    ui->CPI_Stack_GraphicsView->setScene(cpiScene_);
+    cpiScene_->addItem(cpiItem_);
 }
 
 void MainWindow::generateBreakdown()
@@ -575,33 +581,29 @@ void MainWindow::generateBreakdown()
             breakdownOutFile.close();
 
             // Read the breakdown file and run python to process the perf data
-            //QString runString = "python ../UI_PostProcessing/genBreakdownChart.py";
+            QString runString = "python ../UI_PostProcessing/genBreakdownChart.py";
+            system(runString.toStdString().c_str());
 
-    //        // Run Python Post Processing Script
-    //        QString runString = "python ../UI_PostProcessing/genCPIStack.py";
-    //        //QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
-    //        system(runString.toStdString().c_str());
+            // Give the image time to process
+            //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 
-    //        // Give the image time to process
-    //        //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+            // Setup the image
+            QImage image("../bin/Results/PerfBreakdown.png");
+            if (perfItem_ == nullptr)
+                perfItem_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            else
+            {
+                // Remove the current item
+                perfScene_->removeItem(perfItem_);
+                delete perfItem_;
 
-    //        // Setup the image
-    //        QImage image("../bin/Results/CPI_Stack.png");
-    //        if (item_ == nullptr)
-    //            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-    //        else
-    //        {
-    //            // Remove the current item
-    //            scene_->removeItem(item_);
-    //            delete item_;
+                // Build the new item
+                perfItem_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            }
 
-    //            // Build the new item
-    //            item_ = new QGraphicsPixmapItem(QPixmap::fromImage(image));
-    //        }
-
-    //        // Set the scene and place the item
-    //        ui->CPI_Stack_GraphicsView->setScene(scene_);
-    //        scene_->addItem(item_);
+            // Set the scene and place the item
+            ui->BreakdownChart_GraphicsView->setScene(perfScene_);
+            perfScene_->addItem(perfItem_);
         }
         else
             ui->BreakdownOutput_Text->setText("Please check one of the modules before running breakdown!");
@@ -784,7 +786,7 @@ void MainWindow::on_Perfscope_pushButton_clicked()
 {
     // Change color of the button to notify the user of which mode
     // White = Normal
-    // Green = Stethoscope Mode
+    // Green = Perfscope Mode
     QPalette pal = QPalette();
     pal.setColor(QPalette::Button, (perfscopeMode_ ? Qt::white : Qt::green));
     ui->Perfscope_pushButton->setPalette(pal);
@@ -795,7 +797,7 @@ void MainWindow::on_Perfscope_pushButton_clicked()
         ui->PerfGroup_Tab->setDisabled(false);
         ui->PerfMetric_Tab->setDisabled(false);
         ui->CPIStack_Tab->setDisabled(false);
-        //ui->RefreshRate_Text->setReadOnly(true);
+        ui->Perfscope_pushButton->setText("Start Perf Scope");
 
         // Turn off perfscope
         enableLikwidPerfScope(false);
@@ -805,7 +807,7 @@ void MainWindow::on_Perfscope_pushButton_clicked()
         ui->PerfGroup_Tab->setDisabled(true);
         ui->PerfMetric_Tab->setDisabled(true);
         ui->CPIStack_Tab->setDisabled(true);
-        //ui->RefreshRate_Text->setReadOnly(false);
+        ui->Perfscope_pushButton->setText("Stop Perf Scope");
 
         // Start Perfscope
         enableLikwidPerfScope(true);

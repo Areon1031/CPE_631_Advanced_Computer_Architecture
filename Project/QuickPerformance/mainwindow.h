@@ -88,8 +88,10 @@ private:
     // Current Core
     QString executeCore_;
 
-    QGraphicsItem* item_;
-    QGraphicsScene* scene_;
+    QGraphicsItem* cpiItem_;
+    QGraphicsItem* perfItem_;
+    QGraphicsScene* cpiScene_;
+    QGraphicsScene* perfScene_;
 
     // Execution Methods
     void generateLikwidPerfCommand();

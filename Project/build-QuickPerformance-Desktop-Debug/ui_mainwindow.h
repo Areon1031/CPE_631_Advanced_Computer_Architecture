@@ -87,14 +87,15 @@ public:
     QListWidget *PerfCounters_List;
     QWidget *Features_Tab;
     QGridLayout *gridLayout_11;
-    QTextBrowser *FeatureOperations_Text;
-    QListWidget *Features_List;
+    QLabel *FeaturesList_Label;
     QGroupBox *groupBox;
     QGridLayout *gridLayout_10;
     QPushButton *FeatureEnable_pushButton;
     QPushButton *FeatureDisable_pushButton;
-    QLabel *FeaturesList_Label;
     QLabel *ChosenPerfCoutners_Label_2;
+    QListWidget *Features_List;
+    QListWidget *FeaturesStatus_List;
+    QTextBrowser *FeatureOperations_Text;
     QWidget *CPIStack_Tab;
     QGridLayout *gridLayout_6;
     CustomView *CPI_Stack_GraphicsView;
@@ -409,6 +410,7 @@ public:
 
         PerfGroups_List = new QListWidget(PerfGroup_Tab);
         PerfGroups_List->setObjectName(QStringLiteral("PerfGroups_List"));
+        PerfGroups_List->setSelectionMode(QAbstractItemView::SingleSelection);
 
         gridLayout_5->addWidget(PerfGroups_List, 1, 0, 1, 1);
 
@@ -471,22 +473,17 @@ public:
         gridLayout_11->setSpacing(6);
         gridLayout_11->setContentsMargins(11, 11, 11, 11);
         gridLayout_11->setObjectName(QStringLiteral("gridLayout_11"));
-        FeatureOperations_Text = new QTextBrowser(Features_Tab);
-        FeatureOperations_Text->setObjectName(QStringLiteral("FeatureOperations_Text"));
-        QSizePolicy sizePolicy12(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy12.setHorizontalStretch(1);
-        sizePolicy12.setVerticalStretch(1);
-        sizePolicy12.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
-        FeatureOperations_Text->setSizePolicy(sizePolicy12);
+        FeaturesList_Label = new QLabel(Features_Tab);
+        FeaturesList_Label->setObjectName(QStringLiteral("FeaturesList_Label"));
+        QSizePolicy sizePolicy12(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy12.setHorizontalStretch(0);
+        sizePolicy12.setVerticalStretch(0);
+        sizePolicy12.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
+        FeaturesList_Label->setSizePolicy(sizePolicy12);
+        FeaturesList_Label->setMinimumSize(QSize(343, 17));
+        FeaturesList_Label->setMaximumSize(QSize(343, 17));
 
-        gridLayout_11->addWidget(FeatureOperations_Text, 1, 2, 1, 1);
-
-        Features_List = new QListWidget(Features_Tab);
-        Features_List->setObjectName(QStringLiteral("Features_List"));
-        sizePolicy12.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
-        Features_List->setSizePolicy(sizePolicy12);
-
-        gridLayout_11->addWidget(Features_List, 1, 0, 1, 1);
+        gridLayout_11->addWidget(FeaturesList_Label, 0, 0, 1, 1);
 
         groupBox = new QGroupBox(Features_Tab);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -513,28 +510,41 @@ public:
         gridLayout_10->addWidget(FeatureDisable_pushButton, 1, 0, 1, 1);
 
 
-        gridLayout_11->addWidget(groupBox, 0, 1, 2, 1);
-
-        FeaturesList_Label = new QLabel(Features_Tab);
-        FeaturesList_Label->setObjectName(QStringLiteral("FeaturesList_Label"));
-        QSizePolicy sizePolicy13(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy13.setHorizontalStretch(0);
-        sizePolicy13.setVerticalStretch(0);
-        sizePolicy13.setHeightForWidth(FeaturesList_Label->sizePolicy().hasHeightForWidth());
-        FeaturesList_Label->setSizePolicy(sizePolicy13);
-        FeaturesList_Label->setMinimumSize(QSize(343, 17));
-        FeaturesList_Label->setMaximumSize(QSize(343, 17));
-
-        gridLayout_11->addWidget(FeaturesList_Label, 0, 0, 1, 1);
+        gridLayout_11->addWidget(groupBox, 0, 2, 2, 1);
 
         ChosenPerfCoutners_Label_2 = new QLabel(Features_Tab);
         ChosenPerfCoutners_Label_2->setObjectName(QStringLiteral("ChosenPerfCoutners_Label_2"));
-        sizePolicy13.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
-        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy13);
+        sizePolicy12.setHeightForWidth(ChosenPerfCoutners_Label_2->sizePolicy().hasHeightForWidth());
+        ChosenPerfCoutners_Label_2->setSizePolicy(sizePolicy12);
         ChosenPerfCoutners_Label_2->setMinimumSize(QSize(343, 17));
         ChosenPerfCoutners_Label_2->setMaximumSize(QSize(343, 17));
 
-        gridLayout_11->addWidget(ChosenPerfCoutners_Label_2, 0, 2, 1, 1);
+        gridLayout_11->addWidget(ChosenPerfCoutners_Label_2, 0, 3, 1, 1);
+
+        Features_List = new QListWidget(Features_Tab);
+        Features_List->setObjectName(QStringLiteral("Features_List"));
+        QSizePolicy sizePolicy13(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy13.setHorizontalStretch(1);
+        sizePolicy13.setVerticalStretch(1);
+        sizePolicy13.setHeightForWidth(Features_List->sizePolicy().hasHeightForWidth());
+        Features_List->setSizePolicy(sizePolicy13);
+
+        gridLayout_11->addWidget(Features_List, 1, 0, 1, 1);
+
+        FeaturesStatus_List = new QListWidget(Features_Tab);
+        FeaturesStatus_List->setObjectName(QStringLiteral("FeaturesStatus_List"));
+        sizePolicy13.setHeightForWidth(FeaturesStatus_List->sizePolicy().hasHeightForWidth());
+        FeaturesStatus_List->setSizePolicy(sizePolicy13);
+        FeaturesStatus_List->setSelectionMode(QAbstractItemView::NoSelection);
+
+        gridLayout_11->addWidget(FeaturesStatus_List, 1, 1, 1, 1);
+
+        FeatureOperations_Text = new QTextBrowser(Features_Tab);
+        FeatureOperations_Text->setObjectName(QStringLiteral("FeatureOperations_Text"));
+        sizePolicy13.setHeightForWidth(FeatureOperations_Text->sizePolicy().hasHeightForWidth());
+        FeatureOperations_Text->setSizePolicy(sizePolicy13);
+
+        gridLayout_11->addWidget(FeatureOperations_Text, 1, 3, 1, 1);
 
         tabWidget->addTab(Features_Tab, QString());
         CPIStack_Tab = new QWidget();
@@ -645,10 +655,10 @@ public:
         ChosenPerfCoutners_Label->setText(QApplication::translate("MainWindow", "Chosen Performance Counters", Q_NULLPTR));
         PerfCounters_Label->setText(QApplication::translate("MainWindow", "Performance Counters", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(PerfMetric_Tab), QApplication::translate("MainWindow", "Performance Metric Selection", Q_NULLPTR));
+        FeaturesList_Label->setText(QApplication::translate("MainWindow", "Features List", Q_NULLPTR));
         groupBox->setTitle(QString());
         FeatureEnable_pushButton->setText(QApplication::translate("MainWindow", "Enable", Q_NULLPTR));
         FeatureDisable_pushButton->setText(QApplication::translate("MainWindow", "Disable", Q_NULLPTR));
-        FeaturesList_Label->setText(QApplication::translate("MainWindow", "Features List", Q_NULLPTR));
         ChosenPerfCoutners_Label_2->setText(QApplication::translate("MainWindow", "Operation Results", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Features_Tab), QApplication::translate("MainWindow", "Feature Control", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(CPIStack_Tab), QApplication::translate("MainWindow", "CPI Stack", Q_NULLPTR));

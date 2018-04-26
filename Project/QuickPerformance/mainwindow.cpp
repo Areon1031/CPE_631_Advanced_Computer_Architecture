@@ -193,9 +193,11 @@ void MainWindow::getFeatureList()
 {
     // Clear the current features list
     ui->Features_List->clear();
+    ui->FeaturesStatus_List->clear();
 
     // Execute likwid-perfctr -a to get performance groups
-    system("likwid-features -c 0 -l > cpuFeatures.txt");
+    QString runString = "likwid-features -c " + (executeCore_.isEmpty() ? "0" : executeCore_) + " -l > cpuFeatures.txt";
+    system(runString.toStdString().c_str());
     QFile featuresFile("./cpuFeatures.txt");
 
     // Error Check the file
@@ -211,27 +213,14 @@ void MainWindow::getFeatureList()
     while(!featureInStream.atEnd())
     {
         // Grab the current feature
-        // Only process modifiable features (contains an *)
-        QString currFeature = featureInStream.readLine();
-        // TODO: Implement safety before final release
-        //if (!currFeature.contains('*'))
-        //    continue;
-
-
-        QStringList currFeatureList = currFeature.split(' ');
-        QMutableListIterator<QString> it(currFeatureList);
-        while (it.hasNext())
-        {
-            it.next();
-            it.value() = it.value().trimmed();
-            if (it.value().length() == 0)
-                it.remove();
-        }
-
-        currFeature = currFeatureList.join("\t\t");
+        QStringList currFeatureList = featureInStream.readLine().remove("\t").split(" ");
+        currFeatureList.removeAll("");
+        QString feature = currFeatureList.at(0);
+        QString status = currFeatureList.at(1);
 
         // Add the current option to the list
-        ui->Features_List->addItem(currFeature);
+        ui->Features_List->addItem(feature);
+        ui->FeaturesStatus_List->addItem(status);
     }
 }
 
@@ -749,9 +738,9 @@ void MainWindow::enableFeature(bool enable)
     QString feature = currFeature.at(0);
     QString command;
     if (enable)
-        command = "likwid-features -c 0 -e " + feature + " > featuresListResults.txt";
+        command = "likwid-features -c " + (executeCore_.isEmpty() ? "0" : executeCore_) + " -e " + feature + " > featuresListResults.txt";
     else
-        command = "likwid-features -c 0 -d " + feature + " > featuresListResults.txt";
+        command = "likwid-features -c " + (executeCore_.isEmpty() ? "0" : executeCore_) + " -d " + feature + " > featuresListResults.txt";
 
     // Execute the command
     system(command.toStdString().c_str());
@@ -763,12 +752,14 @@ void MainWindow::enableFeature(bool enable)
 
 void MainWindow::on_FeatureEnable_pushButton_clicked()
 {
-    enableFeature(true);
+    if (ui->Features_List->currentRow() >= 0)
+        enableFeature(true);
 }
 
 void MainWindow::on_FeatureDisable_pushButton_clicked()
 {
-    enableFeature(false);
+    if (ui->Features_List->currentRow() >= 0)
+        enableFeature(false);
 }
 
 void MainWindow::on_Application_Text_textChanged()
@@ -831,6 +822,7 @@ void MainWindow::on_ExecuteCore_Text_textChanged()
     // TODO: Clean up the regex
     executeCore_ = ui->ExecuteCore_Text->toPlainText().remove(QRegExp("[^a-zA-Z\\d\\s]")).remove(QRegExp("[a-zA-Z]+(?: [a-zA-Z]+)*")).remove(" ");
     generateLikwidPerfCommand();
+    getFeatureList();
 }
 
 void MainWindow::on_OutDirectory_pushButton_clicked()

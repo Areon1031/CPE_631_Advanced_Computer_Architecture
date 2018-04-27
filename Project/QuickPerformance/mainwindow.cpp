@@ -838,3 +838,9 @@ void MainWindow::on_OutDirectory_pushButton_clicked()
     outputDir_ = dir;
     ui->OutDirectory_Text->setText(dir);
 }
+
+void MainWindow::on_OutDirectory_Text_textChanged()
+{
+    outputDir_ = ui->OutDirectory_Text->toPlainText();
+    generateLikwidPerfCommand();
+}

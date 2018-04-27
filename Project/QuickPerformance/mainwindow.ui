@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../programBin/Logo/QuickPerformance.ico</normaloff>../programBin/Logo/QuickPerformance.ico</iconset>
+  </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
   </property>
@@ -397,7 +401,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="Topology_Tab">
        <property name="sizePolicy">
@@ -490,7 +494,7 @@
               </size>
              </property>
              <property name="text">
-              <string>Create Breakdown</string>
+              <string>Run Perf Stat</string>
              </property>
             </widget>
            </item>

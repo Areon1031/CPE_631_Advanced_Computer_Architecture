@@ -120,6 +120,9 @@ public:
         sizePolicy.setVerticalStretch(1);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
+        QIcon icon;
+        icon.addFile(QStringLiteral("../programBin/Logo/QuickPerformance.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setLayoutDirection(Qt::LeftToRight);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
@@ -271,8 +274,6 @@ public:
         sizePolicy6.setHeightForWidth(RunTest_pushButton->sizePolicy().hasHeightForWidth());
         RunTest_pushButton->setSizePolicy(sizePolicy6);
         RunTest_pushButton->setMaximumSize(QSize(100, 30));
-        QIcon icon;
-        icon.addFile(QStringLiteral("../programBin/Logo/QuickPerformance.ico"), QSize(), QIcon::Normal, QIcon::Off);
         RunTest_pushButton->setIcon(icon);
         RunTest_pushButton->setIconSize(QSize(16, 16));
 

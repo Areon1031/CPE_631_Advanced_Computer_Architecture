@@ -71,6 +71,8 @@ private slots:
 
     void on_OutDirectory_pushButton_clicked();
 
+    void on_OutDirectory_Text_textChanged();
+
 private:
     // Reference to the UI
     Ui::MainWindow *ui;

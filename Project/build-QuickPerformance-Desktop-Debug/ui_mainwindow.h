@@ -71,20 +71,22 @@ public:
     QTextBrowser *BreakdownOutput_Text;
     QWidget *PerfGroup_Tab;
     QGridLayout *gridLayout_5;
-    QLabel *Application_Label_2;
-    QLabel *Application_Label_3;
+    QLabel *PerfGroupsDescription_Label;
+    QLabel *ChosenPerfGroups_Label;
     QListWidget *PerfGroups_List;
+    QListWidget *PerfGroupsDescription_List;
     QListWidget *ChosenPerfGroups_List;
+    QLabel *PerfGroups_Label;
     QWidget *PerfMetric_Tab;
     QGridLayout *gridLayout;
+    QListWidget *ChosenPerfMetrics_List;
     QLabel *PerfMetrics_Label;
+    QListWidget *PerfMetrics_List;
+    QListWidget *PerfCounters_List;
+    QListWidget *ChosenPerfCounters_List;
     QLabel *ChosenPerfMetrics_Label;
     QLabel *ChosenPerfCoutners_Label;
-    QListWidget *PerfMetrics_List;
-    QListWidget *ChosenPerfMetrics_List;
-    QListWidget *ChosenPerfCounters_List;
     QLabel *PerfCounters_Label;
-    QListWidget *PerfCounters_List;
     QWidget *Features_Tab;
     QGridLayout *gridLayout_11;
     QLabel *FeaturesList_Label;
@@ -121,7 +123,7 @@ public:
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
         QIcon icon;
-        icon.addFile(QStringLiteral("../programBin/Logo/QuickPerformance.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral("../programBin/Logo/UAH.ico"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setLayoutDirection(Qt::LeftToRight);
         centralWidget = new QWidget(MainWindow);
@@ -274,7 +276,9 @@ public:
         sizePolicy6.setHeightForWidth(RunTest_pushButton->sizePolicy().hasHeightForWidth());
         RunTest_pushButton->setSizePolicy(sizePolicy6);
         RunTest_pushButton->setMaximumSize(QSize(100, 30));
-        RunTest_pushButton->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral("../programBin/Logo/QuickPerformance.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        RunTest_pushButton->setIcon(icon1);
         RunTest_pushButton->setIconSize(QSize(16, 16));
 
         gridLayout_2->addWidget(RunTest_pushButton, 3, 1, 1, 1);
@@ -399,15 +403,15 @@ public:
         gridLayout_5->setSpacing(6);
         gridLayout_5->setContentsMargins(11, 11, 11, 11);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
-        Application_Label_2 = new QLabel(PerfGroup_Tab);
-        Application_Label_2->setObjectName(QStringLiteral("Application_Label_2"));
+        PerfGroupsDescription_Label = new QLabel(PerfGroup_Tab);
+        PerfGroupsDescription_Label->setObjectName(QStringLiteral("PerfGroupsDescription_Label"));
 
-        gridLayout_5->addWidget(Application_Label_2, 0, 0, 1, 1);
+        gridLayout_5->addWidget(PerfGroupsDescription_Label, 0, 1, 1, 1);
 
-        Application_Label_3 = new QLabel(PerfGroup_Tab);
-        Application_Label_3->setObjectName(QStringLiteral("Application_Label_3"));
+        ChosenPerfGroups_Label = new QLabel(PerfGroup_Tab);
+        ChosenPerfGroups_Label->setObjectName(QStringLiteral("ChosenPerfGroups_Label"));
 
-        gridLayout_5->addWidget(Application_Label_3, 0, 1, 1, 1);
+        gridLayout_5->addWidget(ChosenPerfGroups_Label, 0, 2, 1, 1);
 
         PerfGroups_List = new QListWidget(PerfGroup_Tab);
         PerfGroups_List->setObjectName(QStringLiteral("PerfGroups_List"));
@@ -415,10 +419,21 @@ public:
 
         gridLayout_5->addWidget(PerfGroups_List, 1, 0, 1, 1);
 
+        PerfGroupsDescription_List = new QListWidget(PerfGroup_Tab);
+        PerfGroupsDescription_List->setObjectName(QStringLiteral("PerfGroupsDescription_List"));
+        PerfGroupsDescription_List->setSelectionMode(QAbstractItemView::SingleSelection);
+
+        gridLayout_5->addWidget(PerfGroupsDescription_List, 1, 1, 1, 1);
+
         ChosenPerfGroups_List = new QListWidget(PerfGroup_Tab);
         ChosenPerfGroups_List->setObjectName(QStringLiteral("ChosenPerfGroups_List"));
 
-        gridLayout_5->addWidget(ChosenPerfGroups_List, 1, 1, 1, 1);
+        gridLayout_5->addWidget(ChosenPerfGroups_List, 1, 2, 1, 1);
+
+        PerfGroups_Label = new QLabel(PerfGroup_Tab);
+        PerfGroups_Label->setObjectName(QStringLiteral("PerfGroups_Label"));
+
+        gridLayout_5->addWidget(PerfGroups_Label, 0, 0, 1, 1);
 
         tabWidget->addTab(PerfGroup_Tab, QString());
         PerfMetric_Tab = new QWidget();
@@ -427,10 +442,30 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        ChosenPerfMetrics_List = new QListWidget(PerfMetric_Tab);
+        ChosenPerfMetrics_List->setObjectName(QStringLiteral("ChosenPerfMetrics_List"));
+
+        gridLayout->addWidget(ChosenPerfMetrics_List, 1, 1, 3, 1);
+
         PerfMetrics_Label = new QLabel(PerfMetric_Tab);
         PerfMetrics_Label->setObjectName(QStringLiteral("PerfMetrics_Label"));
 
         gridLayout->addWidget(PerfMetrics_Label, 0, 0, 1, 1);
+
+        PerfMetrics_List = new QListWidget(PerfMetric_Tab);
+        PerfMetrics_List->setObjectName(QStringLiteral("PerfMetrics_List"));
+
+        gridLayout->addWidget(PerfMetrics_List, 1, 0, 1, 1);
+
+        PerfCounters_List = new QListWidget(PerfMetric_Tab);
+        PerfCounters_List->setObjectName(QStringLiteral("PerfCounters_List"));
+
+        gridLayout->addWidget(PerfCounters_List, 3, 0, 1, 1);
+
+        ChosenPerfCounters_List = new QListWidget(PerfMetric_Tab);
+        ChosenPerfCounters_List->setObjectName(QStringLiteral("ChosenPerfCounters_List"));
+
+        gridLayout->addWidget(ChosenPerfCounters_List, 1, 2, 3, 1);
 
         ChosenPerfMetrics_Label = new QLabel(PerfMetric_Tab);
         ChosenPerfMetrics_Label->setObjectName(QStringLiteral("ChosenPerfMetrics_Label"));
@@ -442,30 +477,10 @@ public:
 
         gridLayout->addWidget(ChosenPerfCoutners_Label, 0, 2, 1, 1);
 
-        PerfMetrics_List = new QListWidget(PerfMetric_Tab);
-        PerfMetrics_List->setObjectName(QStringLiteral("PerfMetrics_List"));
-
-        gridLayout->addWidget(PerfMetrics_List, 1, 0, 1, 1);
-
-        ChosenPerfMetrics_List = new QListWidget(PerfMetric_Tab);
-        ChosenPerfMetrics_List->setObjectName(QStringLiteral("ChosenPerfMetrics_List"));
-
-        gridLayout->addWidget(ChosenPerfMetrics_List, 1, 1, 3, 1);
-
-        ChosenPerfCounters_List = new QListWidget(PerfMetric_Tab);
-        ChosenPerfCounters_List->setObjectName(QStringLiteral("ChosenPerfCounters_List"));
-
-        gridLayout->addWidget(ChosenPerfCounters_List, 1, 2, 3, 1);
-
         PerfCounters_Label = new QLabel(PerfMetric_Tab);
         PerfCounters_Label->setObjectName(QStringLiteral("PerfCounters_Label"));
 
         gridLayout->addWidget(PerfCounters_Label, 2, 0, 1, 1);
-
-        PerfCounters_List = new QListWidget(PerfMetric_Tab);
-        PerfCounters_List->setObjectName(QStringLiteral("PerfCounters_List"));
-
-        gridLayout->addWidget(PerfCounters_List, 3, 0, 1, 1);
 
         tabWidget->addTab(PerfMetric_Tab, QString());
         Features_Tab = new QWidget();
@@ -646,10 +661,11 @@ public:
         PerfBranches_checkBox->setText(QApplication::translate("MainWindow", "Branches", Q_NULLPTR));
         PerfCache_checkBox->setText(QApplication::translate("MainWindow", "Cache", Q_NULLPTR));
         PerfMemory_checkBox->setText(QApplication::translate("MainWindow", "Memory", Q_NULLPTR));
-        Breakdown_pushButton->setText(QApplication::translate("MainWindow", "Create Breakdown", Q_NULLPTR));
+        Breakdown_pushButton->setText(QApplication::translate("MainWindow", "Run Perf Stat", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(Breakdown_Tab), QApplication::translate("MainWindow", "Perf First Stop", Q_NULLPTR));
-        Application_Label_2->setText(QApplication::translate("MainWindow", "Performance Groups", Q_NULLPTR));
-        Application_Label_3->setText(QApplication::translate("MainWindow", "Chosen Performance Groups", Q_NULLPTR));
+        PerfGroupsDescription_Label->setText(QApplication::translate("MainWindow", "Description", Q_NULLPTR));
+        ChosenPerfGroups_Label->setText(QApplication::translate("MainWindow", "Chosen Performance Groups", Q_NULLPTR));
+        PerfGroups_Label->setText(QApplication::translate("MainWindow", "Performance Groups", Q_NULLPTR));
         tabWidget->setTabText(tabWidget->indexOf(PerfGroup_Tab), QApplication::translate("MainWindow", "Performance Group Selection", Q_NULLPTR));
         PerfMetrics_Label->setText(QApplication::translate("MainWindow", "Performance Metrics", Q_NULLPTR));
         ChosenPerfMetrics_Label->setText(QApplication::translate("MainWindow", "Chosen Performance Metrics", Q_NULLPTR));

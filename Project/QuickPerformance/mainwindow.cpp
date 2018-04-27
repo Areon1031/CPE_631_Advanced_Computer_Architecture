@@ -119,28 +119,39 @@ void MainWindow::getPerformanceGroups()
     while(!perfInStream.atEnd())
     {
         // Grab the current performance macro and description
+//        QString perfGroup = perfInStream.readLine();
+//        QString finalString;
+//        bool foundFirstChar = false;
+
+//        // Remove the description from the string as well as unnecessary characters
+//        for (int i = 0; i < perfGroup.size(); i++)
+//        {
+//            // Remove leading whitespace and tabs
+//            if (perfGroup.at(i) != ' ' && perfGroup.at(i) != '\t')
+//            {
+//                finalString += perfGroup.at(i);
+//                foundFirstChar = true;
+//            }
+
+//            // If the first character has been found, we have the performance group
+//            // stop processing when we find the start of the description
+//            if (foundFirstChar && (perfGroup.at(i) == ' ' || perfGroup.at(i) == '\t'))
+//                break;
+//        }
+
+//        // Add the current option to the list
+//        ui->PerfGroups_List->addItem(finalString);
+
         QString perfGroup = perfInStream.readLine();
-        QString finalString;
-        bool foundFirstChar = false;
 
-        // Remove the description from the string as well as unnecessary characters
-        for (int i = 0; i < perfGroup.size(); i++)
-        {
-            // Remove leading whitespace and tabs
-            if (perfGroup.at(i) != ' ' && perfGroup.at(i) != '\t')
-            {
-                finalString += perfGroup.at(i);
-                foundFirstChar = true;
-            }
+        QStringList perfGroupList = perfGroup.split("\t");
 
-            // If the first character has been found, we have the performance group
-            // stop processing when we find the start of the description
-            if (foundFirstChar && (perfGroup.at(i) == ' ' || perfGroup.at(i) == '\t'))
-                break;
-        }
+        perfGroup = perfGroupList.at(0);
+        perfGroup = perfGroup.remove(" ");
+        QString desc = perfGroupList.at(1);
 
-        // Add the current option to the list
-        ui->PerfGroups_List->addItem(finalString);
+        ui->PerfGroups_List->addItem(perfGroup);
+        ui->PerfGroupsDescription_List->addItem(desc);
     }
 }
 

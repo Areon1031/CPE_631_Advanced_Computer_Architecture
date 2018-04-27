@@ -643,7 +643,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "QuickPerformance", Q_NULLPTR));
         Logo_Group->setTitle(QString());
         Logo->setText(QString());
         Perfscope_Group->setTitle(QString());
@@ -662,7 +662,7 @@ public:
         PerfCache_checkBox->setText(QApplication::translate("MainWindow", "Cache", Q_NULLPTR));
         PerfMemory_checkBox->setText(QApplication::translate("MainWindow", "Memory", Q_NULLPTR));
         Breakdown_pushButton->setText(QApplication::translate("MainWindow", "Run Perf Stat", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(Breakdown_Tab), QApplication::translate("MainWindow", "Perf First Stop", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(Breakdown_Tab), QApplication::translate("MainWindow", "Perf Stat", Q_NULLPTR));
         PerfGroupsDescription_Label->setText(QApplication::translate("MainWindow", "Description", Q_NULLPTR));
         ChosenPerfGroups_Label->setText(QApplication::translate("MainWindow", "Chosen Performance Groups", Q_NULLPTR));
         PerfGroups_Label->setText(QApplication::translate("MainWindow", "Performance Groups", Q_NULLPTR));

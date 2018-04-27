@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>QuickPerformance</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -421,7 +421,7 @@
       </widget>
       <widget class="QWidget" name="Breakdown_Tab">
        <attribute name="title">
-        <string>Perf First Stop</string>
+        <string>Perf Stat</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_13">
         <item row="0" column="0" rowspan="2">

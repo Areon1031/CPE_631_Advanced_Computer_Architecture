@@ -1,3 +1,13 @@
+/**
+  mainwindow.h
+
+  Main Window header file for the Quick Performance Application
+  Author: Kyle Ray
+  CPE 631 Advanced Computer Architecture
+  Project
+**/
+
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -19,11 +29,11 @@
 enum QuickTabs
 {
     TOPOLOGY = 0,
+    PERF_STAT,
     PERF_GROUPS,
     PERF_METRICS,
     FEATURE_CONTROL,
     CPI,
-    BREAKDOWN,
     APP_OUT
 };
 
@@ -67,10 +77,11 @@ private slots:
     void on_Breakdown_pushButton_clicked();
     void on_Perfscope_pushButton_clicked();
 
+    // Core #
     void on_ExecuteCore_Text_textChanged();
 
+    // Output
     void on_OutDirectory_pushButton_clicked();
-
     void on_OutDirectory_Text_textChanged();
 
 private:
@@ -95,6 +106,7 @@ private:
     // Current Core
     QString executeCore_;
 
+    // Custom View Items
     QGraphicsItem* cpiItem_;
     QGraphicsItem* perfItem_;
     QGraphicsScene* cpiScene_;
@@ -120,7 +132,7 @@ private:
     void updateFeaturesResultOutput();
     void enableFeature(bool enable);
 
-    // Perfscope thread
+    // Perfscope thread (test threads)
     std::thread spawn(){ return std::thread( [this] { this->executeUserApplication(); } ); }
     std::thread spawnPerfScope(){ return std::thread( [this] { this->enableLikwidPerfScope(true); } ); }
 };

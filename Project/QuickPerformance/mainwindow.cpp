@@ -1,3 +1,13 @@
+/**
+  mainwindow.cpp
+
+  Main Window implementation file for the Quick Performance Application
+  Author: Kyle Ray
+  CPE 631 Advanced Computer Architecture
+  Project
+**/
+
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -68,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
     perfScene_ = new QGraphicsScene(this);
 }
 
+// Destructor
 MainWindow::~MainWindow()
 {
     // Clean up
@@ -78,6 +89,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// Method to gather topology information
 void MainWindow::getTopology()
 {
     // Execute likwid topology
@@ -99,6 +111,7 @@ void MainWindow::getTopology()
     ui->Topology_Text->setFont(topFont);
 }
 
+// Method to gather performance group information
 void MainWindow::getPerformanceGroups()
 {
     // Execute likwid-perfctr -a to get performance groups
@@ -118,43 +131,20 @@ void MainWindow::getPerformanceGroups()
     // Read the data from the stream
     while(!perfInStream.atEnd())
     {
-        // Grab the current performance macro and description
-//        QString perfGroup = perfInStream.readLine();
-//        QString finalString;
-//        bool foundFirstChar = false;
 
-//        // Remove the description from the string as well as unnecessary characters
-//        for (int i = 0; i < perfGroup.size(); i++)
-//        {
-//            // Remove leading whitespace and tabs
-//            if (perfGroup.at(i) != ' ' && perfGroup.at(i) != '\t')
-//            {
-//                finalString += perfGroup.at(i);
-//                foundFirstChar = true;
-//            }
-
-//            // If the first character has been found, we have the performance group
-//            // stop processing when we find the start of the description
-//            if (foundFirstChar && (perfGroup.at(i) == ' ' || perfGroup.at(i) == '\t'))
-//                break;
-//        }
-
-//        // Add the current option to the list
-//        ui->PerfGroups_List->addItem(finalString);
-
-        QString perfGroup = perfInStream.readLine();
-
-        QStringList perfGroupList = perfGroup.split("\t");
-
-        perfGroup = perfGroupList.at(0);
+        // Format the string
+        QStringList perfGroupList = perfInStream.readLine().split("\t");
+        QString perfGroup = perfGroupList.at(0);
         perfGroup = perfGroup.remove(" ");
         QString desc = perfGroupList.at(1);
 
+        // Place the information on the GUI
         ui->PerfGroups_List->addItem(perfGroup);
         ui->PerfGroupsDescription_List->addItem(desc);
     }
 }
 
+// Method to gather performance metrics information
 void MainWindow::getPerformanceMetrics()
 {
     // Execute likwid-perfctr -a to get performance groups
@@ -200,6 +190,7 @@ void MainWindow::getPerformanceMetrics()
     }
 }
 
+// Method to retrieve features information
 void MainWindow::getFeatureList()
 {
     // Clear the current features list
@@ -235,6 +226,7 @@ void MainWindow::getFeatureList()
     }
 }
 
+// Method to display the resolution of a feature change to the user
 void MainWindow::updateFeaturesResultOutput()
 {
     // Open the features results file
@@ -248,9 +240,11 @@ void MainWindow::updateFeaturesResultOutput()
     QTextStream featureInStream(&featuresFile);
     featureInStream.setCodec("UTF-8");
 
+    // Update the output
     ui->FeatureOperations_Text->setText(featureInStream.readAll());
 }
 
+// Method to enable/disable perfscope mode
 void MainWindow::enableLikwidPerfScope(bool enable)
 {
     if (enable)
@@ -402,6 +396,7 @@ void MainWindow::executeUserApplication()
     outputFile.close();
 }
 
+// TODO: This may just need to be removed
 void MainWindow::generateCPIStack()
 {
     // TODO: Update the python post processing to accept data from the gui
@@ -498,14 +493,7 @@ void MainWindow::generateBreakdown()
                 perfCommand += outputDir_ + "/breakDown.txt" ;
                 system(perfCommand.toStdString().c_str());
 
-                // TODO: Update the python post processing to accept data from the gui
-                // This may just have the python script parsing the data output.txt
-                // from this application and feeding it back.
-
-                // Likwid doesn't really support CPI for individual components like originally thought
-                // Will probably try to add a sort of breakdown chart instead of cpi stack
-
-                // Read CPI Information from the resulting file
+                // Read Perf Information from the resulting file
                 QFile breakdownFile(outputDir_ + "/breakDown.txt");
                 QFile breakdownOutFile(outputDir_ + "/breakdownInfo.txt");
 

@@ -1,3 +1,10 @@
+/**
+  customview.h
+
+  Simple custom view to allow for zooming
+  on graphics objects
+**/
+
 #ifndef CUSTOMVIEW_H
 #define CUSTOMVIEW_H
 

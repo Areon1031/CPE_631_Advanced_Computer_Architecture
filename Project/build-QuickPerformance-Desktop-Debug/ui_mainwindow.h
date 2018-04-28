@@ -421,7 +421,7 @@ public:
 
         PerfGroupsDescription_List = new QListWidget(PerfGroup_Tab);
         PerfGroupsDescription_List->setObjectName(QStringLiteral("PerfGroupsDescription_List"));
-        PerfGroupsDescription_List->setSelectionMode(QAbstractItemView::SingleSelection);
+        PerfGroupsDescription_List->setSelectionMode(QAbstractItemView::NoSelection);
 
         gridLayout_5->addWidget(PerfGroupsDescription_List, 1, 1, 1, 1);
 

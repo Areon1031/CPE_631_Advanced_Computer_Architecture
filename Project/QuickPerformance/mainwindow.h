@@ -90,9 +90,11 @@ private:
 
     // Application File
     QString application_;
+    QString safeApplication_;
 
     // Output Directory
     QString outputDir_;
+    QString safeOutDir_;
 
     // Command Line Arguments for Application
     QString commandLineArgs_;

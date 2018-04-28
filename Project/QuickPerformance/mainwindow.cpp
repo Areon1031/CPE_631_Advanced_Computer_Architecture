@@ -305,7 +305,7 @@ void MainWindow::on_RunTest_pushButton_clicked()
             executeUserApplication();
 
             // Update the CPI Stack Tab
-            if (ui->ChosenPerfGroups_List->count() > 0 && ui->CPIStack_Tab->isEnabled())
+            if (ui->ChosenPerfGroups_List->count() > 0)
                 generateCPIStack();
         }
         else

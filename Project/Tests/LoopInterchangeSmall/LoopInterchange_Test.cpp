@@ -4,7 +4,7 @@
 using namespace std;
 
 static const int FIRST_DIM = 5000;
-static const int SECOND_DIM = 1000;
+static const int SECOND_DIM = 100;
 
 /* copied from mpbench */
 #define TIMER_CLEAR     (tv1.tv_sec = tv1.tv_usec = tv2.tv_sec = tv2.tv_usec = 0)

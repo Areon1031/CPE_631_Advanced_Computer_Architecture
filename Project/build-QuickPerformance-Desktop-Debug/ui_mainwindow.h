@@ -123,7 +123,7 @@ public:
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
         QIcon icon;
-        icon.addFile(QStringLiteral("../programBin/Logo/UAH.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral("../build-QuickPerformance-Desktop-Debug/usr/share/Logo/UAH.ico"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setLayoutDirection(Qt::LeftToRight);
         centralWidget = new QWidget(MainWindow);

@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../programBin/Logo/UAH.ico</normaloff>../programBin/Logo/UAH.ico</iconset>
+    <normaloff>../build-QuickPerformance-Desktop-Debug/usr/share/Logo/UAH.ico</normaloff>../build-QuickPerformance-Desktop-Debug/usr/share/Logo/UAH.ico</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>

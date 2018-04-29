@@ -254,9 +254,9 @@ void MainWindow::updateFeaturesResultOutput()
 void MainWindow::enableLikwidPerfScope(bool enable)
 {
     if (enable)
-        system("./scopeMe.sh");
+        system("usr/share/scripts/scopeMe.sh usr/share/scripts/");
     else
-        system("./killScopeForever.sh");
+        system("usr/share/scripts/killScopeForever.sh");
 }
 
 

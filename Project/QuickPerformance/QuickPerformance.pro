@@ -37,5 +37,3 @@ FORMS += \
         mainwindow.ui
 
 LIBS += -pthread
-
-CONFIG += c++11

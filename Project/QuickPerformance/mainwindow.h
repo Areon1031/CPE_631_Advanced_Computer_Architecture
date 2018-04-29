@@ -21,7 +21,6 @@
 #include <QGraphicsScene>
 #include <QtGui>
 
-#include <likwid.h> // May not be necessary, remove later if needed
 #include <thread>
 #include <chrono>
 

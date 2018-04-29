@@ -104,7 +104,7 @@ void MainWindow::getTopology()
 
     // Error Check the file
     if (!topFile.open(QIODevice::ReadOnly))
-        QMessageBox::information(0, "info", topFile.errorString());
+        QMessageBox::information(0, "info", "Please Ensure LIKWID is Installed.");
 
     // Convert file into stream to show it in text box
     QTextStream inStream(&topFile);

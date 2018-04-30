@@ -36,5 +36,4 @@ HEADERS += \
 FORMS += \
         mainwindow.ui
 
-LIBS += -L/usr/local/lib -llikwid \
-    -pthread
+LIBS += -pthread

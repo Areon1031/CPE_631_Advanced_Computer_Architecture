@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->LikwidCommand_Text->setText(likwidPerfCommand_);
 
     // Setup the Logo
-    QPixmap logo("../programBin/Logo/UAH_Logo.png");
+    QPixmap logo("usr/share/Logo/UAH_Logo.png");
     ui->Logo->setPixmap(logo);
     ui->Logo->setScaledContents(true);
 
@@ -104,7 +104,7 @@ void MainWindow::getTopology()
 
     // Error Check the file
     if (!topFile.open(QIODevice::ReadOnly))
-        QMessageBox::information(0, "info", topFile.errorString());
+        QMessageBox::information(0, "info", "Please Ensure LIKWID is Installed.");
 
     // Convert file into stream to show it in text box
     QTextStream inStream(&topFile);
@@ -254,9 +254,9 @@ void MainWindow::updateFeaturesResultOutput()
 void MainWindow::enableLikwidPerfScope(bool enable)
 {
     if (enable)
-        system("./scopeMe.sh");
+        system("usr/share/scripts/scopeMe.sh usr/share/scripts/");
     else
-        system("./killScopeForever.sh");
+        system("usr/share/scripts/killScopeForever.sh");
 }
 
 
@@ -446,7 +446,7 @@ void MainWindow::generateCPIStack()
     cpiOutFile.close();
 
     // Run Python Post Processing Script
-    QString runString = "python ../UI_PostProcessing/genCPIStack.py " + outputDir_ + "/cpiInfo.txt " + outputDir_;
+    QString runString = "python usr/share/UI_PostProcessing/genCPIStack.py " + outputDir_ + "/cpiInfo.txt " + outputDir_;
     //QString runString = "python ../UI_PostProcessing/simpleStackedBarExample.py";
     system(runString.toStdString().c_str());
 
@@ -577,7 +577,7 @@ void MainWindow::generateBreakdown()
                 breakdownOutFile.close();
 
                 // Read the breakdown file and run python to process the perf data
-                QString runString = "python ../UI_PostProcessing/genBreakdownChart.py " + outputDir_ + "/breakdownInfo.txt " + outputDir_ ;
+                QString runString = "python usr/share/UI_PostProcessing/genBreakdownChart.py " + outputDir_ + "/breakdownInfo.txt " + outputDir_ ;
                 system(runString.toStdString().c_str());
 
                 // Setup the image

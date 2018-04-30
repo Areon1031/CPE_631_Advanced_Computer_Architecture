@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=QuickPerformance
+Exec=AppRun %F
+Icon=default
+Comment=Simple Quick Performance Tool using LIKWID
+Terminal=true

@@ -1,0 +1,57 @@
+time=0.352385 seconds
+--------------------------------------------------------------------------------
+Group 1: L2
++-----------------------+---------+------------+
+|         Event         | Counter |   Core 1   |
++-----------------------+---------+------------+
+|   INSTR_RETIRED_ANY   |  FIXC0  | 1802229572 |
+| CPU_CLK_UNHALTED_CORE |  FIXC1  | 3777676659 |
+|  CPU_CLK_UNHALTED_REF |  FIXC2  | 3439209360 |
+|    L1D_REPLACEMENT    |   PMC0  |  112522771 |
+|    L2_TRANS_L1D_WB    |   PMC1  |   99783416 |
+|     ICACHE_MISSES     |   PMC2  |       5700 |
++-----------------------+---------+------------+
+
++--------------------------------+------------+
+|             Metric             |   Core 1   |
++--------------------------------+------------+
+|       Runtime (RDTSC) [s]      |     0.8996 |
+|      Runtime unhalted [s]      |     0.9444 |
+|           Clock [MHz]          |  4393.8517 |
+|               CPI              |     2.0961 |
+|  L2D load bandwidth [MBytes/s] |  8004.8760 |
+|  L2D load data volume [GBytes] |     7.2015 |
+| L2D evict bandwidth [MBytes/s] |  7098.5976 |
+| L2D evict data volume [GBytes] |     6.3861 |
+|     L2 bandwidth [MBytes/s]    | 15103.8791 |
+|     L2 data volume [GBytes]    |    13.5880 |
++--------------------------------+------------+
+
+time=0.104964 seconds
+--------------------------------------------------------------------------------
+Group 1: L2
++-----------------------+---------+------------+
+|         Event         | Counter |   Core 1   |
++-----------------------+---------+------------+
+|   INSTR_RETIRED_ANY   |  FIXC0  | 1802915590 |
+| CPU_CLK_UNHALTED_CORE |  FIXC1  |  859826790 |
+|  CPU_CLK_UNHALTED_REF |  FIXC2  |  825678280 |
+|    L1D_REPLACEMENT    |   PMC0  |    3163168 |
+|    L2_TRANS_L1D_WB    |   PMC1  |    3124543 |
+|     ICACHE_MISSES     |   PMC2  |       5604 |
++-----------------------+---------+------------+
+
++--------------------------------+-----------+
+|             Metric             |   Core 1  |
++--------------------------------+-----------+
+|       Runtime (RDTSC) [s]      |    0.2414 |
+|      Runtime unhalted [s]      |    0.2149 |
+|           Clock [MHz]          | 4165.6132 |
+|               CPI              |    0.4769 |
+|  L2D load bandwidth [MBytes/s] |  838.5812 |
+|  L2D load data volume [GBytes] |    0.2024 |
+| L2D evict bandwidth [MBytes/s] |  828.3414 |
+| L2D evict data volume [GBytes] |    0.2000 |
+|     L2 bandwidth [MBytes/s]    | 1668.4083 |
+|     L2 data volume [GBytes]    |    0.4028 |
++--------------------------------+-----------+

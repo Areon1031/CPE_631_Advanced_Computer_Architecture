@@ -1,0 +1,10 @@
+Deployment information
+
+using linuxdeployqt provided on github
+https://github.com/probonopd/linuxdeployqt
+
+In order to get this to work
+1.) Build the program 
+2.) run command 'patchelf --set-rpath '$ORIGIN/../../lib' plugins/platforms/libqxcb.so
+3.) run linuxdeployqt application -appimage
+4.) Application should run natively now

@@ -1,5 +1,0 @@
-Plotting tools in python
-https://blog.modeanalytics.com/python-data-visualization-libraries/
-
-Note: Blackhawk computers already have matplotlib on them so that is probably the postprocessing tool
-to use.
